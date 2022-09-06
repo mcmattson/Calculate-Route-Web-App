@@ -29,9 +29,9 @@ export const memberData = [
         imagePath: memberPic
     },
     {
-        name: "Team Member 4",
+        name: "Maria Lake",
         bio: "Bio Here",
-        homeTown: "Hometown",
+        homeTown: "Broomfield, Colorado",
         imagePath: memberPic
     },
     {
