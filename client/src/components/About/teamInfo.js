@@ -24,7 +24,7 @@ export const memberData = [
     },
     {
         name: "Mikyla Bowen",
-        bio: "Bio Here",
+        bio: "I am a junior at Colorado State University (CSU) majoring in Data Science and Computer Science. I am also currently a UTA for CS253 and a researcher in the Wilson Lab. My goals are to pursue a Master's degree in computer science after finishing my undergraduate degree and pursue a career with a focus on machine learning. My biggest achievement is being a 2020 Boettcher Scholar.",
         homeTown: "Greeley, Colorado",
         imagePath: memberPic
     },
