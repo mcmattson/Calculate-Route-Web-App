@@ -4,7 +4,7 @@ import teamPic from "../../static/images/PlaceholderTeam.jpg";
 export const teamData =
     {
         teamName: "Team Name",
-        missionStatement: "Mission Statement",
+        missionStatement: "Over the course of the Fall semester of 2022, we intend to connect with others and elevate our product through teamwork so that we may improve our industry skill set.",
         imagePath: teamPic,
     };
 
