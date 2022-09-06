@@ -29,9 +29,9 @@ export const memberData = [
         imagePath: memberPic
     },
     {
-        name: "Team Member 4",
+        name: "Maria Lake",
         bio: "I'm a junior at Colorado State University majoring in Computer Science and concentrating on Software Engineering. I am currently a UTA for CS165: Data Structures and Algorithms. I have a strong interest in Software Engineering in the aerospace industry and I plan to pursue that path after finishing my degree. My favorite achievement is that I'm a four time Dean's List student.",
-        homeTown: "Hometown",
+        homeTown: "Broomfield, Colorado",
         imagePath: memberPic
     },
     {
