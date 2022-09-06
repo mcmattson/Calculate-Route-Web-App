@@ -12,7 +12,7 @@ export const teamData =
 export const memberData = [
     {
         name: "Matthew Mattson",
-        bio: "Bio Here",
+        bio: "I am a Senior at Colorado State University majoring in Computer Science. My goals are to finish my degree and find career in a company that focuses on company culture while improving other peoples lives. My biggest achievement is my 14 years in the military, my two (almost three) boys and making the Dean's List.",
         homeTown: "Loveland, Colorado",
         imagePath: memberPic
     },
