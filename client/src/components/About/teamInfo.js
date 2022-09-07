@@ -1,4 +1,5 @@
 import memberPic from "../../static/images/Placeholder.jpg";
+import memberPic3 from "../../static/images/Mikyla_small.jpg";
 import teamPic from "../../static/images/PlaceholderTeam.jpg";
 
 export const teamData =
@@ -26,7 +27,7 @@ export const memberData = [
         name: "Mikyla Bowen",
         bio: "I am a junior at Colorado State University (CSU) majoring in Data Science and Computer Science. I am also currently a UTA for CS253 and a researcher in the Wilson Lab. My goals are to pursue a Master's degree in computer science after finishing my undergraduate degree and pursue a career with a focus on machine learning. My biggest achievement is being a 2020 Boettcher Scholar.",
         homeTown: "Greeley, Colorado",
-        imagePath: memberPic
+        imagePath: memberPic3
     },
     {
         name: "Maria Lake",
