@@ -18,7 +18,7 @@ export const memberData = [
     },
     {
         name: "Cathryn Wardlow",
-        bio: "Bio Here",
+        bio: "I am a junior at Colorado State University (better known as CSU) majoring in Computer Science with a concentration in Software Engineering. My current goals are to graduate and work with a company in the aerospace industry just like my father. My personal favorite achievement is that I have written three novels in the process of publishing as well as overcoming my disabilities and living a normal life.",
         homeTown: "Littleton, Colorado",
         imagePath: memberPic
     },
