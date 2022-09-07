@@ -1,5 +1,6 @@
 import memberPic from "../../static/images/Placeholder.jpg";
 import memberPic3 from "../../static/images/Mikyla_small.jpg";
+import memberPic5 from "../../static/images/Ians_pic.jpg";
 import teamPic from "../../static/images/PlaceholderTeam.jpg";
 
 export const teamData =
@@ -39,6 +40,6 @@ export const memberData = [
         name: "Ian Duncan",
         bio: "I am a senior at Colorado State University majoring in computer science with a general focus. My goals are to graduate this year and to find a job within a company where I can learn to develop at a large scale and have my own code released into public software. My biggest achievement so far was winning the High School Hobey Baker leadership award and being recognized at a Colorado Avalanche game.",
         homeTown: "Castle Rock, Colorado",
-        imagePath: memberPic
+        imagePath: memberPic5
     },
 ];
