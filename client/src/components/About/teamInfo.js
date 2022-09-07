@@ -1,4 +1,7 @@
 import memberPic from "../../static/images/Placeholder.jpg";
+import memberPic2 from "../../static/images/cathryn-small-pic.jpg";
+import memberPic3 from "../../static/images/Mikyla_small.jpg";
+import memberPic5 from "../../static/images/Ians_pic.jpg";
 import teamPic from "../../static/images/PlaceholderTeam.jpg";
 
 export const teamData =
@@ -20,13 +23,13 @@ export const memberData = [
         name: "Cathryn Wardlow",
         bio: "I am a junior at Colorado State University (better known as CSU) majoring in Computer Science with a concentration in Software Engineering. My current goals are to graduate and work with a company in the aerospace industry just like my father. My personal favorite achievement is that I have written three novels in the process of publishing as well as overcoming my disabilities and living a normal life.",
         homeTown: "Littleton, Colorado",
-        imagePath: memberPic
+        imagePath: memberPic2
     },
     {
         name: "Mikyla Bowen",
         bio: "I am a junior at Colorado State University (CSU) majoring in Data Science and Computer Science. I am also currently a UTA for CS253 and a researcher in the Wilson Lab. My goals are to pursue a Master's degree in computer science after finishing my undergraduate degree and pursue a career with a focus on machine learning. My biggest achievement is being a 2020 Boettcher Scholar.",
         homeTown: "Greeley, Colorado",
-        imagePath: memberPic
+        imagePath: memberPic3
     },
     {
         name: "Maria Lake",
@@ -38,6 +41,6 @@ export const memberData = [
         name: "Ian Duncan",
         bio: "I am a senior at Colorado State University majoring in computer science with a general focus. My goals are to graduate this year and to find a job within a company where I can learn to develop at a large scale and have my own code released into public software. My biggest achievement so far was winning the High School Hobey Baker leadership award and being recognized at a Colorado Avalanche game.",
         homeTown: "Castle Rock, Colorado",
-        imagePath: memberPic
+        imagePath: memberPic5
     },
 ];
