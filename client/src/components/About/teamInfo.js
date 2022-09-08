@@ -1,4 +1,4 @@
-import memberPic from "../../static/images/Placeholder.jpg";
+import memberPic from "../../static/images/matt_200x200.jpg";
 import memberPic2 from "../../static/images/cathryn-small-pic.jpg";
 import memberPic3 from "../../static/images/Mikyla_small.jpg";
 import memberPic4 from "../../static/images/MariMemberPic.jpg";
