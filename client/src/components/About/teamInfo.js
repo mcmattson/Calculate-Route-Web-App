@@ -2,7 +2,7 @@ import memberPic from "../../static/images/Placeholder.jpg";
 import memberPic2 from "../../static/images/cathryn-small-pic.jpg";
 import memberPic3 from "../../static/images/Mikyla_small.jpg";
 import memberPic5 from "../../static/images/Ians_pic.jpg";
-import teamPic from "../../static/images/PlaceholderTeam.jpg";
+import teamPic from "../../static/images/team-image.jpg";
 
 export const teamData =
     {
