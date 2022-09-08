@@ -1,6 +1,7 @@
 import memberPic from "../../static/images/Placeholder.jpg";
 import memberPic2 from "../../static/images/cathryn-small-pic.jpg";
 import memberPic3 from "../../static/images/Mikyla_small.jpg";
+import memberPic4 from "../../static/images/MariMemberPic.jpg";
 import memberPic5 from "../../static/images/Ians_pic.jpg";
 import teamPic from "../../static/images/team-image.jpg";
 
@@ -35,7 +36,7 @@ export const memberData = [
         name: "Maria Lake",
         bio: "I'm a junior at Colorado State University majoring in Computer Science and concentrating on Software Engineering. I am currently a UTA for CS165: Data Structures and Algorithms. I have a strong interest in Software Engineering in the aerospace industry and I plan to pursue that path after finishing my degree. My favorite achievement is that I'm a four time Dean's List student.",
         homeTown: "Broomfield, Colorado",
-        imagePath: memberPic
+        imagePath: memberPic4
     },
     {
         name: "Ian Duncan",
