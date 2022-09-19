@@ -15,17 +15,14 @@ public class DistancesRequest extends Request {
 
     @Override
     public void buildResponse() {
-        serverName = "t16 Data Avengers";
-        features = new ArrayList<>();
-        features.add("config");
-        log.trace("buildResponse -> {}", this);
+        ;
     }
 
   /* The following methods exist only for testing purposes and are not used
   during normal execution, including the constructor. */
 
     public DistancesRequest() {
-        this.requestType = "config";
+        this.requestType = "distances";
     }
 
     public String getServerName() {
