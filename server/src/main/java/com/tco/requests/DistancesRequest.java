@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 public class DistancesRequest extends Request {
 
-    private static final transient Logger log = LoggerFactory.getLogger(ConfigRequest.class);
+    private static final transient Logger log = LoggerFactory.getLogger(DistancesRequest.class);
 
     private String serverName;
     private List<String> features;
@@ -24,7 +24,7 @@ public class DistancesRequest extends Request {
   /* The following methods exist only for testing purposes and are not used
   during normal execution, including the constructor. */
 
-    public ConfigRequest() {
+    public DistancesRequest() {
         this.requestType = "config";
     }
 
