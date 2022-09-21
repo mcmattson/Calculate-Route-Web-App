@@ -13,11 +13,12 @@ public class DistancesRequest extends Request {
 
     private Float earthRadius;
     private HashMap<String, String> places;
+    private List<Integer> distances;
     private List<String> features;
 
     @Override
     public void buildResponse() {
-        ;
+        distances = null;
     }
 
   /* The following methods exist only for testing purposes and are not used
