@@ -10,7 +10,7 @@ public class DistancesRequest extends Request {
 
     private static final transient Logger log = LoggerFactory.getLogger(DistancesRequest.class);
 
-    private String serverName;
+    private Float earthRadius;
     private List<String> features;
 
     @Override
@@ -23,10 +23,6 @@ public class DistancesRequest extends Request {
 
     public DistancesRequest() {
         this.requestType = "distances";
-    }
-
-    public String getServerName() {
-        return serverName;
     }
 
     public boolean validFeature(String feature){
