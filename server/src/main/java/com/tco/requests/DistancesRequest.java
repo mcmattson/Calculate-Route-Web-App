@@ -28,7 +28,5 @@ public class DistancesRequest extends Request {
         this.requestType = "distances";
     }
 
-    public boolean validFeature(String feature){
-        return features.contains(feature);
-    }
+    
 }
