@@ -6,5 +6,9 @@ public final class DistanceCalculator {
 
     private DistanceCalculator() {}
 
+    public static Long calculate(){
+        return 0L;
+    }
+
 }
 
