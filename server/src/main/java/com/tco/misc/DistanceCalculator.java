@@ -6,5 +6,9 @@ public final class DistanceCalculator {
 
     private DistanceCalculator() {}
 
+    public static Long calculate(Long from, Long to, Double earthRadius){
+        return 0L;
+    }
+
 }
 
