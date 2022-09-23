@@ -11,14 +11,22 @@ public class DistancesRequest extends Request {
 
     private static final transient Logger log = LoggerFactory.getLogger(DistancesRequest.class);
 
-    private Float earthRadius;
-    private HashMap<String, String> places;
-    private List<Integer> distances;
+    private Double earthRadius;
+    private Places places;
+    private Distances distances;
     private List<String> features;
 
     @Override
+    // Credit To Dave Matthews
     public void buildResponse() {
-        distances = null;
+        distances = buildDistanceList();
+        log.trace("distanceResponse -> {}", this);
+    }
+
+    private Distances buildDistanceList() {
+        Distances distances = new Distances();
+
+        return distances;
     }
 
   /* The following methods exist only for testing purposes and are not used
@@ -27,6 +35,4 @@ public class DistancesRequest extends Request {
     public DistancesRequest() {
         this.requestType = "distances";
     }
-
-    
 }
