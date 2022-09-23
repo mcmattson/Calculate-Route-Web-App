@@ -33,4 +33,17 @@ public class TestDistances {
         assertEquals(2, distances.size());
         assertEquals(0L, distances.total());
     }
+    
+    @Test
+    @DisplayName ("mmattson: distances with multiple places")
+    public void testDistances () {
+        Distances distances = new Distances();
+        distances.add(5L);
+        distances.add(40L);
+        distances.add(300L);
+        distances.add(2000L);
+        distances.add(10000L);
+        assertEquals(5, distances.size());
+        assertEquals(12345L, distances.total());
+    }
 }
