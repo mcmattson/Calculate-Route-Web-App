@@ -23,4 +23,14 @@ public class TestDistances {
         assertEquals(1, distances.size());
         assertEquals(12345L, distances.total());
     }
+    
+    @Test
+    @DisplayName ("mmattson: two distances with no places")
+    public void testTwoDistances () {
+        Distances distances = new Distances();
+        distances.add(0L);
+        distances.add(0L);
+        assertEquals(2, distances.size());
+        assertEquals(0L, distances.total());
+    }
 }
