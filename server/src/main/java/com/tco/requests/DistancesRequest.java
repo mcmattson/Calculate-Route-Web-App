@@ -1,6 +1,7 @@
 package com.tco.requests;
 
 import java.util.List;
+import java.util.HashMap;
 import java.util.ArrayList;
 
 import org.slf4j.Logger;
@@ -10,12 +11,14 @@ public class DistancesRequest extends Request {
 
     private static final transient Logger log = LoggerFactory.getLogger(DistancesRequest.class);
 
-    private String serverName;
+    private Float earthRadius;
+    private HashMap<String, String> places;
+    private List<Integer> distances;
     private List<String> features;
 
     @Override
     public void buildResponse() {
-        ;
+        distances = null;
     }
 
   /* The following methods exist only for testing purposes and are not used
@@ -25,11 +28,5 @@ public class DistancesRequest extends Request {
         this.requestType = "distances";
     }
 
-    public String getServerName() {
-        return serverName;
-    }
-
-    public boolean validFeature(String feature){
-        return features.contains(feature);
-    }
+    
 }
