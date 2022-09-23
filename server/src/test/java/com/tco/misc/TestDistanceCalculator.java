@@ -42,6 +42,9 @@ public class TestDistanceCalculator {
     final static long piBig = Math.round(Math.PI * big);
     final static long piBigHalf = Math.round(Math.PI / 2.0 * big);
 
+    //Actual Earth radius in km.
+    final static long realRadius = 6378L;
+
     //Big identity tests.
     @Test
     @DisplayName("cath2731: The distance-to-self should be zero.")
@@ -88,6 +91,14 @@ public class TestDistanceCalculator {
     public void testDistanceToSelfPiAntarctic() {
         assertEquals(0L, calculate(coordinatesAntarctic, coordinatesAntarctic, piBigHalf));
         assertEquals(0L, calculate(coordinatesAntarctic, coordinatesAntarctic, piSmallHalf));
+    }
+
+    //Testing with different geographic location distances.
+    @Test
+    @DisplayName("cath2731: The distance-to-self should NOT be zero.")
+    public void testDistanceToSelfNonZero() {
+        assertEquals(10633L, calculate(origin, coordinatesBurma, realRadius));
+        assertEquals(15767L, calculate(coordinatesFoCo, coordinatesAntarctic, realRadius));
     }
 
 
