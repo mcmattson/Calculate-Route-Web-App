@@ -94,7 +94,20 @@
 		},
 		{
 			"name": "Distances",
-			"item": [],
+			"item": [
+				{
+					"name": "New Request",
+					"id": "508aa64b-0159-44a6-a5ff-4da39ef46f30",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
 			"id": "1ef61dd5-e179-4525-a5ef-21ba2767fe9c"
 		}
 	],
@@ -122,12 +135,12 @@
 	],
 	"variable": [
 		{
-			"id": "c26944cf-71bb-4573-a0f7-ae70300e9892",
+			"id": "d52ba316-5d07-4104-b27a-dc113bea9ab5",
 			"key": "BASE_URL",
 			"value": "https://black-bottle.cs.colostate.edu:31416/"
 		},
 		{
-			"id": "2bd5a053-fa37-4614-92c1-5d35bc479e61",
+			"id": "9ca8d837-3aa0-4b25-8466-60e55fae4b2f",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
