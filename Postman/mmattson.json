@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "New Folder",
+			"name": "config",
 			"item": [],
 			"id": "cb0164ca-b611-41a2-bcb8-3a12010200fd"
 		},
@@ -48,12 +48,12 @@
 	],
 	"variable": [
 		{
-			"id": "185368b5-ac60-4d18-b16a-ff7daf733b64",
+			"id": "7b235b69-bee3-46f8-8d22-ed4d4b398eb4",
 			"key": "BASE_URL",
 			"value": "http://localhost:41300"
 		},
 		{
-			"id": "73916d10-a158-4dd5-a3d6-acd3f59ff082",
+			"id": "1a49b4a5-c4d1-4941-9a9c-5fbedab6d2a2",
 			"key": "TEAM_NAME",
 			"value": "txx team name"
 		}
