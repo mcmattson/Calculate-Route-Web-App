@@ -35,7 +35,7 @@
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.serverName).to.be.a (\"string\");\r",
 									"    pm.expect(jsonData.serverName).to.match(/[tT][0-9][0-9] .*/)\r",
-									"});\r",
+									"})\r",
 									"\r",
 									"pm.test(\"features test\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
@@ -78,7 +78,12 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"requestType\":\"config\"\r\n}"
+							"raw": "{\r\n    \"requestType\": \"config\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": "{{BASE_URL}}/api/config"
 					},
@@ -117,12 +122,12 @@
 	],
 	"variable": [
 		{
-			"id": "e4b773fd-c41b-40a5-ad19-744059082173",
+			"id": "c26944cf-71bb-4573-a0f7-ae70300e9892",
 			"key": "BASE_URL",
 			"value": "https://black-bottle.cs.colostate.edu:31416/"
 		},
 		{
-			"id": "af9ea1d1-17dd-494d-bf29-bf73b6599bae",
+			"id": "2bd5a053-fa37-4614-92c1-5d35bc479e61",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
