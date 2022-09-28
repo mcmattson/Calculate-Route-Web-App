@@ -97,12 +97,44 @@
 			"item": [
 				{
 					"name": "New Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8afa0ea5-857d-4436-952b-9155a9f92fbf",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"requestType test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.requestType).to.eql (\"distances\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"earthRadius test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.earthRadius).to.eql(1.0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"places test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.places).to.not.equal(null);\r",
+									"    pm.expect(jsonData.places.length).to.equal(0);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"id": "508aa64b-0159-44a6-a5ff-4da39ef46f30",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": []
 					},
 					"response": []
@@ -135,12 +167,12 @@
 	],
 	"variable": [
 		{
-			"id": "d52ba316-5d07-4104-b27a-dc113bea9ab5",
+			"id": "df14e91a-c487-4687-9a4f-3922bf9c0829",
 			"key": "BASE_URL",
 			"value": "https://black-bottle.cs.colostate.edu:31416/"
 		},
 		{
-			"id": "9ca8d837-3aa0-4b25-8466-60e55fae4b2f",
+			"id": "8c75e74d-9883-483d-8a03-fdee172c9887",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
