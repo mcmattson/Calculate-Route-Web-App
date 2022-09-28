@@ -20,9 +20,9 @@ public final class DistanceCalculator {
         Double numerator = Math.sqrt(firstParenthesisSquared + secondParenthesisSquared);
         Double sinSinLatitude = Math.sin(from.latRadians()) * Math.sin(to.latRadians());
         Double cosCosCosLatitude = Math.cos(from.latRadians()) * Math.cos(to.latRadians()) * Math.cos(delta_lambda);
-        Double demoninator = sinSinLatitude + cosCosCosLatitude;
+        Double denominator = sinSinLatitude + cosCosCosLatitude;
 
-        Double delta_o = Math.atan2(numerator,demoninator);
+        Double delta_o = Math.atan2(numerator,denominator);
         Long distanceBetweenPlaces = Math.round(delta_o * earthRadius); 
         return distanceBetweenPlaces;
     }
