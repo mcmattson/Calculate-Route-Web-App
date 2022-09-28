@@ -11,6 +11,36 @@
 			"item": [
 				{
 					"name": "Config Post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c53e4ea5-5ae6-445b-bc04-143b4383efb9",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON test\", function () {\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"requestType test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.requestType).to.eql (\"config\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"serverName test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.serverName).to.be.a (\"string\");\r",
+									"    pm.expect(jsonData.serverName).to.match(/[tT][0-9][0-9] .*/) (\"string\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"id": "ef049d9c-3a41-40a8-b18b-043708bc6d54",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -54,12 +84,12 @@
 	],
 	"variable": [
 		{
-			"id": "766127b0-4569-4640-b262-f043f2745a34",
+			"id": "27570936-0745-4feb-9ab1-c9b1ee935b05",
 			"key": "BASE_URL",
 			"value": "https://black-bottle.cs.colostate.edu:31416/"
 		},
 		{
-			"id": "b3954fe1-1e7c-406b-947e-2827aa3c22e5",
+			"id": "506d8762-9886-438e-9ef3-7dc8b7cb05fd",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
