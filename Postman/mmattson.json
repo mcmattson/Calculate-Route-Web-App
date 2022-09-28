@@ -96,7 +96,7 @@
 			"name": "Distances",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "Distance Min Radius No Places",
 					"event": [
 						{
 							"listen": "test",
@@ -176,12 +176,12 @@
 	],
 	"variable": [
 		{
-			"id": "a2602fde-5a46-4866-93da-540eaa98ced9",
+			"id": "e2b29146-fffa-416b-ad66-ddadbc2e2c01",
 			"key": "BASE_URL",
 			"value": "https://black-bottle.cs.colostate.edu:31416/"
 		},
 		{
-			"id": "f45b44d1-f10c-471b-a7f8-b2c2273fda94",
+			"id": "9b5d292f-9683-42cf-b914-6c9db2e88454",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
