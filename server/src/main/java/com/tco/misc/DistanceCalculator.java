@@ -9,21 +9,22 @@ public final class DistanceCalculator {
     public static Long calculate(GeographicCoordinate from, GeographicCoordinate to, double earthRadius){
         Double delta_lambda = to.lonRadians() - from.lonRadians();
 
-        Double first_group = Math.cos(to.latRadians()) * Math.sin(delta_lambda);
-        Double second_group = first_group * first_group;
+        Double firstParenthesis = Math.cos(to.latRadians()) * Math.sin(delta_lambda);
+        Double firstParenthesisSquared = firstParenthesis * firstParenthesis;
 
-        Double cosSinLat = Math.cos(from.latRadians()) * Math.sin(to.latRadians());
-        Double sinCosCos = Math.sin(from.latRadians()) * Math.cos(to.latRadians()) * Math.cos(delta_lambda);
-        Double third_group = cosSinLat-sinCosCos;      
-        Double fourth_group = third_group *third_group;
+        Double cosSinLatitude = Math.cos(from.latRadians()) * Math.sin(to.latRadians());
+        Double sinCosCosLatitude = Math.sin(from.latRadians()) * Math.cos(to.latRadians()) * Math.cos(delta_lambda);
+        Double secondParenthesis = cosSinLatitude-sinCosCosLatitude;      
+        Double secondParenthesisSquared = secondParenthesis *secondParenthesis;
 
-        Double numerator = Math.sqrt(second_group + fourth_group);
-        Double sinSin = Math.sin(from.latRadians()) * Math.sin(to.latRadians());
-        Double cosCosCos = Math.cos(from.latRadians()) * Math.cos(to.latRadians()) * Math.cos(delta_lambda);
-        Double demoninator = sinSin + cosCosCos;
+        Double numerator = Math.sqrt(firstParenthesisSquared + secondParenthesisSquared);
+        Double sinSinLatitude = Math.sin(from.latRadians()) * Math.sin(to.latRadians());
+        Double cosCosCosLatitude = Math.cos(from.latRadians()) * Math.cos(to.latRadians()) * Math.cos(delta_lambda);
+        Double demoninator = sinSinLatitude + cosCosCosLatitude;
 
         Double delta_o = Math.atan2(numerator,demoninator);
-        return Math.round(delta_o * earthRadius); 
+        Long distanceBetweenPlaces = Math.round(delta_o * earthRadius); 
+        return distanceBetweenPlaces;
     }
 
 }
