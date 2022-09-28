@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "New Request",
+			"name": "Config Post",
 			"id": "ef049d9c-3a41-40a8-b18b-043708bc6d54",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -43,12 +43,12 @@
 	],
 	"variable": [
 		{
-			"id": "14c42506-820a-4fdc-9f0b-dba78e87bbc8",
+			"id": "0a812c66-b78c-458e-a86c-077c42a9c4ca",
 			"key": "BASE_URL",
 			"value": "http://localhost:41300"
 		},
 		{
-			"id": "3cc8aa1b-d99a-4e48-b98f-5cc32d8c4ffd",
+			"id": "fb60eaca-db2d-4de0-a576-417df0fb5a16",
 			"key": "TEAM_NAME",
 			"value": "txx team name"
 		}
