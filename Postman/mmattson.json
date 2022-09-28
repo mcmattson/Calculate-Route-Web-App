@@ -88,7 +88,7 @@
 			"id": "cb0164ca-b611-41a2-bcb8-3a12010200fd"
 		},
 		{
-			"name": "New Folder",
+			"name": "Distances",
 			"item": [],
 			"id": "1ef61dd5-e179-4525-a5ef-21ba2767fe9c"
 		}
@@ -117,12 +117,12 @@
 	],
 	"variable": [
 		{
-			"id": "6dcc5130-7f01-4d44-83fd-0de59b90d3b5",
+			"id": "e4b773fd-c41b-40a5-ad19-744059082173",
 			"key": "BASE_URL",
 			"value": "https://black-bottle.cs.colostate.edu:31416/"
 		},
 		{
-			"id": "ed65ba95-357d-446e-b4cc-4a44e34d4aee",
+			"id": "af9ea1d1-17dd-494d-bf29-bf73b6599bae",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
