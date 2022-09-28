@@ -34,7 +34,35 @@
 									"pm.test(\"serverName test\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.serverName).to.be.a (\"string\");\r",
-									"    pm.expect(jsonData.serverName).to.match(/[tT][0-9][0-9] .*/) (\"string\");\r",
+									"    pm.expect(jsonData.serverName).to.match(/[tT][0-9][0-9] .*/)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"features test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.features).to.not.equal(null);\r",
+									"    pm.expect(jsonData.features).to.contain(\"config\");\r",
+									"    pm.expect(jsonData.features).to.contain(\"distances\");\r",
+									"});\r",
+									"\r",
+									"pm.test('Schema test', function () {\r",
+									"    var Ajv = require(\"ajv\");\r",
+									"    var ajv = new Ajv({logger:console});\r",
+									"    var schema = {\r",
+									"        \"properties\": {\r",
+									"            \"serverName\": {\r",
+									"                \"type\": \"string\",\r",
+									"                \"minlength\":3\r",
+									"            },\r",
+									"            \"requestType\": {\r",
+									"                \"type\" : \"string\"\r",
+									"            },\r",
+									"            \"features\": {\r",
+									"                \"type\":\"array\"\r",
+									"            }\r",
+									"        }\r",
+									"    };\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(ajv.validate(schema, jsonData)).to.be.true;\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -49,8 +77,8 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": []
+							"mode": "raw",
+							"raw": "{\r\n    \"requestType\":\"config\"\r\n}"
 						},
 						"url": "{{BASE_URL}}/api/config"
 					},
@@ -84,12 +112,12 @@
 	],
 	"variable": [
 		{
-			"id": "27570936-0745-4feb-9ab1-c9b1ee935b05",
+			"id": "6a72f23c-53b9-4381-9d2f-788d2ce99c82",
 			"key": "BASE_URL",
 			"value": "https://black-bottle.cs.colostate.edu:31416/"
 		},
 		{
-			"id": "506d8762-9886-438e-9ef3-7dc8b7cb05fd",
+			"id": "05118b69-8fa6-4d49-89c8-453f46efa768",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
