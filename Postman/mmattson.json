@@ -10,8 +10,8 @@
 			"name": "config",
 			"item": [
 				{
-					"name": "New Request",
-					"id": "874f4a7e-8a87-4923-b46b-2d3221470e24",
+					"name": "Config Post",
+					"id": "ef049d9c-3a41-40a8-b18b-043708bc6d54",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -23,18 +23,6 @@
 				}
 			],
 			"id": "cb0164ca-b611-41a2-bcb8-3a12010200fd"
-		},
-		{
-			"name": "Config Post",
-			"id": "ef049d9c-3a41-40a8-b18b-043708bc6d54",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": []
-			},
-			"response": []
 		}
 	],
 	"event": [
@@ -61,12 +49,12 @@
 	],
 	"variable": [
 		{
-			"id": "32281422-7e93-4970-9452-be9eee80123a",
+			"id": "1ecd16e6-4615-4295-ab14-d6e5d5625718",
 			"key": "BASE_URL",
 			"value": "http://localhost:41300"
 		},
 		{
-			"id": "c5ad0f57-20fe-4941-9118-2684a12b7417",
+			"id": "001bfb65-5d47-4b55-abe7-de4741fae1f6",
 			"key": "TEAM_NAME",
 			"value": "txx team name"
 		}
