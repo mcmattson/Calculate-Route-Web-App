@@ -86,6 +86,11 @@
 				}
 			],
 			"id": "cb0164ca-b611-41a2-bcb8-3a12010200fd"
+		},
+		{
+			"name": "New Folder",
+			"item": [],
+			"id": "1ef61dd5-e179-4525-a5ef-21ba2767fe9c"
 		}
 	],
 	"event": [
@@ -112,12 +117,12 @@
 	],
 	"variable": [
 		{
-			"id": "6a72f23c-53b9-4381-9d2f-788d2ce99c82",
+			"id": "6dcc5130-7f01-4d44-83fd-0de59b90d3b5",
 			"key": "BASE_URL",
 			"value": "https://black-bottle.cs.colostate.edu:31416/"
 		},
 		{
-			"id": "05118b69-8fa6-4d49-89c8-453f46efa768",
+			"id": "ed65ba95-357d-446e-b4cc-4a44e34d4aee",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
