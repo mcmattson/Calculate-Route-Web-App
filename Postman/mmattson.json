@@ -8,7 +8,20 @@
 	"item": [
 		{
 			"name": "config",
-			"item": [],
+			"item": [
+				{
+					"name": "New Request",
+					"id": "874f4a7e-8a87-4923-b46b-2d3221470e24",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
 			"id": "cb0164ca-b611-41a2-bcb8-3a12010200fd"
 		},
 		{
@@ -48,12 +61,12 @@
 	],
 	"variable": [
 		{
-			"id": "7b235b69-bee3-46f8-8d22-ed4d4b398eb4",
+			"id": "32281422-7e93-4970-9452-be9eee80123a",
 			"key": "BASE_URL",
 			"value": "http://localhost:41300"
 		},
 		{
-			"id": "1a49b4a5-c4d1-4941-9a9c-5fbedab6d2a2",
+			"id": "c5ad0f57-20fe-4941-9118-2684a12b7417",
 			"key": "TEAM_NAME",
 			"value": "txx team name"
 		}
