@@ -7,6 +7,11 @@
 	},
 	"item": [
 		{
+			"name": "New Folder",
+			"item": [],
+			"id": "cb0164ca-b611-41a2-bcb8-3a12010200fd"
+		},
+		{
 			"name": "Config Post",
 			"id": "ef049d9c-3a41-40a8-b18b-043708bc6d54",
 			"protocolProfileBehavior": {
@@ -43,12 +48,12 @@
 	],
 	"variable": [
 		{
-			"id": "0a812c66-b78c-458e-a86c-077c42a9c4ca",
+			"id": "185368b5-ac60-4d18-b16a-ff7daf733b64",
 			"key": "BASE_URL",
 			"value": "http://localhost:41300"
 		},
 		{
-			"id": "fb60eaca-db2d-4de0-a576-417df0fb5a16",
+			"id": "73916d10-a158-4dd5-a3d6-acd3f59ff082",
 			"key": "TEAM_NAME",
 			"value": "txx team name"
 		}
