@@ -1,0 +1,45 @@
+{
+	"info": {
+		"_postman_id": "254407e6-cfef-42ca-ba75-65978b4b9fbc",
+		"name": "postman-collection",
+		"description": "This is a template for postman collections in CS314.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				],
+				"id": "02fa84b9-5c60-4c04-ab7e-5972455e6ef4"
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				],
+				"id": "6bbf58fc-4fb1-4e8d-90cb-8ce38f89a7f7"
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "75b22fcd-68b3-4193-baf6-a5265b0ba24e",
+			"key": "BASE_URL",
+			"value": "http://localhost:41300",
+			"type": "string"
+		},
+		{
+			"id": "8ad49cd7-b83c-46a5-8ab7-3a5ef306d2b6",
+			"key": "TEAM_NAME",
+			"value": "txx team name",
+			"type": "string"
+		}
+	]
+}
