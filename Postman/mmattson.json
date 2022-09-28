@@ -5,20 +5,7 @@
 		"description": "This is a template for postman collections in CS314.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
-	"item": [
-		{
-			"name": "New Request",
-			"id": "ac45b9a2-6a23-4179-ab1e-06f6229b581b",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": []
-			},
-			"response": []
-		}
-	],
+	"item": [],
 	"event": [
 		{
 			"listen": "prerequest",
@@ -43,12 +30,12 @@
 	],
 	"variable": [
 		{
-			"id": "6d5652a6-fa1a-482e-ae3d-1fbd49d25f2c",
+			"id": "3567c97d-d41d-4111-8e7a-008179d8496c",
 			"key": "BASE_URL",
 			"value": "http://localhost:41300"
 		},
 		{
-			"id": "9c072cd7-7ecb-46f6-a2ef-150074a5f837",
+			"id": "40827e9c-363e-4654-add7-bac1d469c64b",
 			"key": "TEAM_NAME",
 			"value": "txx team name"
 		}
