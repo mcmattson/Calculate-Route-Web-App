@@ -144,7 +144,8 @@
 									"language": "json"
 								}
 							}
-						}
+						},
+						"url": "{{BASE_URL}}/api/distances"
 					},
 					"response": []
 				}
@@ -176,12 +177,12 @@
 	],
 	"variable": [
 		{
-			"id": "e2b29146-fffa-416b-ad66-ddadbc2e2c01",
+			"id": "67f094ee-74a6-42cb-a4d9-c12ef963bf10",
 			"key": "BASE_URL",
 			"value": "https://black-bottle.cs.colostate.edu:31416/"
 		},
 		{
-			"id": "9b5d292f-9683-42cf-b914-6c9db2e88454",
+			"id": "542d379e-0542-48d3-9670-6d3d50f84003",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
