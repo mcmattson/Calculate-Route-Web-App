@@ -97,11 +97,8 @@ public class TestDistanceCalculator {
     @Test
     @DisplayName("cath2731: The distance-to-self should NOT be zero.")
     public void testDistanceToSelfNonZero() {
-        //Distance equation has yet to be implemented. TODO
-        //assertEquals(10633L, calculate(origin, coordinatesBurma, realRadius));
-        assertEquals(0L, calculate(origin, coordinatesBurma, realRadius));
-        //assertEquals(15767L, calculate(coordinatesFoCo, coordinatesAntarctic, realRadius));
-        assertEquals(0L, calculate(coordinatesFoCo, coordinatesAntarctic, realRadius));
+        assertEquals(10633L, calculate(origin, coordinatesBurma, realRadius));
+        assertEquals(14859L, calculate(coordinatesFoCo, coordinatesAntarctic, realRadius));
     }
 
 
