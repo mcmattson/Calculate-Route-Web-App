@@ -16,8 +16,13 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": "{{BASE_URL}}/api/config"
 					},
 					"response": []
 				}
@@ -49,12 +54,12 @@
 	],
 	"variable": [
 		{
-			"id": "fdb77136-c45c-413b-9841-3e2674a8d8e5",
+			"id": "766127b0-4569-4640-b262-f043f2745a34",
 			"key": "BASE_URL",
 			"value": "https://black-bottle.cs.colostate.edu:31416/"
 		},
 		{
-			"id": "d481e6cc-8708-436a-b872-ccb69f60c865",
+			"id": "b3954fe1-1e7c-406b-947e-2827aa3c22e5",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
