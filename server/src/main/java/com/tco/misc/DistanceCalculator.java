@@ -10,12 +10,12 @@ public final class DistanceCalculator {
         Double delta_lambda = to.lonRadians() - from.lonRadians();
 
         Double firstParenthesis = Math.cos(to.latRadians()) * Math.sin(delta_lambda);
-        Double firstParenthesisSquared = firstParenthesis * firstParenthesis;
+        Double firstParenthesisSquared = Math.pow(firstParenthesis,2);
 
         Double cosSinLatitude = Math.cos(from.latRadians()) * Math.sin(to.latRadians());
         Double sinCosCosLatitude = Math.sin(from.latRadians()) * Math.cos(to.latRadians()) * Math.cos(delta_lambda);
         Double secondParenthesis = cosSinLatitude-sinCosCosLatitude;      
-        Double secondParenthesisSquared = secondParenthesis *secondParenthesis;
+        Double secondParenthesisSquared = Math.pow(secondParenthesis, 2);
 
         Double numerator = Math.sqrt(firstParenthesisSquared + secondParenthesisSquared);
         Double sinSinLatitude = Math.sin(from.latRadians()) * Math.sin(to.latRadians());
