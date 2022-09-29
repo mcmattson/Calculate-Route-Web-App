@@ -31,6 +31,12 @@ public class TestConfigRequest {
     }
 
     @Test
+    @DisplayName("base: Features includes \"distances\"")
+    public void testDistanceFeature(){
+        assertTrue(conf.validFeature("distances"));
+    }
+
+    @Test
     @DisplayName("base: Team name is correct")
     public void testServerName() {
         String name = conf.getServerName();
