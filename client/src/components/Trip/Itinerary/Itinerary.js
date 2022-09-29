@@ -30,6 +30,7 @@ function TripHeader(props) {
 				>
 					{props.tripName}
 				</th>
+				<th> Miles </th>
 			</tr>
 		</thead>
 	);
@@ -70,6 +71,7 @@ function PlaceRow(props) {
 				<strong>{name}</strong>
 				<AdditionalPlaceInfo showFullName={showFullName} location={location} placeActions={props.placeActions} index={props.index} place={props.place}/>
 			</td>
+			<td align='right'> {0} </td>
 			<RowArrow toggleShowFullName={toggleShowFullName} index={props.index}/>
 		</tr>
 	);
