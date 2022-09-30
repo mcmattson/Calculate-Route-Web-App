@@ -4,8 +4,10 @@ import { Table, Collapse } from 'reactstrap';
 import { latLngToText, placeToLatLng } from '../../../utils/transformers';
 import { BsChevronDown } from 'react-icons/bs';
 import PlaceActions from './PlaceActions';
+import useDistances from '..../Page.js'
 
 export default function Itinerary(props) {
+	const [distanceSettings, processServerDistanceSuccess] = useDistances(props.places, props.showMessage);
 	return (
 		<Table responsive>
 			<TripHeader
@@ -15,6 +17,8 @@ export default function Itinerary(props) {
 				places={props.places}
 				placeActions={props.placeActions}
 				selectedIndex={props.selectedIndex}
+				distanceSettings= {distanceSettings}
+
 			/>
 		</Table>
 	);
@@ -30,7 +34,7 @@ function TripHeader(props) {
 				>
 					{props.tripName}
 				</th>
-				<th> Miles </th>
+				<th> Kilometers </th>
 			</tr>
 		</thead>
 	);
@@ -46,6 +50,7 @@ function PlaceList(props) {
 					placeActions={props.placeActions}
 					selectedIndex={props.selectedIndex}
 					index={index}
+					distanceSettings = {props.distanceSettings}
 				/>
 			))}
 		</tbody>
@@ -71,7 +76,7 @@ function PlaceRow(props) {
 				<strong>{name}</strong>
 				<AdditionalPlaceInfo showFullName={showFullName} location={location} placeActions={props.placeActions} index={props.index} place={props.place}/>
 			</td>
-			<td align='right'> {0} </td>
+			<td align='right'> {props.distanceSettings.serverDistance.distances} </td>
 			<RowArrow toggleShowFullName={toggleShowFullName} index={props.index}/>
 		</tr>
 	);

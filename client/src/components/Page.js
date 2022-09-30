@@ -83,3 +83,33 @@ function useServerSettings(showMessage) {
 
 	return [{ serverUrl: serverUrl, serverConfig: serverConfig }, processServerConfigSuccess,];
 }
+
+function useDistances(places, showMessage) {
+	const [serverUrl, setServerUrl] = useState(getOriginalServerUrl());
+	const [serverDistance, setServerDistance] = useState(null);
+
+	useEffect(() => {
+		sendDistanceRequest();
+	}, []);
+
+	function processServerDistanceSuccess(distance, url) {
+		LOG.info('Switching to Server:', url);
+		setServer(distance);
+		setServerUrl(url);
+	}
+
+	async function sendDistanceRequest() {
+		const distanceResponse = await sendAPIRequest({ 
+			requestType: 'distance', 
+			places : places,
+			earthRadius : 6571} ,serverUrl); //Kilometers
+		if (distanceResponse) {
+			processServerDistanceSuccess(distanceResponse, serverUrl);
+		} else {
+			setServerDistance(null);
+			showMessage(`Distance request to ${serverUrl} failed. Check the log for more details.`, 'error');
+		}
+	}
+
+	return [{ serverUrl: serverUrl, serverDistance: serverDistance }, processServerDistanceSuccess,];
+}
