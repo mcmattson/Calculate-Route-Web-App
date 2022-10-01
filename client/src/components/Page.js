@@ -84,7 +84,7 @@ function useServerSettings(showMessage) {
 	return [{ serverUrl: serverUrl, serverConfig: serverConfig }, processServerConfigSuccess,];
 }
 
-function useDistances(places, showMessage) {
+/*function useDistances(places, showMessage) {
 	const [serverUrl, setServerUrl] = useState(getOriginalServerUrl());
 	const [serverDistance, setServerDistance] = useState(null);
 
@@ -112,4 +112,4 @@ function useDistances(places, showMessage) {
 	}
 
 	return [{ serverUrl: serverUrl, serverDistance: serverDistance }, processServerDistanceSuccess,];
-}
+}*/

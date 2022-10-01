@@ -8,22 +8,24 @@ import static java.lang.Math.toRadians;
 import com.tco.misc.GeographicCoordinate;
 import java.util.HashMap;
 
-class Place extends HashMap<String,String> implements GeographicCoordinate {
+class Place implements GeographicCoordinate {
 
+    public String latitude;
+    public String longitude;
     //Test
     //constructor
     Place(String lat, String lon) {
-        this.put("latitude", lat);
-        this.put("longitude", lon);
+        this.latitude = lat;
+        this.longitude = lon;
     }
 
     //interface
     public Double latRadians() {
-        return toRadians(parseDouble(this.get("latitude")));
+        return toRadians(parseDouble(latitude));
     }
 
     public Double lonRadians() {
-        return toRadians(parseDouble(this.get("longitude")));
+        return toRadians(parseDouble(longitude));
     }
     
 }
