@@ -3,6 +3,7 @@ import { useToggle } from '../../../hooks/useToggle';
 import { Table, Collapse } from 'reactstrap';
 import { latLngToText, placeToLatLng } from '../../../utils/transformers';
 import { BsChevronDown } from 'react-icons/bs';
+import { LOG } from '../../../utils/constants';
 import PlaceActions from './PlaceActions';
 import { getOriginalServerUrl, sendAPIRequest } from '../../../utils/restfulAPI';
 //import {useDistances} from '../Page';
