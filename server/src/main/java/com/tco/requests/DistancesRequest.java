@@ -29,8 +29,8 @@ public class DistancesRequest extends Request {
         Distances distances = new Distances();
         
         for(int i = 0; i < places.size(); i++ ){
-            Place one = places.get(i);
-            Place two = places.get((i + 1) % places.size());
+            Place placeFrom = places.get(i);
+            Place placeTo = places.get((i + 1) % places.size());
             Long toAdd = DistanceCalculator.calculate(one, two, 6571.0);
             distances.add(toAdd);
         } 
