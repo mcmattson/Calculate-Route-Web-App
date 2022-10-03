@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useToggle } from '../../../hooks/useToggle';
 import { Table, Collapse } from 'reactstrap';
 import { latLngToText, placeToLatLng } from '../../../utils/transformers';
 import { BsChevronDown } from 'react-icons/bs';
+import { LOG } from '../../../utils/constants';
 import PlaceActions from './PlaceActions';
+import { getOriginalServerUrl, sendAPIRequest } from '../../../utils/restfulAPI';
+
 
 export default function Itinerary(props) {
+	const [distanceSettings, processServerDistanceSuccess] = useDistances(props.places);
 	return (
 		<Table responsive>
 			<TripHeader
@@ -15,6 +19,8 @@ export default function Itinerary(props) {
 				places={props.places}
 				placeActions={props.placeActions}
 				selectedIndex={props.selectedIndex}
+				distanceSettings= {distanceSettings}
+
 			/>
 		</Table>
 	);
@@ -30,7 +36,7 @@ function TripHeader(props) {
 				>
 					{props.tripName}
 				</th>
-				<th> Miles </th>
+				<th> Kilometers </th>
 			</tr>
 		</thead>
 	);
@@ -46,6 +52,7 @@ function PlaceList(props) {
 					placeActions={props.placeActions}
 					selectedIndex={props.selectedIndex}
 					index={index}
+					distanceSettings = {props.distanceSettings}
 				/>
 			))}
 		</tbody>
@@ -56,6 +63,13 @@ function PlaceRow(props) {
 	const [showFullName, toggleShowFullName] = useToggle(false);
 	const name = props.place.defaultDisplayName;
 	const location = latLngToText(placeToLatLng(props.place));
+	let distances = [9, 10, 11, 12, 99, 2, 44, 2, 5]; // for testing purposes. 
+	if (props.distanceSettings.serverDistance){ 
+		
+	 	distances = props.distanceSettings.serverDistance.distances;
+		
+	}
+
 	return (
 		<tr className={props.selectedIndex === props.index ? 'selected-row' : ''}>
 			<td
@@ -71,7 +85,7 @@ function PlaceRow(props) {
 				<strong>{name}</strong>
 				<AdditionalPlaceInfo showFullName={showFullName} location={location} placeActions={props.placeActions} index={props.index} place={props.place}/>
 			</td>
-			<td align='right'> {0} </td>
+			<td align='right'> {distances[props.index]} </td>
 			<RowArrow toggleShowFullName={toggleShowFullName} index={props.index}/>
 		</tr>
 	);
@@ -101,3 +115,33 @@ function RowArrow(props) {
 		</td>
 	);
 }
+function useDistances(places) {
+	const [serverUrl, setServerUrl] = useState(getOriginalServerUrl());
+	const [serverDistance, setServerDistance] = useState({distances: []});
+
+	useEffect(() => {
+		sendDistanceRequest();
+	}, [places]);
+
+	function processServerDistanceSuccess(distance, url) {
+		LOG.info('Switching to Server:', url);
+		setServerDistance(distance);
+		setServerUrl(url);
+	}
+
+	async function sendDistanceRequest() {
+		const distanceResponse = await sendAPIRequest({ 
+			requestType: 'distances', 
+			places : places,
+			earthRadius : 6571} , serverUrl);
+		if (distanceResponse) {
+			processServerDistanceSuccess(distanceResponse, serverUrl);
+		} else {
+			setServerDistance({distances: []});
+			//showMessage(`Distance request to ${serverUrl} failed. Check the log for more details.`, 'error');
+		}
+	}
+
+	return [{ serverUrl: serverUrl, serverDistance: serverDistance }, processServerDistanceSuccess,];
+}
+

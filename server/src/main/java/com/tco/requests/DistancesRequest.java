@@ -1,4 +1,5 @@
 package com.tco.requests;
+import com.tco.misc.DistanceCalculator;
 
 import java.util.List;
 import java.util.HashMap;
@@ -6,6 +7,7 @@ import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 public class DistancesRequest extends Request {
 
@@ -25,7 +27,13 @@ public class DistancesRequest extends Request {
 
     private Distances buildDistanceList() {
         Distances distances = new Distances();
-
+        
+        for(int i = 0; i < places.size(); i++ ){
+            Place placeFrom = places.get(i);
+            Place placeTo = places.get((i + 1) % places.size());
+            Long toAdd = DistanceCalculator.calculate(placeFrom, placeTo, 6571.0);
+            distances.add(toAdd);
+        } 
         return distances;
     }
 

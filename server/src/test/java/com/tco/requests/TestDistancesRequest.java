@@ -14,7 +14,7 @@ public class TestDistancesRequest {
     @BeforeEach
     public void createConfigurationForTestCases() {
         dist = new DistancesRequest();
-        dist.buildResponse();
+        //dist.buildResponse();
     }
 
     @Test
