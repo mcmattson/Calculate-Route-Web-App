@@ -36,7 +36,9 @@ function TripHeader(props) {
 				>
 					{props.tripName}
 				</th>
-				<th> Kilometers </th>
+				<th> Leg Distances (Kilometers) </th>
+				<th> Cumulative Distances (Kilometers)</th>
+				<th> Total Distance (Kilometers): </th>
 			</tr>
 		</thead>
 	);
@@ -86,6 +88,7 @@ function PlaceRow(props) {
 				<AdditionalPlaceInfo showFullName={showFullName} location={location} placeActions={props.placeActions} index={props.index} place={props.place}/>
 			</td>
 			<td align='right'> {distances[props.index]} </td>
+			<td align='right'> </td>
 			<RowArrow toggleShowFullName={toggleShowFullName} index={props.index}/>
 		</tr>
 	);
