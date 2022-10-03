@@ -30,15 +30,17 @@ function TripHeader(props) {
 	return (
 		<thead>
 			<tr>
+				<th> Total Distance (Kilometers): </th>
+			</tr>
+			<tr>
 				<th
 					className='trip-header-title'
 					data-testid='trip-header-title'
 				>
 					{props.tripName}
 				</th>
-				<th> Leg Distances (Kilometers) </th>
-				<th> Cumulative Distances (Kilometers)</th>
-				<th> Total Distance (Kilometers): </th>
+				<th> Leg Distance (Kilometers) </th>
+				<th> Cumulative Distance (Kilometers)</th>
 			</tr>
 		</thead>
 	);
