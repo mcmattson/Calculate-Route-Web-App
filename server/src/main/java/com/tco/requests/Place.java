@@ -13,13 +13,13 @@ class Place implements GeographicCoordinate {
     public String latitude;
     public String longitude;
     //Test
-    //constructor
+    //Constructor
     Place(String lat, String lon) {
         this.latitude = lat;
         this.longitude = lon;
     }
 
-    //interface
+    //Interface
     public Double latRadians() {
         return toRadians(parseDouble(latitude));
     }

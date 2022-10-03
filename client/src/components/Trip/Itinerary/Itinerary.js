@@ -6,7 +6,7 @@ import { BsChevronDown } from 'react-icons/bs';
 import { LOG } from '../../../utils/constants';
 import PlaceActions from './PlaceActions';
 import { getOriginalServerUrl, sendAPIRequest } from '../../../utils/restfulAPI';
-//import {useDistances} from '../Page';
+
 
 export default function Itinerary(props) {
 	const [distanceSettings, processServerDistanceSuccess] = useDistances(props.places);
@@ -89,7 +89,7 @@ function PlaceRow(props) {
 			<RowArrow toggleShowFullName={toggleShowFullName} index={props.index}/>
 		</tr>
 	);
-}//ADD in distances.get(props.distanceIndex)
+}
 
 function AdditionalPlaceInfo(props) {
 	return (
@@ -133,7 +133,7 @@ function useDistances(places) {
 		const distanceResponse = await sendAPIRequest({ 
 			requestType: 'distances', 
 			places : places,
-			earthRadius : 6571} , serverUrl); //Kilometers
+			earthRadius : 6571} , serverUrl);
 		if (distanceResponse) {
 			processServerDistanceSuccess(distanceResponse, serverUrl);
 		} else {

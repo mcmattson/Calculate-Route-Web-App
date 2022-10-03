@@ -27,8 +27,7 @@ public class DistancesRequest extends Request {
 
     private Distances buildDistanceList() {
         Distances distances = new Distances();
-        //for each leg (two Geo Coords/Places) run them through Distance Calculator and distancs.add(return value)
-        //NOT forgetting the loop back from the last inex to the first index. 
+        
         for(int i = 0; i < places.size(); i++ ){
             Place one = places.get(i);
             Place two = places.get((i + 1) % places.size());
