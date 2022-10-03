@@ -30,7 +30,7 @@ function TripHeader(props) {
 	return (
 		<thead>
 			<tr>
-				<th> Total Distance (Kilometers): </th>
+				<th> Total Trip Distance (Kilometers): </th>
 			</tr>
 			<tr>
 				<th
