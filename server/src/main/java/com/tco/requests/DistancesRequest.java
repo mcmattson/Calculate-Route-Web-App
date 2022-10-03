@@ -31,7 +31,7 @@ public class DistancesRequest extends Request {
         for(int i = 0; i < places.size(); i++ ){
             Place placeFrom = places.get(i);
             Place placeTo = places.get((i + 1) % places.size());
-            Long toAdd = DistanceCalculator.calculate(one, two, 6571.0);
+            Long toAdd = DistanceCalculator.calculate(placesFrom, placeTo, 6571.0);
             distances.add(toAdd);
         } 
         return distances;
