@@ -67,7 +67,7 @@ function PlaceRow(props) {
 	const [showFullName, toggleShowFullName] = useToggle(false);
 	const name = props.place.defaultDisplayName;
 	const location = latLngToText(placeToLatLng(props.place));
-	let distances = [9, 10, 11, 12, 99, 2, 44, 2, 5]; // for testing purposes. 
+	let distances = [0]; // for testing purposes. 
 	if (props.distanceSettings.serverDistance){ 
 		
 	 	distances = props.distanceSettings.serverDistance.distances;
