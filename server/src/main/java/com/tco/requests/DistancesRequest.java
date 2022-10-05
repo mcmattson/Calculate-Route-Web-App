@@ -1,5 +1,6 @@
 package com.tco.requests;
 import com.tco.misc.DistanceCalculator;
+import com.tco.requests.Distances;
 
 import java.util.List;
 import java.util.HashMap;
@@ -17,11 +18,13 @@ public class DistancesRequest extends Request {
     private Places places;
     private Distances distances;
     private List<String> features;
+    private Long total;
 
     @Override
     // Credit To Dave Matthews
     public void buildResponse() {
         distances = buildDistanceList();
+        total = distances.total();
         log.trace("distanceResponse -> {}", this);
     }
 

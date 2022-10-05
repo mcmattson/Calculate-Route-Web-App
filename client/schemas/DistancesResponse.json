@@ -43,8 +43,12 @@
         "minimum": 0
       },
       "minItems": 0
+    },
+    "total": {
+      "description": "the sum of elements in the distances array",
+      "type": "number"
     }
   },
   "required":["requestType","places","earthRadius","distances"],
-  "additionalProperties": false
+  "additionalProperties": false 
 }

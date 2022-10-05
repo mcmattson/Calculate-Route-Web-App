@@ -14,6 +14,7 @@ export default function Itinerary(props) {
 		<Table responsive>
 			<TripHeader
 				tripName={props.tripName}
+				distanceSettings= {distanceSettings}
 			/>
 			<PlaceList
 				places={props.places}
@@ -30,7 +31,7 @@ function TripHeader(props) {
 	return (
 		<thead>
 			<tr>
-				<th> Total Trip Distance (Kilometers): </th>
+				 <TotalTripDistance distanceSettings = {props.distanceSettings} /> 
 			</tr>
 			<tr>
 				<th
@@ -44,6 +45,18 @@ function TripHeader(props) {
 			</tr>
 		</thead>
 	);
+}
+
+function TotalTripDistance(props){
+	let distances = [0]; 
+	if (props.distanceSettings.serverDistance){ 
+	 	distances = props.distanceSettings.serverDistance.distances;
+	}
+	let total = props.distanceSettings.serverDistance.total;
+	return (
+		<th>Total Trip Distance (Kilometers): {total}</th>
+	)
+
 }
 
 function PlaceList(props) {
@@ -67,7 +80,7 @@ function PlaceRow(props) {
 	const [showFullName, toggleShowFullName] = useToggle(false);
 	const name = props.place.defaultDisplayName;
 	const location = latLngToText(placeToLatLng(props.place));
-	let distances = [9, 10, 11, 12, 99, 2, 44, 2, 5]; // for testing purposes. 
+	let distances = [0]; 
 	if (props.distanceSettings.serverDistance){ 
 		
 	 	distances = props.distanceSettings.serverDistance.distances;
@@ -122,7 +135,8 @@ function RowArrow(props) {
 }
 function useDistances(places) {
 	const [serverUrl, setServerUrl] = useState(getOriginalServerUrl());
-	const [serverDistance, setServerDistance] = useState({distances: []});
+	const [serverDistance, setServerDistance] = useState({distances: [], total : 0});
+	
 
 	useEffect(() => {
 		sendDistanceRequest();
@@ -135,14 +149,17 @@ function useDistances(places) {
 	}
 
 	async function sendDistanceRequest() {
-		const distanceResponse = await sendAPIRequest({ 
-			requestType: 'distances', 
-			places : places,
-			earthRadius : 6571} , serverUrl);
+		const distanceResponse = await sendAPIRequest(
+			{ 
+				requestType: 'distances', 
+				places : places,
+				earthRadius : 6571,          
+			} , serverUrl);
+
 		if (distanceResponse) {
 			processServerDistanceSuccess(distanceResponse, serverUrl);
 		} else {
-			setServerDistance({distances: []});
+			setServerDistance({distances: [], total: 0});
 			//showMessage(`Distance request to ${serverUrl} failed. Check the log for more details.`, 'error');
 		}
 	}
