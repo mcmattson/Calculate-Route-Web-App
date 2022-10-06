@@ -48,7 +48,6 @@ describe('Itinerary', () => {
 
 	test('cumulativeDistance: calculated the correct cumulative distance for 1st', () =>{
 		const column = screen.getByTestId('place-col-0');
-		//console.log(column.textContent);
 		expect(column.textContent).toBe(" 0");
 
 	});
