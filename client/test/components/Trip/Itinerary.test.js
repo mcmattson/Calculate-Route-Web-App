@@ -45,4 +45,10 @@ describe('Itinerary', () => {
 		user.click(toggle);
 		expect(screen.getByText(/expanded test/i)).toBeTruthy();
 	});
+
+	test('total distance: calculated the correct total distance for 1st', () =>{
+		const distance = screen.getByTestId('header-total-dist');
+		expect(distance.textContent).toContain(" 0");
+
+	});
 });

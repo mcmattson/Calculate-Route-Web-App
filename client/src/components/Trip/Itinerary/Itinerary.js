@@ -14,6 +14,7 @@ export default function Itinerary(props) {
 		<Table responsive>
 			<TripHeader
 				tripName={props.tripName}
+				distanceSettings= {distanceSettings}
 			/>
 			<PlaceList
 				places={props.places}
@@ -30,7 +31,7 @@ function TripHeader(props) {
 	return (
 		<thead>
 			<tr>
-				<th> Total Trip Distance (Kilometers): </th>
+				 <TotalTripDistance distanceSettings = {props.distanceSettings} /> 
 			</tr>
 			<tr>
 				<th
@@ -44,6 +45,21 @@ function TripHeader(props) {
 			</tr>
 		</thead>
 	);
+}
+
+function TotalTripDistance(props){
+	let distances = [0]; 
+	if (props.distanceSettings.serverDistance){ 
+	 	distances = props.distanceSettings.serverDistance.distances;
+	}
+	let total = 0 
+	for (var i = 0; i < distances.length; i++){ total+= distances[i];}
+
+
+	return (
+		<th	 data-testid = {'header-total-dist'} > Total Trip Distance (Kilometers): {total}</th>
+	)
+
 }
 
 function PlaceList(props) {
@@ -67,7 +83,7 @@ function PlaceRow(props) {
 	const [showFullName, toggleShowFullName] = useToggle(false);
 	const name = props.place.defaultDisplayName;
 	const location = latLngToText(placeToLatLng(props.place));
-	let distances = [9, 10, 11, 12, 99, 2, 44, 2, 5]; // for testing purposes. 
+	let distances = [0]; 
 	if (props.distanceSettings.serverDistance){ 
 		
 	 	distances = props.distanceSettings.serverDistance.distances;
