@@ -7,7 +7,7 @@ import { MOCK_PLACES } from '../../sharedMocks';
 import Itinerary from '../../../src/components/Trip/Itinerary/Itinerary.js';
 
 describe('Itinerary', () => {
-	const placeActions = { append: jest.fn(), selectIndex: jest.fn() };
+	const placeActions = { append: jest.fn(), selectIndex: jest.fn()};
 	beforeEach(() => {
 		render(
 			<Itinerary
@@ -45,4 +45,12 @@ describe('Itinerary', () => {
 		user.click(toggle);
 		expect(screen.getByText(/expanded test/i)).toBeTruthy();
 	});
+
+	test('cumulativeDistance: calculated the correct cumulative distance for 1st', () =>{
+		const column = screen.getByTestId('place-col-0');
+		//console.log(column.textContent);
+		expect(column.textContent).toBe(" 0");
+
+	});
+
 });
