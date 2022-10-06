@@ -54,8 +54,10 @@ function TotalTripDistance(props){
 	}
 	let total = 0 
 	for (var i = 0; i < distances.length; i++){ total+= distances[i];}
+
+
 	return (
-		<th>Total Trip Distance (Kilometers): {total}</th>
+		<th	 data-testid = {'header-total-dist'} > Total Trip Distance (Kilometers): {total}</th>
 	)
 
 }
