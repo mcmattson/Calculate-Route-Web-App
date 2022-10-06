@@ -106,10 +106,19 @@ function PlaceRow(props) {
 				<AdditionalPlaceInfo showFullName={showFullName} location={location} placeActions={props.placeActions} index={props.index} place={props.place}/>
 			</td>
 			<td align='right'> {distances[props.index]} </td>
-			<td align='right'> </td>
+			<CumulativeLegDistance distances = {distances} index = {props.index}/>
 			<RowArrow toggleShowFullName={toggleShowFullName} index={props.index}/>
 		</tr>
 	);
+}
+
+function CumulativeLegDistance(props){
+	let total = 0 
+ 	for (var i = 0; i < props.index; i++){ 
+		total+= props.distances[i];
+	}
+	return <td data-testid={`place-col-${props.index}`} align='right'> {total}</td>
+
 }
 
 function AdditionalPlaceInfo(props) {
