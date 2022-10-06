@@ -52,4 +52,9 @@ describe('Itinerary', () => {
 
 	});
 
+	test('total distance: calculated the correct total distance for 1st', () =>{
+		const distance = screen.getByTestId('header-total-dist');
+		expect(distance.textContent).toContain(" 0");
+
+	});
 });
