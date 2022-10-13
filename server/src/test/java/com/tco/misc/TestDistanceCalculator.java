@@ -101,5 +101,12 @@ public class TestDistanceCalculator {
         assertEquals(14898L, calculate(coordinatesFoCo, coordinatesAntarctic, realRadius));
     }
 
+    final Geo placeA = new Geo(40.0, 20.0);
+    final Geo placeB = new Geo(50.0, 30.0);
 
+    @Test
+    @DisplayName("mikylab: Testing delta longitude for absolute value")
+    public void testAbsoluteValue(){
+        assertEquals(1361L, calculate(placeB, placeA, 6378.1));
+    }
 }

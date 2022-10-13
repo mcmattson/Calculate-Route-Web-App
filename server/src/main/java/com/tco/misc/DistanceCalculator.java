@@ -7,7 +7,7 @@ public final class DistanceCalculator {
     private DistanceCalculator() {}
 
     public static Long calculate(GeographicCoordinate from, GeographicCoordinate to, double earthRadius){
-        Double delta_lambda = to.lonRadians() - from.lonRadians();
+        Double delta_lambda = Math.abs(to.lonRadians() - from.lonRadians());
 
         Double firstParenthesis = Math.cos(to.latRadians()) * Math.sin(delta_lambda);
         Double firstParenthesisSquared = Math.pow(firstParenthesis,2);
