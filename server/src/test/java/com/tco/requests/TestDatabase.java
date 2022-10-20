@@ -35,5 +35,18 @@ public class TestDatabase {
         assertTrue(thrown);
     }
 
+@Test
+   @DisplayName("cath2731: testing Locations when locations is null")
+    public void testLocationNull() {
+        boolean thrown = false;
+        try{
+            Locations resulting = database.Locations(null, -1);
+        }
+        catch (Exception e){
+            thrown = true;
+        }
+        assertTrue(thrown);
+    }
+
 
 }

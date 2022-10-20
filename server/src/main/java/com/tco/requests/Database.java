@@ -15,6 +15,23 @@ import com.tco.requests.Locations;
 
 public class Database {
     
+    static Locations Locations(String match, Integer limit) throws Exception {
+        String sql      = Select.match(match, limit);
+        String url      = Credential.url();
+        String user     = Credential.USER;
+        String password = Credential.PASSWORD;
+        try (
+            // connect to the database and query
+            Connection conn    = DriverManager.getConnection(url, user, password);
+            Statement  query   = conn.createStatement();
+            ResultSet  results = query.executeQuery(sql)
+        ) {
+            return convertQueryResultsToLocations(results, sqlSearch.getCOLUMNS());
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
     public static Locations convertQueryResultsToLocations(ResultSet results, String columns) throws Exception {
         int count = 0;
         String[] cols = columns.split(",");
