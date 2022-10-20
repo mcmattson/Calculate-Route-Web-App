@@ -15,6 +15,27 @@ import com.tco.requests.Locations;
 
 public class Database {
     
+    static Integer found(String match) throws Exception {
+        String sql = Select.found(match);
+        try (
+            // connect to the database and query
+            Connection conn = DriverManager.getConnection(Credential.url(), Credential.USER, Credential.PASSWORD);
+            Statement query = conn.createStatement();
+            ResultSet results = query.executeQuery(sql)
+        ) {
+            return count(results);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    private static Integer count(ResultSet results) throws Exception {
+        if (results.next()) {
+            return results.getInt("count");
+        }
+        throw new Exception("No count results in found query.");
+    }
+    
     static Locations Locations(String match, Integer limit) throws Exception {
         String sql      = Select.match(match, limit);
         String url      = Credential.url();

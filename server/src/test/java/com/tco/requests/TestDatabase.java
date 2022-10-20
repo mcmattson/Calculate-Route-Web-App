@@ -48,5 +48,17 @@ public class TestDatabase {
         assertTrue(thrown);
     }
 
+    @Test
+    @DisplayName("mikylab: test find a result")
+    public void testFindDave(){
+        Integer count = 0;
+        try{
+            count = database.found("dave");
+        }
+        catch(Exception e){
+        }
+        assertEquals(16, count);
+
+    }
 
 }
