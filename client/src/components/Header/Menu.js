@@ -60,6 +60,7 @@ function buildMenuButtons(props) {
 		new MenuButtonProps('add-place-button', props.toggleAddPlace, <FaPlus />, 'Add Place'),
 		new MenuButtonProps('load-file-button', props.toggleLoadFile, <FaFolderOpen />, 'Load File'),
 		new MenuButtonProps('remove-all-button', props.placeActions.removeAll, <FaTrashAlt />, 'Remove All', props.disableRemoveAll),
+		new MenuButtonProps('save-file-button', props.toggleSaveFile, <FaPlus />, 'Save File'),
 		new MenuButtonProps('server-settings-button', props.toggleServerSettings, <BsHddNetworkFill />, 'Server Settings'),
 	];
 }
