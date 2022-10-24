@@ -5,6 +5,7 @@ import Menu from './Menu';
 import { useToggle } from '../../hooks/useToggle';
 import AddPlace from './AddPlace';
 import LoadFile from './LoadFile'
+import SaveFile from './SaveFile'
 import ServerSettings from './ServerSettings';
 import { IoMdClose } from 'react-icons/io';
 
@@ -12,6 +13,7 @@ export default function Header(props) {
 	const [showAddPlace, toggleAddPlace] = useToggle(false);
 	const [showServerSettings, toggleServerSettings] = useToggle(false);
 	const [showLoadFile, toggleLoadFile] = useToggle(false);
+	const [showSaveFile, toggleSaveFile] = useToggle(false);
 	return (
 		<React.Fragment>
 			<HeaderContents
@@ -22,10 +24,12 @@ export default function Header(props) {
 				toggleAddPlace={toggleAddPlace}
 				toggleServerSettings={toggleServerSettings}
 				toggleLoadFile={toggleLoadFile}
+				toggleSaveFile={toggleSaveFile}
 			/>
 			<AppModals
 				showAddPlace={showAddPlace} toggleAddPlace={toggleAddPlace}
 				showLoadFile={showLoadFile} toggleLoadFile={toggleLoadFile}
+				showSaveFile={showSaveFile} toggleSaveFile={toggleSaveFile}
 				showServerSettings={showServerSettings} toggleServerSettings={toggleServerSettings}
 				placeActions={props.placeActions}
 				processServerConfigSuccess={props.processServerConfigSuccess}
@@ -69,6 +73,7 @@ function HeaderButton(props) {
 			placeActions={props.placeActions}
 			toggleAddPlace={props.toggleAddPlace}
 			toggleLoadFile={props.toggleLoadFile}
+			toggleSaveFile={props.toggleSaveFile}
 			disableRemoveAll={props.disableRemoveAll}
 			toggleServerSettings={props.toggleServerSettings}
 		/>
@@ -92,6 +97,12 @@ function AppModals(props) {
 			<LoadFile
 				isOpen={props.showLoadFile}
 				toggleLoadFile={props.toggleLoadFile}
+				placeActions={props.placeActions}
+				setTripName={props.setTripName}
+			/>
+			<SaveFile
+				isOpen={props.showSaveFile}
+				toggleSaveFile={props.toggleSaveFile}
 				placeActions={props.placeActions}
 				setTripName={props.setTripName}
 			/>
