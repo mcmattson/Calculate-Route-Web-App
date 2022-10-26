@@ -51,7 +51,7 @@ function PlaceSearch(props) {
 			<Col>
 				<Input
 					onChange={(input) => props.setCoordString(input.target.value)}
-					placeholder='Enter Place Coordinates'
+					placeholder='Enter Coordinates or Place Name'
 					data-testid='coord-input'
 					value={props.coordString}
 				/>
