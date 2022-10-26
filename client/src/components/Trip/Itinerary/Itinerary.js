@@ -161,16 +161,16 @@ function useDistances(places) {
 
 	async function sendDistanceRequest() {
 		const distanceResponse = await sendAPIRequest({ 
-			requestType: 'distances', 
+			requestType: "distances", 
 			places : places,
-			earthRadius : 6571} , serverUrl);
+			earthRadius : 6571.0} , serverUrl);
 		if (distanceResponse) {
 			processServerDistanceSuccess(distanceResponse, serverUrl);
 		} else {
 			setServerDistance({distances: []});
 			//showMessage(`Distance request to ${serverUrl} failed. Check the log for more details.`, 'error');
 		}
-	}
+	} 
 
 	return [{ serverUrl: serverUrl, serverDistance: serverDistance }, processServerDistanceSuccess,];
 }
