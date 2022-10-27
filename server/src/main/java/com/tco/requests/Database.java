@@ -10,8 +10,7 @@ import java.lang.Exception;
 
 import com.tco.requests.Location;
 import com.tco.requests.Locations;
-
-
+import com.tco.requests.Select;
 
 public class Database {
     
@@ -47,7 +46,7 @@ public class Database {
             Statement  query   = conn.createStatement();
             ResultSet  results = query.executeQuery(sql)
         ) {
-            return convertQueryResultsToLocations(results, sqlSearch.getCOLUMNS());
+            return convertQueryResultsToLocations(results, Select.getCOLUMNS());
         } catch (Exception e) {
             throw e;
         }

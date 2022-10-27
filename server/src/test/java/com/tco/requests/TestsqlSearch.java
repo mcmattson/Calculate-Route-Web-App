@@ -9,15 +9,14 @@ import java.sql.ResultSet;
 import com.tco.requests.Database;
 import com.tco.requests.Location;
 import com.tco.requests.Locations;
-import com.tco.requests.sqlSearch;
 
 public class TestsqlSearch {
     
-    private sqlSearch sql;
+    private Select sql;
 
     @BeforeEach
     public void configureDatabaseForTest(){
-        sql = new sqlSearch();
+        sql = new Select();
     }
 
     @Test
