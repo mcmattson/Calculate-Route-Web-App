@@ -10,7 +10,7 @@ import com.tco.requests.Database;
 import com.tco.requests.Location;
 import com.tco.requests.Locations;
 
-public class TestsqlSearch {
+public class TestSelect {
     
     private Select sql;
 
@@ -21,7 +21,7 @@ public class TestsqlSearch {
 
     @Test
     @DisplayName("mikylab: testing an entire SQl query to be successful")
-        public void testSQLsearch(){
+        public void testSelect(){
             boolean successfulQuery = false;
             try {
                 String match = "Sandy";
