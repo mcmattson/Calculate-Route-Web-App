@@ -2,9 +2,11 @@ package com.tco.requests;
 
 import com.tco.requests.Place;
 import static java.lang.Math.toRadians;
+import static java.lang.Double.parseDouble;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
+import static java.lang.Math.toRadians;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -24,4 +26,11 @@ public class TestPlace {
         assertTrue(lat && lon);
     }
 
+    @Test
+    @DisplayName("marilake: testing that latRadians is implimented and correctly")
+    public void testLatRadians(){
+        Double MOCKlatitude = toRadians(parseDouble("21.9162"));
+        Double burmaRadiansLat = coordinatesBurma.latRadians();
+        assertEquals(MOCKlatitude, burmaRadiansLat);
+    }
 }
