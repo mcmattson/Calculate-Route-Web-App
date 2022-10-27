@@ -34,4 +34,22 @@ public class TestSelect {
             }
             assertTrue(successfulQuery);
         }
+
+    @Test
+    @DisplayName("mikylab: testing an entire SQl query when no results are found")
+        public void testNoResultsFound(){
+            boolean noResultsFound = false;
+            try {
+                String match = "Asgard";
+                Integer limit = 100;
+                Integer found = Database.found(match);
+                Locations Locations = Database.Locations(match, limit);
+                if (found == 0){
+                    noResultsFound = true;
+                }
+            } catch (Exception e) {
+                System.err.println("Exception: " + e.getMessage());
+            }
+            assertTrue(noResultsFound);
+        }
 }
