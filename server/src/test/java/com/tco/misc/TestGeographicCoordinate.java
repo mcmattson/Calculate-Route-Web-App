@@ -4,6 +4,9 @@ import static java.lang.Math.toRadians;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 
 public class TestGeographicCoordinate {
     static class Geo implements GeographicCoordinate{
@@ -24,4 +27,9 @@ public class TestGeographicCoordinate {
     Double geoLatToRadians = toRadians(45.000);
     Double geoLonToRadians = toRadians(90.000);
 
+    @Test
+    @DisplayName("marilake : Testing interface implimentation of latRadians()")
+    public void testLatRadiansImplimentation(){
+        assertEquals(geoLatToRadians , geoCoord.latRadians());
+    }
 }
