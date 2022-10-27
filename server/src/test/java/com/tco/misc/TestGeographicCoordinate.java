@@ -32,4 +32,11 @@ public class TestGeographicCoordinate {
     public void testLatRadiansImplimentation(){
         assertEquals(geoLatToRadians , geoCoord.latRadians());
     }
+    
+    @Test 
+    @DisplayName("marilake : Testing interface implimentation of lonRadians()")
+    public void testLonRadiansImplimentation(){
+        assertEquals(geoLonToRadians, geoCoord.lonRadians());
+    }
+
 }
