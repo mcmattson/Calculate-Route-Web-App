@@ -16,4 +16,12 @@ public class TestPlace {
     Place coordinatesFoCo = new Place("40.5853" , "-105.0844");
     Place coordinatesAntarctic = new Place("-82.8628", "135.0000");
 
+    @Test
+    @DisplayName("marilake: testing the constructor works with valid inputs")
+    public void testConstructor(){
+        boolean lat = (coordinatesFoCo.latitude == "40.5853");
+        boolean lon = (coordinatesFoCo.longitude == "-105.0844");
+        assertTrue(lat && lon);
+    }
+
 }
