@@ -49,4 +49,13 @@ public class TestPlace {
         Double originRadiansLat = origin.latRadians();
         assertEquals(MOCKlatitude, originRadiansLat);
     }
+
+    @Test
+    @DisplayName("marilake: testing that lonRadians works at origin")
+    public void originLonRadiansTest(){
+        Double MOCKlongitude = 0.0;
+        Double originRadiansLon = origin.lonRadians();
+        assertEquals(MOCKlongitude, originRadiansLon);
+    }
+
 }
