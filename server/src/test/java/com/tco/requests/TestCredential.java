@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import com.tco.requests.Credential;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -18,7 +19,12 @@ public class TestCredential {
     String user = Credential.USER;
     String password = Credential.PASSWORD;
     String url = Credential.URL;
-    boolean thrown = false;
+    boolean thrown;
+
+    @BeforeEach
+    public void configureCredentialForTest(){
+        thrown = false;
+    }
 
     @Test
     @DisplayName ("mmattson: no Credentials")
