@@ -9,20 +9,20 @@ import java.sql.ResultSet;
 import com.tco.requests.Database;
 import com.tco.requests.Location;
 import com.tco.requests.Locations;
-import com.tco.requests.sqlSearch;
+import com.tco.requests.Select;
 
-public class TestsqlSearch {
+public class TestSelect {
     
-    private sqlSearch sql;
+    private Select sql;
 
     @BeforeEach
     public void configureDatabaseForTest(){
-        sql = new sqlSearch();
+        sql = new Select();
     }
 
     @Test
     @DisplayName("mikylab: testing an entire SQl query to be successful")
-        public void testSQLsearch(){
+        public void testSelect(){
             boolean successfulQuery = false;
             try {
                 String match = "Sandy";
