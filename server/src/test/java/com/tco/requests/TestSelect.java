@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import com.tco.requests.Database;
 import com.tco.requests.Location;
 import com.tco.requests.Locations;
-import com.tco.requests.Select;
 
 public class TestSelect {
     
