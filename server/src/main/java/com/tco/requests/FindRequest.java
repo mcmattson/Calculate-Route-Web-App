@@ -16,4 +16,8 @@ public class FindRequest extends Request{
     public void buildResponse() {
         
     }
+    
+    public FindRequest() {
+        this.requestType = "find";
+    }
 }
