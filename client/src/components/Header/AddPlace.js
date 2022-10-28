@@ -41,22 +41,20 @@ function AddPlaceHeader(props) {
 	);
 }
 
+function textLength(value) {
+	return value.length >= 3;
+}
+
 function PlaceSearch(props, coordString, nameString) {
 	useEffect(() => {
 		document.getElementById('search').onkeyup = function () {
-			if (textLength(this.value)) {
-				console.log("Place Search"); //replace with verifyPlace Function
-			};
+			if (textLength(this.value))
+				console.log("Return Place Search"); //replace with verifyPlace Function
 		}
 	}, [props.nameString]);
 	useEffect(() => {
 		verifyCoordinates(props.coordString, props.setFoundPlace);
 	}, [props.coordString]);
-
-	function textLength(value) {
-		if (value.length >= 3) return true;
-		return false;
-	}
 	return (
 		<ModalBody>
 			<Col>
