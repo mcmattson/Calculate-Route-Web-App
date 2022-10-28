@@ -41,15 +41,29 @@ function AddPlaceHeader(props) {
 	);
 }
 
-function PlaceSearch(props) {
+function PlaceSearch(props, coordString, nameString) {
+	useEffect(() => {
+		document.getElementById('search').onkeyup = function () {
+			if (textLength(this.value)) {
+				var searchResults = "Place Search";
+				console.log("Place Search"); //replace with verifyPlace Function
+				return searchResults;
+			};
+		}
+	}, [props.nameString]);
 	useEffect(() => {
 		verifyCoordinates(props.coordString, props.setFoundPlace);
 	}, [props.coordString]);
 
+	function textLength(value) {
+		if (value.length >= 3) return true;
+		return false;
+	}
 	return (
 		<ModalBody>
 			<Col>
 				<Input
+					type='search' id='search'
 					onChange={(input) => props.setCoordString(input.target.value)}
 					placeholder='Enter Coordinates or Place Name'
 					data-testid='coord-input'
