@@ -92,7 +92,7 @@ function AddPlaceFooter(props) {
 				data-testid='add-place-button'
 				disabled={!props.foundPlace}
 			>
-				Add Place
+				Add Place(s)
 			</Button>
 		</ModalFooter>
 	);
