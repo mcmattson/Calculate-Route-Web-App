@@ -45,9 +45,7 @@ function PlaceSearch(props, coordString, nameString) {
 	useEffect(() => {
 		document.getElementById('search').onkeyup = function () {
 			if (textLength(this.value)) {
-				var searchResults = "Place Search";
 				console.log("Place Search"); //replace with verifyPlace Function
-				return searchResults;
 			};
 		}
 	}, [props.nameString]);
@@ -107,7 +105,7 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 		const latLngPlace = new Coordinates(coordString);
 		const lat = latLngPlace.getLatitude();
 		const lng = latLngPlace.getLongitude();
-		if (isLatLngValid(lat,lng)) {
+		if (isLatLngValid(lat, lng)) {
 			const fullPlace = await reverseGeocode({ lat, lng });
 			setFoundPlace(fullPlace);
 		}
@@ -116,6 +114,6 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 	}
 }
 
-function isLatLngValid(lat,lng) {
+function isLatLngValid(lat, lng) {
 	return (lat !== undefined && lng !== undefined);
 }

@@ -51,6 +51,34 @@ describe('AddPlace', () => {
 		expect(addButton.classList.contains('disabled')).toBe(true);
 	});
 
+	test('base: handles less than 3 chars input', async () => {
+		const coordInput = screen.getByTestId('coord-input');
+		const logSpy = jest.spyOn(console, 'log');
+		user.type(coordInput, 'd');
+
+		await waitFor(() => {
+			expect(coordInput.value).toEqual('d');
+
+		});
+		expect(logSpy).toBeNull;
+		const addButton = screen.getByTestId('add-place-button');
+		expect(addButton.classList.contains('disabled')).toBe(true);
+	});
+
+	test('base: handles equal or more than 3 chars input', async () => {
+		const coordInput = screen.getByTestId('coord-input');
+		const logSpy = jest.spyOn(console, 'log');
+		user.type(coordInput, "dav")
+
+		await waitFor(() => {
+			expect(coordInput.value).toEqual("dav");
+
+		});
+		(!expect(logSpy).toBeNull);
+		const addButton = screen.getByTestId('add-place-button');
+		expect(addButton.classList.contains('disabled')).toBe(true);
+	});
+
 	test('base: Adds place', async () => {
 		fetch.mockResponse(REVERSE_GEOCODE_RESPONSE);
 		const coordInput = screen.getByTestId('coord-input');
