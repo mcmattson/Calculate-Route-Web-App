@@ -51,7 +51,7 @@ describe('AddPlace', () => {
 		expect(addButton.classList.contains('disabled')).toBe(true);
 	});
 
-	test('base: handles less than 3 chars input', async () => {
+	test('mmattson: handles less than 3 chars input', async () => {
 		const coordInput = screen.getByTestId('coord-input');
 		const logSpy = jest.spyOn(console, 'log');
 		user.type(coordInput, 'd');
@@ -65,7 +65,7 @@ describe('AddPlace', () => {
 		expect(addButton.classList.contains('disabled')).toBe(true);
 	});
 
-	test('base: handles equal or more than 3 chars input', async () => {
+	test('mmattson: handles equal or more than 3 chars input', async () => {
 		const coordInput = screen.getByTestId('coord-input');
 		const logSpy = jest.spyOn(console, 'log');
 		user.type(coordInput, "dav")
