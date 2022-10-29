@@ -105,3 +105,11 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 function isLatLngValid(lat,lng) {
 	return (lat !== undefined && lng !== undefined);
 }
+
+function useFind(match) {
+	function processServerFindSuccess(){}
+
+	async function sendFindRequest() {}
+
+	return null;
+}
