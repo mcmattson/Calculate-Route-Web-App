@@ -53,12 +53,12 @@
 	],
 	"variable": [
 		{
-			"id": "e0a68740-317b-4b83-bda5-425403f56588",
+			"id": "3c3eaf23-8815-4eb4-a2ba-cdcb03f33582",
 			"key": "BASE_URL",
 			"value": "http://localhost:41316"
 		},
 		{
-			"id": "620bf4d4-047e-4f6a-ae34-07d7c1faf86a",
+			"id": "5ede32c4-c702-4f92-b788-c97bd8168ede",
 			"key": "TEAM_NAME",
 			"value": "txx team name"
 		}
