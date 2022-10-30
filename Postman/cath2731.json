@@ -17,7 +17,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"requestType\": \"distances\"\r\n\r\n}",
+					"raw": "{\r\n  \"requestType\": \"distances\",\r\n  \"places\": [\r\n    {\r\n      \"latitude\": \"90.000000\",\r\n      \"longitude\": \"180.0000\"\r\n    },\r\n    {\r\n      \"latitude\": \"18.71\",\r\n      \"longitude\": \"+6\"\r\n    },\r\n    {\r\n      \"latitude\": \"84.00279050\",\r\n      \"longitude\": \"6.497158\"\r\n    },\r\n    {\r\n      \"latitude\": \"-3.1927144\",\r\n      \"longitude\": \"-180.00000\"\r\n    }\r\n  ],\r\n  \"earthRadius\": 4\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -53,12 +53,12 @@
 	],
 	"variable": [
 		{
-			"id": "6dea061f-fae2-4708-a05e-3309e4e4b339",
+			"id": "e0a68740-317b-4b83-bda5-425403f56588",
 			"key": "BASE_URL",
 			"value": "http://localhost:41316"
 		},
 		{
-			"id": "8be1ec91-fdd0-47ff-b98d-7a7094500dc6",
+			"id": "620bf4d4-047e-4f6a-ae34-07d7c1faf86a",
 			"key": "TEAM_NAME",
 			"value": "txx team name"
 		}
