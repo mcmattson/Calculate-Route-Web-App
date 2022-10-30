@@ -13,8 +13,18 @@
 				"disableBodyPruning": true
 			},
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"requestType\": \"distances\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{BASE_URL}}/api/distances"
 			},
 			"response": []
 		}
@@ -43,12 +53,12 @@
 	],
 	"variable": [
 		{
-			"id": "00151db0-a55c-4cbf-8be0-33b1d9e4df3b",
+			"id": "6dea061f-fae2-4708-a05e-3309e4e4b339",
 			"key": "BASE_URL",
 			"value": "http://localhost:41316"
 		},
 		{
-			"id": "b1249e83-58a3-4cfb-91d2-ee5e6bdd9be0",
+			"id": "8be1ec91-fdd0-47ff-b98d-7a7094500dc6",
 			"key": "TEAM_NAME",
 			"value": "txx team name"
 		}
