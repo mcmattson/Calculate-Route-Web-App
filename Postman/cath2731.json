@@ -23,32 +23,32 @@
 		{
 			"listen": "prerequest",
 			"script": {
+				"id": "11c33a8c-a49a-43f8-a1ef-6fc76937d6d9",
 				"type": "text/javascript",
 				"exec": [
 					""
-				],
-				"id": "3e267028-8c33-4bf7-bb91-16de1b441e8d"
+				]
 			}
 		},
 		{
 			"listen": "test",
 			"script": {
+				"id": "bb5d5ce8-2123-42cc-9e73-d17cab6f547f",
 				"type": "text/javascript",
 				"exec": [
 					""
-				],
-				"id": "b4457a23-989c-4d20-8cf7-43a7fca0d483"
+				]
 			}
 		}
 	],
 	"variable": [
 		{
-			"id": "c029905c-6e59-4ab0-8908-3ef3ef134e9a",
+			"id": "00151db0-a55c-4cbf-8be0-33b1d9e4df3b",
 			"key": "BASE_URL",
-			"value": "http://localhost:41300"
+			"value": "http://localhost:41316"
 		},
 		{
-			"id": "aa7adf5e-bd88-4ca6-98fe-adc82633b060",
+			"id": "b1249e83-58a3-4cfb-91d2-ee5e6bdd9be0",
 			"key": "TEAM_NAME",
 			"value": "txx team name"
 		}
