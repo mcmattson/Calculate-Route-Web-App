@@ -107,6 +107,13 @@ function isLatLngValid(lat,lng) {
 }
 
 function useFind(match) {
+	const [serverUrl, setServerUrl] = useState(getOriginalServerUrl());
+	const [serverFind, serServerFind] = useState({places: []});
+
+	useEffect( () => {
+		sendFindRequest();
+	}, [match]);  
+
 	function processServerFindSuccess(){}
 
 	async function sendFindRequest() {}
