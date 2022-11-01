@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.lang.Exception;
 
-import com.tco.requests.Location;
-import com.tco.requests.Locations;
+import com.tco.requests.Place;
+import com.tco.requests.Places;
 import com.tco.requests.Select;
 
 public class Database {
@@ -35,7 +35,7 @@ public class Database {
         throw new Exception("No count results in found query.");
     }
     
-    static Locations Locations(String match, Integer limit) throws Exception {
+    static Places Places(String match, Integer limit) throws Exception {
         String sql      = Select.match(match, limit);
         String url      = Credential.url();
         String user     = Credential.USER;
@@ -52,19 +52,27 @@ public class Database {
         }
     }
 
-    public static Locations convertQueryResultsToLocations(ResultSet results, String columns) throws Exception {
+    public static Places convertQueryResultsToLocations(ResultSet results, String columns) throws Exception {
         int count = 0;
         String[] cols = columns.split(",");
-        Locations Locations = new Locations();
+        Places Places = new Places();
         while (results.next()) {
-        Location Location = new Location();  
+        Place Place = new Place("0", "0");  
+        HashMap<String, String> hashFeatures = new HashMap<String, String>();
+        Place.locationFeatures = hashFeatures;
             for (String col : cols){
-                Location.put(col, results.getString(col));
+                if (col == "latitude"){
+                    Place.latitude = results.getString(col);
+                }else if (col == "longitude"){
+                    Place.longitude = results.getString(col);
+                }else{
+                    Place.locationFeatures.put(col, results.getString(col));
+                }
             }
-        Location.put("index", String.format("%d", ++count));    
-        Locations.add(Location);  
+        Place.locationFeatures.put("index", String.format("%d", ++count));    
+        Places.add(Place);  
         }
-        return Locations;
+        return Places;
     }
 
 
