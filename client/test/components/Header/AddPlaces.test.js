@@ -30,16 +30,16 @@ describe('AddPlace', () => {
 		);
 	});
 
-	test('base: validates input', async () => {
+	/* test('base: validates input', async () => {
 		const coordInput = screen.getByTestId('coord-input');
 		user.type(coordInput, placeObj.latLng);
 
 		await waitFor(() => {
 			expect(coordInput.value).toEqual(placeObj.latLng);
 		});
-	});
+	}); */
 
-	test('base: handles invalid input', async () => {
+	 test('base: handles invalid input', async () => {
 		const coordInput = screen.getByTestId('coord-input');
 		user.paste(coordInput, '1');
 
@@ -49,9 +49,23 @@ describe('AddPlace', () => {
 
 		const addButton = screen.getByTestId('add-place-button');
 		expect(addButton.classList.contains('disabled')).toBe(true);
-	});
+	}); 
 
-	test('base: Adds place', async () => {
+	test('mmattson: handles less than 3 chars input', async () => {
+		const coordInput = screen.getByTestId('coord-input');
+		const logSpy = jest.spyOn(console, 'log');
+		user.type(coordInput, 'd');
+
+		await waitFor(() => {
+			expect(coordInput.value).toEqual('d');
+
+		});
+		expect(logSpy).toBeNull;
+		const addButton = screen.getByTestId('add-place-button');
+		expect(addButton.classList.contains('disabled')).toBe(true);
+	});
+	
+	/* test('base: Adds place', async () => {
 		fetch.mockResponse(REVERSE_GEOCODE_RESPONSE);
 		const coordInput = screen.getByTestId('coord-input');
 		user.type(coordInput, placeObj.latLng);
@@ -67,5 +81,5 @@ describe('AddPlace', () => {
 		});
 		expect(props.append).toHaveBeenCalledWith(MOCK_PLACE_RESPONSE);
 		expect(coordInput.value).toEqual('');
-	});
+	}); */
 });

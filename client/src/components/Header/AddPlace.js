@@ -41,8 +41,17 @@ function AddPlaceHeader(props) {
 	);
 }
 
+function textLength(value) {
+	return value.length >= 3;
+}
+
 function PlaceSearch(props) {
 	useEffect(() => {
+		document.getElementById('search').onkeyup = function () {
+			if (textLength(this.value)) {
+				verifyPlacesName(props.coordString);
+			}
+		}
 		verifyCoordinates(props.coordString, props.setFoundPlace);
 	}, [props.coordString]);
 
@@ -50,6 +59,7 @@ function PlaceSearch(props) {
 		<ModalBody>
 			<Col>
 				<Input
+					type='search' id='search'
 					onChange={(input) => props.setCoordString(input.target.value)}
 					placeholder='Enter Coordinates or Place Name'
 					data-testid='coord-input'
@@ -100,6 +110,22 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 	} catch (error) {
 		setFoundPlace(undefined);
 	}
+}
+
+async function verifyPlacesName(coordString, setFoundPlace) {
+	try {
+		if (isPlaceValid(coordString)) {
+			console.log("CoordString Retun:" + coordString);
+			//const fullPlace = await reversePlacecode({ coordString });
+			//setFoundPlace(fullPlace);
+		}
+	} catch (error) {
+		setFoundPlace(undefined);
+	}
+}
+
+function isPlaceValid(coordString) {
+	return (coordString !== undefined);
 }
 
 function isLatLngValid(lat,lng) {
