@@ -112,7 +112,7 @@ function useFind(match) {
 
 	useEffect( () => {
 		sendFindRequest();
-	}, [match]); //impliment with an array? 
+	}, [match]);  
 
 	function processServerFindSuccess(){}
 
