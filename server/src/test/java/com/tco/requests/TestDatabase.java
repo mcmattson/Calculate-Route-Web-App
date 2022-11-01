@@ -6,8 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 
 import java.sql.ResultSet;
 import com.tco.requests.Database;
-import com.tco.requests.Location;
-import com.tco.requests.Locations;
+import com.tco.requests.Place;
+import com.tco.requests.Places;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -27,7 +27,7 @@ public class TestDatabase {
         try{
             ResultSet results = null;
             String columns = "1,2,3";  
-            Locations resultTest = database.convertQueryResultsToLocations(results, columns);
+            Places resultTest = database.convertQueryResultsToLocations(results, columns);
         }
         catch (Exception e){
             thrown = true;
@@ -40,7 +40,7 @@ public class TestDatabase {
     public void testLocationNull() {
         boolean thrown = false;
         try{
-            Locations resulting = database.Locations(null, -1);
+            Places resulting = database.Places(null, -1);
         }
         catch (Exception e){
             thrown = true;
