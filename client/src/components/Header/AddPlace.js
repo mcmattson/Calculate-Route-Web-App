@@ -110,6 +110,10 @@ function useFind(match) {
 	const [serverUrl, setServerUrl] = useState(getOriginalServerUrl());
 	const [serverFind, serServerFind] = useState({places: []});
 
+	useEffect( () => {
+		sendFindRequest();
+	}, [match]); //impliment with an array? 
+
 	function processServerFindSuccess(){}
 
 	async function sendFindRequest() {}
