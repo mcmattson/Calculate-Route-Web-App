@@ -115,3 +115,18 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 function isLatLngValid(lat, lng) {
 	return (lat !== undefined && lng !== undefined);
 }
+
+function useFind(match) {
+	const [serverUrl, setServerUrl] = useState(getOriginalServerUrl());
+	const [serverFind, serServerFind] = useState({places: []});
+
+	useEffect( () => {
+		sendFindRequest();
+	}, [match]);  
+
+	function processServerFindSuccess(){}
+
+	async function sendFindRequest() {}
+
+	return null;
+}
