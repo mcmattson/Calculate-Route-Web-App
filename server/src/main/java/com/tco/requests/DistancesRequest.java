@@ -16,7 +16,6 @@ public class DistancesRequest extends Request {
     private Double earthRadius;
     private Places places;
     private Distances distances;
-    private List<String> features;
 
     @Override
     // Credit To Dave Matthews
