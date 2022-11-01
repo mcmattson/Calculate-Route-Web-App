@@ -41,15 +41,25 @@ function AddPlaceHeader(props) {
 	);
 }
 
-function PlaceSearch(props) {
+function textLength(value) {
+	return value.length >= 3;
+}
+
+function PlaceSearch(props, coordString, nameString) {
+	useEffect(() => {
+		document.getElementById('search').onkeyup = function () {
+			if (textLength(this.value))
+				console.log("Return Place Search"); //replace with verifyPlace Function
+		}
+	}, [props.nameString]);
 	useEffect(() => {
 		verifyCoordinates(props.coordString, props.setFoundPlace);
 	}, [props.coordString]);
-
 	return (
 		<ModalBody>
 			<Col>
 				<Input
+					type='search' id='search'
 					onChange={(input) => props.setCoordString(input.target.value)}
 					placeholder='Enter Coordinates or Place Name'
 					data-testid='coord-input'
@@ -93,7 +103,7 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 		const latLngPlace = new Coordinates(coordString);
 		const lat = latLngPlace.getLatitude();
 		const lng = latLngPlace.getLongitude();
-		if (isLatLngValid(lat,lng)) {
+		if (isLatLngValid(lat, lng)) {
 			const fullPlace = await reverseGeocode({ lat, lng });
 			setFoundPlace(fullPlace);
 		}
@@ -102,7 +112,7 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 	}
 }
 
-function isLatLngValid(lat,lng) {
+function isLatLngValid(lat, lng) {
 	return (lat !== undefined && lng !== undefined);
 }
 
