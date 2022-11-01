@@ -12,6 +12,7 @@ class Place implements GeographicCoordinate {
 
     public String latitude;
     public String longitude;
+    public HashMap<String, String> locationFeatures;
     //Test
     //Constructor
     Place(String lat, String lon) {

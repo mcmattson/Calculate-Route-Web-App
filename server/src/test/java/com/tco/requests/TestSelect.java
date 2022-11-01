@@ -27,7 +27,7 @@ public class TestSelect {
                 String match = "Sandy";
                 Integer limit = 100;
                 Integer found = Database.found(match);
-                Locations Locations = Database.Locations(match, limit);
+                Places Places = Database.Places(match, limit);
                 successfulQuery = true;
             } catch (Exception e) {
                 System.err.println("Exception: " + e.getMessage());
@@ -43,7 +43,7 @@ public class TestSelect {
                 String match = "Asgard";
                 Integer limit = 100;
                 Integer found = Database.found(match);
-                Locations Locations = Database.Locations(match, limit);
+                Places Places = Database.Places(match, limit);
                 if (found == 0){
                     noResultsFound = true;
                 }
