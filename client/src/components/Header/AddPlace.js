@@ -142,5 +142,5 @@ function useFind(match) {
 		}
 	}
 
-	return null ;
+	return [{serverUrl: serverUrl, serverFind: serverFind}, processServerFindSuccess,];
 }
