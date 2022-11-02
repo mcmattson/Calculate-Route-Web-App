@@ -80,8 +80,19 @@ function PlaceSearch(props) {
 function PlaceInfo(props) {
 	return (
 		<Collapse isOpen={!!props.foundPlace}>
-			<br />
-			{props.foundPlace?.formatPlace()}
+			<ModalBody>
+				<br />
+				<Input
+					type="checkbox"
+					onClick={() => {
+						console.log('Seclection made');
+					}
+					}
+					data-testid='add-place-checkbox'
+				>
+				</Input>
+				{props.foundPlace?.formatPlace()}
+			</ModalBody>
 		</Collapse>
 	);
 }
@@ -92,6 +103,7 @@ function AddPlaceFooter(props) {
 			<Button
 				color='primary'
 				onClick={() => {
+					//TODO: add selction list to Map/Itinerary
 					props.append(props.foundPlace);
 					props.setCoordString('');
 				}}
