@@ -11,6 +11,7 @@ import {
 } from 'reactstrap';
 import Coordinates from 'coordinate-parser';
 import { reverseGeocode } from '../../utils/reverseGeocode';
+import { reversePlacecode } from '../../utils/reversePlacecode';
 
 export default function AddPlace(props) {
 	const [foundPlace, setFoundPlace] = useState();
@@ -42,19 +43,24 @@ function AddPlaceHeader(props) {
 }
 
 function textLength(value) {
-	return value.length >= 3;
+	return (value.length >= 3);
 }
 
-function PlaceSearch(props, coordString, nameString) {
+function textComma(value) {
+	return (value.indexOf(',') > -1);
+}
+
+function PlaceSearch(props) {
 	useEffect(() => {
 		document.getElementById('search').onkeyup = function () {
-			if (textLength(this.value))
-				console.log("Return Place Search"); //replace with verifyPlace Function
+			if (textComma(this.value)) {
+				verifyCoordinates(props.coordString, props.setFoundPlace);
+			} else if (textLength(this.value)) {
+				verifyPlacesName(props.coordString, props.setFoundPlace);
+			}
 		}
-	}, [props.nameString]);
-	useEffect(() => {
-		verifyCoordinates(props.coordString, props.setFoundPlace);
 	}, [props.coordString]);
+
 	return (
 		<ModalBody>
 			<Col>
@@ -112,21 +118,36 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 	}
 }
 
+async function verifyPlacesName(nameString, setFoundPlace) {
+	try {
+		if (isPlaceValid(nameString)) {
+			const fullPlace = await reversePlacecode(nameString);
+			setFoundPlace(fullPlace);
+		}
+	} catch (error) {
+		setFoundPlace(undefined);
+	}
+}
+
+function isPlaceValid(coordString) {
+	return (coordString !== undefined);
+}
+
 function isLatLngValid(lat, lng) {
 	return (lat !== undefined && lng !== undefined);
 }
 
 function useFind(match) {
 	const [serverUrl, setServerUrl] = useState(getOriginalServerUrl());
-	const [serverFind, serServerFind] = useState({places: []});
+	const [serverFind, serServerFind] = useState({ places: [] });
 
-	useEffect( () => {
+	useEffect(() => {
 		sendFindRequest();
-	}, [match]);  
+	}, [match]);
 
-	function processServerFindSuccess(){}
+	function processServerFindSuccess() { }
 
-	async function sendFindRequest() {}
+	async function sendFindRequest() { }
 
 	return null;
 }
