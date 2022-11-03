@@ -18,6 +18,32 @@ public class TestPlace {
     Place coordinatesFoCo = new Place("40.5853" , "-105.0844");
     Place coordinatesAntarctic = new Place("-82.8628", "135.0000");
 
+    Place coordinatesEverest = new Place("27.9881", "86.9250");
+
+    public boolean TestRadians(String typeCoordinates, String mockValue, Place location){
+        double convertedMockValue = toRadians(parseDouble(mockValue)); 
+        if (typeCoordinates == "longitude"){
+            return convertedMockValue == location.lonRadians();
+        }else if (typeCoordinates == "latitude"){
+            return convertedMockValue == location.latRadians();
+        }else{
+            return false;
+        }
+    }
+
+    @Test
+    @DisplayName("mikylab: test latitude Everest radians")
+    public void testLatitudeEverest(){
+        assertTrue(TestRadians("latitude", "27.9881", coordinatesEverest));
+    }
+
+    @Test
+    @DisplayName("mikylab: test longitude Everest radians") 
+    public void testLongitudeEverest(){
+        assertTrue(TestRadians("longitude", "86.9250", coordinatesEverest));
+    }
+
+
     @Test
     @DisplayName("marilake: testing the constructor works with valid inputs")
     public void testConstructor(){
