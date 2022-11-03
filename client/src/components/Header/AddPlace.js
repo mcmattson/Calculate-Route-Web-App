@@ -8,6 +8,11 @@ import {
 	Input,
 	Collapse,
 	ModalFooter,
+	ListGroup,
+	ListGroupItem,
+	Grid,
+	Row,
+	Panel,
 } from 'reactstrap';
 import Coordinates from 'coordinate-parser';
 import { reverseGeocode } from '../../utils/reverseGeocode';
@@ -81,17 +86,13 @@ function PlaceInfo(props) {
 	return (
 		<Collapse isOpen={!!props.foundPlace}>
 			<ModalBody>
-				<br />
-				<Input
-					type="checkbox"
-					onClick={() => {
-						console.log('Seclection made');
-					}
-					}
-					data-testid='add-place-checkbox'
-				>
-				</Input>
-				{props.foundPlace?.formatPlace()}
+				<div style={{width: 450, marginLeft: -18, marginRight: -50 }}>
+					<ListGroup flush >
+						<ListGroupItem action href="#link1">
+						{props.foundPlace?.formatPlace()}
+					</ListGroupItem>
+					</ListGroup>
+				</div>
 			</ModalBody>
 		</Collapse>
 	);
