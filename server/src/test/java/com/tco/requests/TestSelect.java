@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.ResultSet;
 import com.tco.requests.Database;
-import com.tco.requests.Location;
-import com.tco.requests.Locations;
 
 public class TestSelect {
     
