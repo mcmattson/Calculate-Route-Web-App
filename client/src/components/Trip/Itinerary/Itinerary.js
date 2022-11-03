@@ -9,7 +9,7 @@ import { getOriginalServerUrl, sendAPIRequest } from '../../../utils/restfulAPI'
 
 
 export default function Itinerary(props) {
-	const [distanceSettings, processServerDistanceSuccess] = useDistances(props.places);
+	const distanceSettings = useDistances(props.places, 6371.0, getOriginalServerUrl());
 	return (
 		<Table responsive>
 			<TripHeader
@@ -49,11 +49,10 @@ function TripHeader(props) {
 
 function TotalTripDistance(props){
 	let distances = [0]; 
-	if (props.distanceSettings.serverDistance){ 
-	 	distances = props.distanceSettings.serverDistance.distances;
+	if (props.distanceSettings.distances){ 
+	 	distances = props.distanceSettings.distances;
 	}
-	let total = 0 
-	for (var i = 0; i < distances.length; i++){ total+= distances[i];}
+	let total = distances.total
 
 
 	return (
@@ -84,9 +83,9 @@ function PlaceRow(props) {
 	const name = props.place.defaultDisplayName;
 	const location = latLngToText(placeToLatLng(props.place));
 	let distances = [0]; 
-	if (props.distanceSettings.serverDistance){ 
+	if (props.distanceSettings.distances){ 
 		
-	 	distances = props.distanceSettings.serverDistance.distances;
+	 	distances = props.distanceSettings.distances.leg;
 		
 	}
 
@@ -113,11 +112,8 @@ function PlaceRow(props) {
 }
 
 function CumulativeLegDistance(props){
-	let total = 0 
- 	for (var i = 0; i < props.index; i++){ 
-		total+= props.distances[i];
-	}
-	return <td data-testid={`place-col-${props.index}`} align='right'> {total}</td>
+    let cumulativeArray = calcCumulative(props.distances);
+	return <td data-testid={`place-col-${props.index}`} align='right'> {cumulativeArray[props.index]}</td>
 
 }
 
@@ -145,34 +141,45 @@ function RowArrow(props) {
 		</td>
 	);
 }
-function useDistances(places) {
-	const [serverUrl, setServerUrl] = useState(getOriginalServerUrl());
-	const [serverDistance, setServerDistance] = useState({distances: []});
 
-	useEffect(() => {
-		sendDistanceRequest();
-	}, [places]);
+export function useDistances(places, earthRadius, serverURL) {
+    const [leg, setLeg] = useState([]);
+    const [cumulative, setCumulative] = useState([]);
+    const [total, setTotal] = useState(0);
+    
+    const distances = {
+      leg: leg,
+      cumulative: cumulative,
+      total: total
+    }
+    
+    const distanceActions = {
+      setLeg: setLeg,
+      setCumulative: setCumulative,
+      setTotal: setTotal
+    }
+    
+    useEffect(() => {makeDistancesRequest(places, earthRadius, serverURL, distanceActions);},
+              [places,earthRadius])
+  
+    return {distances};
+}
 
-	function processServerDistanceSuccess(distance, url) {
-		LOG.info('Switching to Server:', url);
-		setServerDistance(distance);
-		setServerUrl(url);
-	}
+async function makeDistancesRequest(places, earthRadius, serverURL, distanceActions) {
+  
+    const {setLeg, setCumulative, setTotal} = distanceActions;
+  
+    const requestBody = { requestType: "distances", places: places, earthRadius: earthRadius};
+    const distancesResponse = await sendAPIRequest(requestBody, serverURL);
 
-	async function sendDistanceRequest() {
-		const distanceResponse = await sendAPIRequest({ 
-			requestType: 'distances', 
-			places : places,
-			earthRadius : 6571} , serverUrl);
-		if (distanceResponse) {
-			processServerDistanceSuccess(distanceResponse, serverUrl);
-		} else {
-			setServerDistance({distances: []});
-			//showMessage(`Distance request to ${serverUrl} failed. Check the log for more details.`, 'error');
-		}
-	}
-
-	return [{ serverUrl: serverUrl, serverDistance: serverDistance }, processServerDistanceSuccess,];
+    if (distancesResponse) {
+        setLeg(distancesResponse.distances);
+        setCumulative(calcCumulative(distancesResponse.distances))
+        setTotal(calcTotal(distancesResponse.distances))
+    }
+    else {
+      LOG.error(`Distance request to ${serverURL} failed. Check the log for more details.`, "error");
+    }
 }
 
 function calcCumulative(distances){
