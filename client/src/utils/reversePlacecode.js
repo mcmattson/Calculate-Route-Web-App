@@ -7,9 +7,6 @@ async function reversePlacecode(place) {
     const API_URL = GEOCODE_URL + `&q=${place}&countrycodes=us`;
     const data = await fetch(API_URL);
     const dataJSON = await data.json();   
-    /* for (var i = 0; i < dataJSON.length; i++) {
-        console.log("reversePlacecode [" + i + "]: " + dataJSON[i].display_name + " " + dataJSON[i].lat + " " + dataJSON[i].lon); 
-    } */
 
     const formattedPlace = place;
     if (dataJSON[0].display_name) {
