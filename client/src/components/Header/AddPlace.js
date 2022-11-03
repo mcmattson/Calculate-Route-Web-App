@@ -11,7 +11,6 @@ import {
 } from 'reactstrap';
 import Coordinates from 'coordinate-parser';
 import { reverseGeocode } from '../../utils/reverseGeocode';
-import { reversePlacecode } from '../../utils/reversePlacecode';
 
 export default function AddPlace(props) {
 	const [foundPlace, setFoundPlace] = useState();
