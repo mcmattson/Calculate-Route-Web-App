@@ -112,6 +112,17 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 	}
 }
 
+async function verifyPlacesName(nameString, setFoundPlace) {
+	try {
+		if (isPlaceValid(nameString)) {
+			const fullPlace = await reversePlacecode(nameString);
+			setFoundPlace(fullPlace);
+		}
+	} catch (error) {
+		setFoundPlace(undefined);
+	}
+}
+
 function isLatLngValid(lat, lng) {
 	return (lat !== undefined && lng !== undefined);
 }
