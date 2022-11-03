@@ -175,3 +175,23 @@ function useDistances(places) {
 	return [{ serverUrl: serverUrl, serverDistance: serverDistance }, processServerDistanceSuccess,];
 }
 
+function calcCumulative(distances){
+    let cummArray = [];
+    let total = 0;
+    cummArray[0] = 0;
+    for (var i = 1; i < distances.length; i++){
+       total += distances[i-1];
+       cummArray[i] = total;
+    }
+  return cummArray;
+}
+
+function calcTotal(distances){
+  let total = 0;
+  for (var i = 0; i < distances.length; i++){
+     total+= distances[i];
+    }
+  return total;
+}
+
+
