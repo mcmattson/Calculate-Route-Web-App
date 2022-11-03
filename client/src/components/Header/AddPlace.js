@@ -112,6 +112,10 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 	}
 }
 
+function isPlaceValid(coordString) {
+	return (coordString !== undefined);
+}
+
 function isLatLngValid(lat, lng) {
 	return (lat !== undefined && lng !== undefined);
 }
