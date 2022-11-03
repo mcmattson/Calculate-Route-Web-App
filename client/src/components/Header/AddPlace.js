@@ -45,6 +45,10 @@ function textLength(value) {
 	return value.length >= 3;
 }
 
+function textComma(value) {
+	return (value.indexOf(',') > -1);
+}
+
 function PlaceSearch(props, coordString, nameString) {
 	useEffect(() => {
 		document.getElementById('search').onkeyup = function () {
