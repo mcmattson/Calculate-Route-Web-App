@@ -1,7 +1,6 @@
 package com.tco.requests;
 
-import com.tco.requests.Location;
-import com.tco.requests.Locations;
+
 
 public class Select {
     private final static String TABLE = "world";
