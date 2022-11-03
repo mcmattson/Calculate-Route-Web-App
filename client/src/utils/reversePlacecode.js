@@ -5,12 +5,8 @@ const GEOCODE_URL = "https://nominatim.openstreetmap.org/search?format=jsonv2";
 async function reversePlacecode(place) {
     // Here the place search are in string format - example: {Dave}
     const API_URL = GEOCODE_URL + `&q=${place}&countrycodes=us`;
-    //console.log('reversePlacecode API_URL: ' + API_URL);
     const data = await fetch(API_URL);
-    //console.log('reversePlacecode data: ' + data);
-    const dataJSON = await data.json();
-    //console.log('reversePlacecode dataJSON: ' + dataJSON);
-   
+    const dataJSON = await data.json();   
     /* for (var i = 0; i < dataJSON.length; i++) {
         console.log("reversePlacecode [" + i + "]: " + dataJSON[i].display_name + " " + dataJSON[i].lat + " " + dataJSON[i].lon); 
     } */
