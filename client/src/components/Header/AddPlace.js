@@ -67,7 +67,7 @@ function PlaceSearch(props) {
 				<Input
 					type='search' id='search'
 					onChange={(input) => props.setCoordString(input.target.value)}
-					placeholder='Enter Coordinates (Lat, Long) or Search Term'
+					placeholder='Enter Coordinates or Search Terms'
 					data-testid='coord-input'
 					value={props.coordString}
 				/>
