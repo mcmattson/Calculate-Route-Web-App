@@ -151,13 +151,13 @@ function isLatLngValid(lat, lng) {
 
 function useFind(match) {
 	const [serverUrl, setServerUrl] = useState(getOriginalServerUrl());
-	const [serverFind, setServerFind] = useState({ places: [] });
+	const [serverFind, setServerFind] = useState({places: []});
 
 	useEffect(() => {
 		sendFindRequest();
-	}, match);
+	}, match);  
 
-	function processServerFindSuccess(places, url) {
+	function processServerFindSuccess(places, url){
 		LOG.info('Switching to Server: ', url);
 		setServerFind(places);
 		setServerUrl(url);
@@ -167,14 +167,13 @@ function useFind(match) {
 		const findResponse = await sendAPIRequest({
 			requestType: 'find',
 			match: "",
-			limit: 10
-		}, serverUrl);
+			limit: 10}, serverUrl);
 		if (findResponse) {
-			processServerFindSuccess(findResponse, serverUrl);
+			processServerFindSuccess(findResponse,serverUrl);
 		} else {
-			setServerFind({ places: [] });
+			setServerFind({places: []});
 		}
 	}
 
-	return [{ serverUrl: serverUrl, serverFind: serverFind }, processServerFindSuccess,];
+	return [{serverUrl: serverUrl, serverFind: serverFind}, processServerFindSuccess,];
 }
