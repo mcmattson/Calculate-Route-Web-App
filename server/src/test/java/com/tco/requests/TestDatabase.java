@@ -61,4 +61,18 @@ public class TestDatabase {
 
     }
 
+ @Test
+   @DisplayName("iandunc: test when something is not found")
+    public void testLocationAsgard() {
+        boolean thrown = false;
+        Integer count = 0;
+        try{
+            count = database.found("asgard");
+        }
+        catch (Exception e){
+            thrown = true;
+        }
+        assertEquals(0, count);
+    }
+
 }
