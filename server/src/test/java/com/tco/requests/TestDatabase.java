@@ -74,4 +74,25 @@ public class TestDatabase {
         assertEquals(0, count);
     }
 
+    @Test
+    @DisplayName("cath2731: test convertQueryResultsToLocations when resultSet is NOT null")
+    public void testNotNullResult() {
+        boolean thrown = false;
+        try{
+            ResultSet results = null;
+            results.moveToInsertRow();
+            results.updateString(1, "Dave");
+            results.moveToInsertRow();
+            results.updateString(1, "Matt");
+            results.moveToInsertRow();
+            results.updateString(1, "hews");
+            String columns = "1,2,3";  
+            Places resultTest = database.convertQueryResultsToLocations(results, columns);
+        }
+        catch (Exception e){
+            thrown = true;
+        }
+        assertTrue(thrown);
+    }
+
 }
