@@ -148,6 +148,114 @@
 						"url": "{{BASE_URL}}/api/distances"
 					},
 					"response": []
+				},
+				{
+					"name": "Distance Min Radius One Place",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8afa0ea5-857d-4436-952b-9155a9f92fbf",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"requestType test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.requestType).to.eql (\"distances\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"earthRadius test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.earthRadius).to.eql(1.0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"places test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.places).to.not.equal(null);\r",
+									"    pm.expect(jsonData.places.length).to.equal(0);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "ea0df1e0-4587-472e-919f-7c2419eee6ac",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"requestType\": \"distances\",\r\n    \"earthRadius\": 1,\r\n    \"places\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/api/distances"
+					},
+					"response": []
+				},
+				{
+					"name": "Distance Min Radius No Places Copy 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8afa0ea5-857d-4436-952b-9155a9f92fbf",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"requestType test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.requestType).to.eql (\"distances\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"earthRadius test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.earthRadius).to.eql(1.0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"places test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.places).to.not.equal(null);\r",
+									"    pm.expect(jsonData.places.length).to.equal(0);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "6c17f5cc-017d-4c32-8571-b1693a787800",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"requestType\": \"distances\",\r\n    \"earthRadius\": 1,\r\n    \"places\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/api/distances"
+					},
+					"response": []
 				}
 			],
 			"id": "1ef61dd5-e179-4525-a5ef-21ba2767fe9c"
@@ -158,6 +266,40 @@
 				{
 					"name": "New Request",
 					"id": "860d03be-bbec-47d4-ba58-274947e9ac66",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"$id\": \"https://example.com/address.schema.json\",\r\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n  \"title\": \"find\",\r\n  \"description\": \"find request/response\",\r\n  \"type\": \"object\",\r\n  \"properties\": {\r\n    \"requestType\": {\r\n      \"description\":\"the TIP object type should be locations\",\r\n      \"type\":\"string\",\r\n      \"pattern\":\"^find$\"\r\n    },\r\n    \"match\": {\r\n      \"description\":\"an alphanumeric pattern used to find geographic locations.\",\r\n      \"type\":\"string\"\r\n    },\r\n    \"type\": {\r\n      \"description\": \"types of places to choose\",\r\n      \"type\": \"array\",\r\n      \"items\": {\r\n        \"type\": \"string\",\r\n        \"enum\": [\"airport\",\"balloonport\",\"heliport\",\"other\"]\r\n      }\r\n    },\r\n    \"where\": {\r\n      \"description\": \"a list of items from the config where filters.\",\r\n      \"type\": \"array\",\r\n      \"items\": {\r\n        \"type\": \"string\"\r\n      }\r\n    },\r\n    \"limit\": {\r\n      \"description\":\"the maximum number of matching places that may be returned.\",\r\n      \"type\":\"integer\",\r\n      \"minimum\":0\r\n    }\r\n  },\r\n  \"required\": [\"requestType\", \"match\", \"limit\"],\r\n  \"additionalProperties\": false\r\n}"
+						},
+						"url": "{{BASE_URL}}/api/find"
+					},
+					"response": []
+				},
+				{
+					"name": "New Request Copy",
+					"id": "c06a26ad-0968-4e91-9d95-2212643ece07",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"$id\": \"https://example.com/address.schema.json\",\r\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n  \"title\": \"find\",\r\n  \"description\": \"find request/response\",\r\n  \"type\": \"object\",\r\n  \"properties\": {\r\n    \"requestType\": {\r\n      \"description\":\"the TIP object type should be locations\",\r\n      \"type\":\"string\",\r\n      \"pattern\":\"^find$\"\r\n    },\r\n    \"match\": {\r\n      \"description\":\"an alphanumeric pattern used to find geographic locations.\",\r\n      \"type\":\"string\"\r\n    },\r\n    \"type\": {\r\n      \"description\": \"types of places to choose\",\r\n      \"type\": \"array\",\r\n      \"items\": {\r\n        \"type\": \"string\",\r\n        \"enum\": [\"airport\",\"balloonport\",\"heliport\",\"other\"]\r\n      }\r\n    },\r\n    \"where\": {\r\n      \"description\": \"a list of items from the config where filters.\",\r\n      \"type\": \"array\",\r\n      \"items\": {\r\n        \"type\": \"string\"\r\n      }\r\n    },\r\n    \"limit\": {\r\n      \"description\":\"the maximum number of matching places that may be returned.\",\r\n      \"type\":\"integer\",\r\n      \"minimum\":0\r\n    }\r\n  },\r\n  \"required\": [\"requestType\", \"match\", \"limit\"],\r\n  \"additionalProperties\": false\r\n}"
+						},
+						"url": "{{BASE_URL}}/api/find"
+					},
+					"response": []
+				},
+				{
+					"name": "New Request Copy 2",
+					"id": "b48f230a-b34c-46cf-8728-c464e571fb1b",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -255,12 +397,12 @@
 	],
 	"variable": [
 		{
-			"id": "d9a940ab-ccac-4727-ac43-e14e03fe76d0",
+			"id": "64d4b4d0-a452-4b3a-8eef-3e74a64ca6a7",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "477e7efd-d920-4b30-82de-2c1e93ac3fdf",
+			"id": "d4bfb3aa-c7b3-4731-966f-3127d1267455",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
