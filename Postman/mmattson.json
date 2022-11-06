@@ -321,7 +321,7 @@
 			"name": "Tour",
 			"item": [
 				{
-					"name": "Tour Optimization",
+					"name": "Tour: Null Optimization",
 					"event": [
 						{
 							"listen": "test",
@@ -397,12 +397,12 @@
 	],
 	"variable": [
 		{
-			"id": "3c8b59b1-1b6e-467c-a6ea-c96a81ddce7c",
+			"id": "493224c8-ecf3-4771-b407-4137ee5ef888",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "6f41905e-01c3-4039-8ed2-95d765b8d5c9",
+			"id": "ef1a9fe7-5dba-4cf5-9245-3428ec267631",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
