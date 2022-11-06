@@ -419,7 +419,7 @@
 					"response": []
 				},
 				{
-					"name": "Tour: Null Optimization Copy 2",
+					"name": "Tour: Multi-Place Optimization",
 					"event": [
 						{
 							"listen": "test",
@@ -495,12 +495,12 @@
 	],
 	"variable": [
 		{
-			"id": "c7d58857-6ae9-4c36-bfef-7406fa6a2cf8",
+			"id": "e5d4bd21-e62b-4b5c-9f31-01b8ba8fe847",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "40158683-d185-434c-80a1-359b42cbd054",
+			"id": "66a7b383-840c-4f4f-9c8e-83078b81a2ba",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
