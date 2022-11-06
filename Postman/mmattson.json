@@ -200,7 +200,7 @@
 							"mode": "raw",
 							"raw": "{\r\n\"requestType\" : \"tour\",\r\n\"earthRadius\" : 3959.0,\r\n\"response\"    : 1.0, \r\n\"places\"      :    [{\"name\":\"Coors Field\",\"longitude\":\"-104.99\",\"latitude\":\"39.75\"},\r\n\t\t   {\"name\":\"Citizens Bank Park\",\"longitude\":\"-75.17\",\"latitude\":\"39.91\"},\r\n\t\t   {\"name\":\"Yankee Stadium\",\"longitude\":\"-73.93\",\"latitude\":\"40.83\"},\r\n\t\t   {\"name\": \"PETCO Park\",\"longitude\":\"-117.16\",\"latitude\":\"32.71\"},\r\n\t\t   {\"name\":\"Citi Field\",\"longitude\":\"-73.85\",\"latitude\":\"40.76\"},\r\n\t\t   {\"name\":\"T-Mobile Park\",\"longitude\":\"-122.33\",\"latitude\":\"47.59\"},\r\n\t\t   {\"name\":\"Truist Park\",\"longitude\":\"-84.47\",\"latitude\":\"33.89\"}]\r\n}"
 						},
-						"url": "https://github.com/CSU-CS-314-Fall-2022/product/blob/main/specifications/protocol/tour/TourRequest.json"
+						"url": "{{BASE_URL}}/api/tour"
 					},
 					"response": []
 				}
@@ -232,12 +232,12 @@
 	],
 	"variable": [
 		{
-			"id": "0818f683-eb77-4660-a778-ecbbc9ac6b46",
+			"id": "0e94d277-4b44-4c52-b955-205afc948c33",
 			"key": "BASE_URL",
 			"value": "https://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "47d461c3-c65f-43fe-aff7-ed13546305f1",
+			"id": "8f16358f-79f6-4256-b77a-8016bfeba2b7",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
