@@ -448,12 +448,6 @@
 									"pm.test(\"places test\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.places).to.not.equal(null);\r",
-									"    pm.expect(jsonData.places.length).to.equal(0);\r",
-									"})\r",
-									"\r",
-									"pm.test(\"places test\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.places).to.not.equal(null);\r",
 									"    pm.expect(jsonData.places.length).to.equal(2566);\r",
 									"})"
 								],
@@ -578,12 +572,12 @@
 	],
 	"variable": [
 		{
-			"id": "4d4defcd-76a4-46e6-9456-c64a03ef9d27",
+			"id": "c3f5e6f4-e71e-4085-9db0-d82f80476f4d",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "d1c053d3-fd17-42b0-9d45-aa40de8f0c4a",
+			"id": "f10b1acd-67dc-4407-a1b8-d500aa8d5372",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
