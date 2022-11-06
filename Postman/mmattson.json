@@ -208,7 +208,7 @@
 			"id": "5ee03296-d3de-433f-8621-78acebf546fa"
 		},
 		{
-			"name": "New Folder",
+			"name": "Find",
 			"item": [],
 			"id": "a6771a46-c74e-4ddc-ab20-5a9adf29e855"
 		}
@@ -237,12 +237,12 @@
 	],
 	"variable": [
 		{
-			"id": "ff28f85a-5127-4b84-9019-d31bb41c4a26",
+			"id": "46f45da1-d98c-48e9-a499-e231cf012228",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "7292638b-b7a5-487f-b4b3-8d564cc92b25",
+			"id": "419d9553-de29-4263-a6b6-f91cc5ca6f7c",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
