@@ -368,6 +368,104 @@
 						"url": "{{BASE_URL}}/api/tour"
 					},
 					"response": []
+				},
+				{
+					"name": "Tour: Two Place Optimization",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8509d0ae-014f-423b-b0b9-cecaf266f98f",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"requestType test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.requestType).to.eql (\"distances\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"earthRadius test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.earthRadius).to.eql(1.0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"places test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.places).to.not.equal(null);\r",
+									"    pm.expect(jsonData.places.length).to.equal(0);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "767b005d-1391-48f8-80ae-4809ba3e83ef",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"requestType\" : \"tour\",\r\n\"earthRadius\" : 3959.0,\r\n\"response\"    : 1.0, \r\n\"places\"      :    [{\"name\":\"Coors Field\",\"longitude\":\"-104.99\",\"latitude\":\"39.75\"},\r\n\t\t   {\"name\":\"Citizens Bank Park\",\"longitude\":\"-75.17\",\"latitude\":\"39.91\"},\r\n\t\t   {\"name\":\"Yankee Stadium\",\"longitude\":\"-73.93\",\"latitude\":\"40.83\"},\r\n\t\t   {\"name\": \"PETCO Park\",\"longitude\":\"-117.16\",\"latitude\":\"32.71\"},\r\n\t\t   {\"name\":\"Citi Field\",\"longitude\":\"-73.85\",\"latitude\":\"40.76\"},\r\n\t\t   {\"name\":\"T-Mobile Park\",\"longitude\":\"-122.33\",\"latitude\":\"47.59\"},\r\n\t\t   {\"name\":\"Truist Park\",\"longitude\":\"-84.47\",\"latitude\":\"33.89\"}]\r\n}"
+						},
+						"url": "{{BASE_URL}}/api/tour"
+					},
+					"response": []
+				},
+				{
+					"name": "Tour: Null Optimization Copy 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8509d0ae-014f-423b-b0b9-cecaf266f98f",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"requestType test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.requestType).to.eql (\"distances\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"earthRadius test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.earthRadius).to.eql(1.0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"places test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.places).to.not.equal(null);\r",
+									"    pm.expect(jsonData.places.length).to.equal(0);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "693c48a0-81ac-4ff6-970c-6cb1680b24aa",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"requestType\" : \"tour\",\r\n\"earthRadius\" : 3959.0,\r\n\"response\"    : 1.0, \r\n\"places\"      :    [{\"name\":\"Coors Field\",\"longitude\":\"-104.99\",\"latitude\":\"39.75\"},\r\n\t\t   {\"name\":\"Citizens Bank Park\",\"longitude\":\"-75.17\",\"latitude\":\"39.91\"},\r\n\t\t   {\"name\":\"Yankee Stadium\",\"longitude\":\"-73.93\",\"latitude\":\"40.83\"},\r\n\t\t   {\"name\": \"PETCO Park\",\"longitude\":\"-117.16\",\"latitude\":\"32.71\"},\r\n\t\t   {\"name\":\"Citi Field\",\"longitude\":\"-73.85\",\"latitude\":\"40.76\"},\r\n\t\t   {\"name\":\"T-Mobile Park\",\"longitude\":\"-122.33\",\"latitude\":\"47.59\"},\r\n\t\t   {\"name\":\"Truist Park\",\"longitude\":\"-84.47\",\"latitude\":\"33.89\"}]\r\n}"
+						},
+						"url": "{{BASE_URL}}/api/tour"
+					},
+					"response": []
 				}
 			],
 			"id": "5ee03296-d3de-433f-8621-78acebf546fa"
@@ -397,12 +495,12 @@
 	],
 	"variable": [
 		{
-			"id": "493224c8-ecf3-4771-b407-4137ee5ef888",
+			"id": "c7d58857-6ae9-4c36-bfef-7406fa6a2cf8",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "ef1a9fe7-5dba-4cf5-9245-3428ec267631",
+			"id": "40158683-d185-434c-80a1-359b42cbd054",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
