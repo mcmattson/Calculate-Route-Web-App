@@ -153,7 +153,7 @@
 			"id": "1ef61dd5-e179-4525-a5ef-21ba2767fe9c"
 		},
 		{
-			"name": "New Folder",
+			"name": "Tour",
 			"item": [],
 			"id": "5ee03296-d3de-433f-8621-78acebf546fa"
 		}
@@ -182,12 +182,12 @@
 	],
 	"variable": [
 		{
-			"id": "a2e6eb7e-078e-4cf1-bbf7-536ebbc4fdd9",
+			"id": "dacf3405-8d5f-4dd4-af2e-146f02ef60cd",
 			"key": "BASE_URL",
 			"value": "https://black-bottle.cs.colostate.edu:31416/"
 		},
 		{
-			"id": "53ab5137-2e85-4a2d-bb11-0c0b3332aed0",
+			"id": "c5dad466-c47d-4817-a330-463edf956c57",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
