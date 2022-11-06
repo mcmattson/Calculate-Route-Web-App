@@ -308,7 +308,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"$id\": \"https://example.com/address.schema.json\",\r\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n  \"title\": \"find\",\r\n  \"description\": \"find request/response\",\r\n  \"type\": \"object\",\r\n  \"properties\": {\r\n    \"requestType\": {\r\n      \"description\":\"the TIP object type should be locations\",\r\n      \"type\":\"string\",\r\n      \"pattern\":\"^find$\"\r\n    },\r\n    \"match\": {\r\n      \"description\":\"an alphanumeric pattern used to find geographic locations.\",\r\n      \"type\":\"string\"\r\n    },\r\n    \"type\": {\r\n      \"description\": \"types of places to choose\",\r\n      \"type\": \"array\",\r\n      \"items\": {\r\n        \"type\": \"string\",\r\n        \"enum\": [\"airport\",\"balloonport\",\"heliport\",\"other\"]\r\n      }\r\n    },\r\n    \"where\": {\r\n      \"description\": \"a list of items from the config where filters.\",\r\n      \"type\": \"array\",\r\n      \"items\": {\r\n        \"type\": \"string\"\r\n      }\r\n    },\r\n    \"limit\": {\r\n      \"description\":\"the maximum number of matching places that may be returned.\",\r\n      \"type\":\"integer\",\r\n      \"minimum\":0\r\n    }\r\n  },\r\n  \"required\": [\"requestType\", \"match\", \"limit\"],\r\n  \"additionalProperties\": false\r\n}"
+							"raw": "{\r\n    \"requestType\": \"find\",\r\n    \"match\": [],\r\n    \"limit\": 0\r\n}"
 						},
 						"url": "{{BASE_URL}}/api/find"
 					},
@@ -495,12 +495,12 @@
 	],
 	"variable": [
 		{
-			"id": "29ed8918-ef42-4c84-bf9f-2c6612f9a1d3",
+			"id": "18d5d78f-9140-443a-83db-4497b7e0b432",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "7e38024e-b1a6-41c0-985f-dd3236e18db4",
+			"id": "4e853af1-44e9-4efb-adde-17fde3e1cea6",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
