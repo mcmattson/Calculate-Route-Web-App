@@ -253,6 +253,22 @@
 			"item": [
 				{
 					"name": "Find: Null Return",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f3bee645-7553-4d7d-a34d-0e8db7eddcd0",
+								"exec": [
+									"pm.test(\"find test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.places).to.equal(null);\r",
+									"    pm.expect(jsonData.places.length).to.equal(0);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"id": "860d03be-bbec-47d4-ba58-274947e9ac66",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -482,12 +498,12 @@
 	],
 	"variable": [
 		{
-			"id": "009eb2ba-912b-4e27-ba0c-d029abd9854c",
+			"id": "429216e9-59e5-4f79-b1b8-bd17e213e61c",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "eb49e6b9-1d17-46b1-8ea0-5789c0f5198b",
+			"id": "1b2f90a3-d038-4c1c-afaf-c0c62361a68c",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
