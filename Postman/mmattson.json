@@ -204,7 +204,7 @@
 					"response": []
 				},
 				{
-					"name": "Distance Min Radius No Places Copy 2",
+					"name": "Distance Min Radius Multi-Place",
 					"event": [
 						{
 							"listen": "test",
@@ -397,12 +397,12 @@
 	],
 	"variable": [
 		{
-			"id": "64d4b4d0-a452-4b3a-8eef-3e74a64ca6a7",
+			"id": "e2c889e4-2005-4d71-adf4-899013fa3d26",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "d4bfb3aa-c7b3-4731-966f-3127d1267455",
+			"id": "ed164f5e-111e-4fa2-b756-d23acddccf7a",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
