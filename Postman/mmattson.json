@@ -103,25 +103,9 @@
 							"script": {
 								"id": "8afa0ea5-857d-4436-952b-9155a9f92fbf",
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"    pm.response.to.be.withBody;\r",
-									"    pm.response.to.be.json;\r",
-									"});\r",
-									"\r",
-									"pm.test(\"requestType test\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.requestType).to.eql (\"distances\");\r",
-									"});\r",
-									"\r",
-									"pm.test(\"earthRadius test\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.earthRadius).to.eql(1.0);\r",
-									"});\r",
-									"\r",
 									"pm.test(\"places test\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.places).to.not.equal(null);\r",
+									"    pm.expect(jsonData.places).to.equal(null);\r",
 									"    pm.expect(jsonData.places.length).to.equal(0);\r",
 									"})"
 								],
@@ -499,12 +483,12 @@
 	],
 	"variable": [
 		{
-			"id": "2bd714c2-73b0-4ea1-9609-8cfdbefc23f5",
+			"id": "33c77e7a-d360-44f2-9204-188aec270a05",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "50792564-1e3a-4933-a415-4c20cf87e927",
+			"id": "6930fb4c-9a91-4197-9c21-900c3749ad69",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
