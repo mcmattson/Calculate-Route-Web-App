@@ -431,7 +431,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"requestType\": \"tour\",\r\n    \"earthRadius\": 1,\r\n    \"response\": 1.0,\r\n    \"places\": [\r\n        {\r\n            \"name\": \"Canyon Ranch Lenox\",\r\n            \"latitude\": \"42.344754\",\r\n            \"longitude\": \"-73.278324\"\r\n        },\r\n        {\r\n            \"name\": \"Lake Austin Spa Resort\",\r\n            \"latitude\": \"30.327341\",\r\n            \"longitude\": \"-97.925930\"\r\n        }\r\n    ]\r\n}"
+							"raw": "{\r\n    \"requestType\": \"tour\",\r\n    \"earthRadius\": 6371.0,\r\n    \"response\": 1.0,\r\n    \"places\": [\r\n        {\r\n            \"name\": \"Canyon Ranch Lenox\",\r\n            \"latitude\": \"42.344754\",\r\n            \"longitude\": \"-73.278324\"\r\n        },\r\n        {\r\n            \"name\": \"Lake Austin Spa Resort\",\r\n            \"latitude\": \"30.327341\",\r\n            \"longitude\": \"-97.925930\"\r\n        }\r\n    ]\r\n}"
 						},
 						"url": "{{BASE_URL}}/api/tour"
 					},
@@ -545,12 +545,12 @@
 	],
 	"variable": [
 		{
-			"id": "5c4777e3-6faa-44c9-a038-4649f3dc328e",
+			"id": "4bd657da-a7c4-433e-ac2e-a025e761511c",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "a2c6123c-7c3e-4be5-887f-1bc3d0907cc7",
+			"id": "259b99ed-731b-4232-b8ea-05b20c941f8c",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
