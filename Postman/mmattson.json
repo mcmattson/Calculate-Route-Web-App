@@ -456,7 +456,43 @@
 					"response": []
 				}
 			],
-			"id": "5ee03296-d3de-433f-8621-78acebf546fa"
+			"id": "5ee03296-d3de-433f-8621-78acebf546fa",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f6e0f040-4260-4462-a2d3-ed0242d29d96",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c48d2312-8713-4fc2-b8a4-de6a6ddfa498",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"requestType test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.requestType).to.eql (\"tour\");",
+							"});",
+							"",
+							"pm.test(\"earthRadius test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.earthRadius).to.eql(1.0);",
+							"});"
+						]
+					}
+				}
+			]
 		}
 	],
 	"event": [
@@ -483,12 +519,12 @@
 	],
 	"variable": [
 		{
-			"id": "33c77e7a-d360-44f2-9204-188aec270a05",
+			"id": "5720cdf9-ddba-4d99-8644-aa03dd30fea5",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "6930fb4c-9a91-4197-9c21-900c3749ad69",
+			"id": "d02f1d21-58d8-4f21-a6ac-4bdb1dc47faa",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
