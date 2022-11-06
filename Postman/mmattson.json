@@ -319,7 +319,48 @@
 					"response": []
 				}
 			],
-			"id": "a6771a46-c74e-4ddc-ab20-5a9adf29e855"
+			"id": "a6771a46-c74e-4ddc-ab20-5a9adf29e855",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9170b631-5201-4f4d-885a-b64999703bf0",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ccaa3b5d-afaf-4a17-8f30-73dd1529da1a",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"requestType test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.requestType).to.eql (\"find\");",
+							"});",
+							"",
+							"pm.test(\"earthRadius test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.earthRadius).to.eql(6371.0);",
+							"});",
+							"",
+							"pm.test(\"response test\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.earthRadius).to.eql(1.0);",
+							"});"
+						]
+					}
+				}
+			]
 		},
 		{
 			"name": "Tour",
@@ -504,12 +545,12 @@
 	],
 	"variable": [
 		{
-			"id": "94777a13-90bf-4a05-8863-18ba6024a8e5",
+			"id": "2a97eb3e-fcad-4982-9f1d-20fe3955726a",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "e875a261-6f2d-414b-9a63-bfa4fceec0ff",
+			"id": "e2415383-bf03-47cb-a4d1-466adb5d47ef",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
