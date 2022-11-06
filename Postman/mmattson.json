@@ -324,7 +324,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "9170b631-5201-4f4d-885a-b64999703bf0",
+						"id": "5c470a6e-ff4c-4c69-bd40-fe53261db763",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -334,7 +334,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "ccaa3b5d-afaf-4a17-8f30-73dd1529da1a",
+						"id": "d5a93f6f-46fd-4a79-abeb-887f5bcfd5f0",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status test\", function () {",
@@ -348,14 +348,9 @@
 							"    pm.expect(jsonData.requestType).to.eql (\"find\");",
 							"});",
 							"",
-							"pm.test(\"earthRadius test\", function () {",
+							"pm.test(\"match test\", function () {",
 							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.earthRadius).to.eql(6371.0);",
-							"});",
-							"",
-							"pm.test(\"response test\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.earthRadius).to.eql(1.0);",
+							"    pm.expect(jsonData.match).to.eql(\"dave\");",
 							"});"
 						]
 					}
@@ -545,12 +540,12 @@
 	],
 	"variable": [
 		{
-			"id": "480bbb29-4d0c-4d7d-b023-42031c81e760",
+			"id": "85361122-df9d-4c5e-9229-108d8380aa3f",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "6b0c1fb0-5683-4544-9ff7-4e923cef3225",
+			"id": "de1dbe43-1e4c-4cb9-b1ac-b6380d2c6183",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
