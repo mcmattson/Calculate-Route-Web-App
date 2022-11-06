@@ -141,26 +141,10 @@
 							"script": {
 								"id": "8afa0ea5-857d-4436-952b-9155a9f92fbf",
 								"exec": [
-									"pm.test(\"Status test\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"    pm.response.to.be.withBody;\r",
-									"    pm.response.to.be.json;\r",
-									"});\r",
-									"\r",
-									"pm.test(\"requestType test\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.requestType).to.eql (\"distances\");\r",
-									"});\r",
-									"\r",
-									"pm.test(\"earthRadius test\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.earthRadius).to.eql(1.0);\r",
-									"});\r",
-									"\r",
 									"pm.test(\"places test\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.places).to.not.equal(null);\r",
-									"    pm.expect(jsonData.places.length).to.equal(0);\r",
+									"    pm.expect(jsonData.places.length).to.equal(1409);\r",
 									"})"
 								],
 								"type": "text/javascript"
@@ -176,7 +160,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"requestType\": \"distances\",\r\n    \"earthRadius\": 1,\r\n    \"places\": []\r\n}",
+							"raw": "{\r\n  \"requestType\"    : \"distances\",\r\n  \"places\"         : [{\"name\":\"Hard Rock Cafe, Seattle\", \"latitude\":  \"47.609384\",  \"longitude\": \"-122.339507\"},\r\n                      {\"name\": \"Hard Rock Cafe, Las Vegas\", \"latitude\":  \"36.104382\", \"longitude\": \"-115.172316\"}],\r\n  \"earthRadius\"    : 6371.0,\r\n  \"distances\"       : [1408, 3171]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -498,12 +482,12 @@
 	],
 	"variable": [
 		{
-			"id": "c9833b2f-cddb-4b45-9970-95c176233ef1",
+			"id": "a9a41200-ab21-4d98-96c2-e1316b3a3419",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "cd8e2c9a-22be-42e9-b386-1e7da8b3916c",
+			"id": "85017f38-7a42-4766-8017-45210f8ce4d7",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
