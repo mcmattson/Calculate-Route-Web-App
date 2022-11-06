@@ -153,6 +153,24 @@
 			"id": "1ef61dd5-e179-4525-a5ef-21ba2767fe9c"
 		},
 		{
+			"name": "Find",
+			"item": [
+				{
+					"name": "New Request",
+					"id": "860d03be-bbec-47d4-ba58-274947e9ac66",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"id": "a6771a46-c74e-4ddc-ab20-5a9adf29e855"
+		},
+		{
 			"name": "Tour",
 			"item": [
 				{
@@ -206,11 +224,6 @@
 				}
 			],
 			"id": "5ee03296-d3de-433f-8621-78acebf546fa"
-		},
-		{
-			"name": "Find",
-			"item": [],
-			"id": "a6771a46-c74e-4ddc-ab20-5a9adf29e855"
 		}
 	],
 	"event": [
@@ -237,12 +250,12 @@
 	],
 	"variable": [
 		{
-			"id": "46f45da1-d98c-48e9-a499-e231cf012228",
+			"id": "5c10f30c-e164-47ec-aca8-5e50ddcef462",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "419d9553-de29-4263-a6b6-f91cc5ca6f7c",
+			"id": "05daa8f5-71f1-436d-9ce0-727cd9b291e4",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
