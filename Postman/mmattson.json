@@ -461,7 +461,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\"requestType\" : \"tour\",\r\n\"earthRadius\" : 3959.0,\r\n\"response\"    : 1.0, \r\n\"places\"      :    [{\"name\":\"Coors Field\",\"longitude\":\"-104.99\",\"latitude\":\"39.75\"},\r\n\t\t   {\"name\":\"Citizens Bank Park\",\"longitude\":\"-75.17\",\"latitude\":\"39.91\"},\r\n\t\t   {\"name\":\"Yankee Stadium\",\"longitude\":\"-73.93\",\"latitude\":\"40.83\"},\r\n\t\t   {\"name\": \"PETCO Park\",\"longitude\":\"-117.16\",\"latitude\":\"32.71\"},\r\n\t\t   {\"name\":\"Citi Field\",\"longitude\":\"-73.85\",\"latitude\":\"40.76\"},\r\n\t\t   {\"name\":\"T-Mobile Park\",\"longitude\":\"-122.33\",\"latitude\":\"47.59\"},\r\n\t\t   {\"name\":\"Truist Park\",\"longitude\":\"-84.47\",\"latitude\":\"33.89\"}]\r\n}"
+							"raw": "{\r\n    \"requestType\": \"tour\",\r\n    \"earthRadius\": 1,\r\n    \"response\": 0,\r\n    \"places\" : []\r\n}"
 						},
 						"url": "{{BASE_URL}}/api/tour"
 					},
@@ -495,12 +495,12 @@
 	],
 	"variable": [
 		{
-			"id": "ce463e50-e773-4933-9bd3-6e2b9fedc7fd",
+			"id": "29ed8918-ef42-4c84-bf9f-2c6612f9a1d3",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "394f8e85-ed5e-4e22-bd62-675f6cf4212a",
+			"id": "7e38024e-b1a6-41c0-985f-dd3236e18db4",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
