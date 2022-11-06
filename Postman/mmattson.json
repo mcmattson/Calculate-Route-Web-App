@@ -392,7 +392,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"requestType\": \"tour\",\r\n    \"earthRadius\": 1,\r\n    \"response\": 0,\r\n    \"places\" : []\r\n}"
+							"raw": "{\r\n    \"requestType\": \"tour\",\r\n    \"earthRadius\": 6371.0,\r\n    \"response\": 0,\r\n    \"places\" : []\r\n}"
 						},
 						"url": "{{BASE_URL}}/api/tour"
 					},
@@ -545,12 +545,12 @@
 	],
 	"variable": [
 		{
-			"id": "70bfc8c5-411c-4c77-8e1d-676c087964b4",
+			"id": "5c4777e3-6faa-44c9-a038-4649f3dc328e",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "bca7375e-098b-4a08-8305-b9f9b58ef9b5",
+			"id": "a2c6123c-7c3e-4be5-887f-1bc3d0907cc7",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
