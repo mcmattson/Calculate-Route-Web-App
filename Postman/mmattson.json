@@ -122,7 +122,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"requestType\": \"distances\",\r\n    \"earthRadius\": 1,\r\n    \"places\": []\r\n}",
+							"raw": "{\r\n    \"requestType\": \"distances\",\r\n    \"earthRadius\": 6371.0,\r\n    \"places\": []\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -482,12 +482,12 @@
 	],
 	"variable": [
 		{
-			"id": "a9a41200-ab21-4d98-96c2-e1316b3a3419",
+			"id": "009eb2ba-912b-4e27-ba0c-d029abd9854c",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "85017f38-7a42-4766-8017-45210f8ce4d7",
+			"id": "eb49e6b9-1d17-46b1-8ea0-5789c0f5198b",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
