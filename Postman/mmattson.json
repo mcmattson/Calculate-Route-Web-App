@@ -521,7 +521,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "3ca17ecc-5a47-4ed4-8e61-dad8d9d00cdb",
+						"id": "47ae6746-2289-4c8e-8c06-d4ac0a0b0d34",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -531,7 +531,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4f756c54-1eba-44af-9dcb-5856f415392d",
+						"id": "76a6d04c-e56a-437a-ba2d-0062212cd50f",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status test\", function () {",
@@ -552,7 +552,7 @@
 							"",
 							"pm.test(\"response test\", function () {",
 							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.earthRadius).to.eql(1.0);",
+							"    pm.expect(jsonData.response).to.eql(1.0);",
 							"});"
 						]
 					}
@@ -584,12 +584,12 @@
 	],
 	"variable": [
 		{
-			"id": "3c2969fd-3643-459f-8d9e-f8bd9d36103d",
+			"id": "d7597052-09bb-4c0e-b20b-090b514dfb68",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "c4053023-8578-43d4-966c-0d99a9666e4a",
+			"id": "dd720193-3ebb-43a1-98f6-355e07cbd622",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
