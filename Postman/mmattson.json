@@ -134,7 +134,7 @@
 					"response": []
 				},
 				{
-					"name": "Distance: One Place",
+					"name": "Distance: Two Place",
 					"event": [
 						{
 							"listen": "test",
@@ -514,12 +514,12 @@
 	],
 	"variable": [
 		{
-			"id": "b3773c86-6a54-438d-81e3-3c8e170a432e",
+			"id": "46949f8c-0553-4301-b170-cd61f95bb560",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "89dff27c-03e5-4990-99dc-7e3135575629",
+			"id": "d7eead9d-cdb2-4664-8651-8d8dc1b0ffb4",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
