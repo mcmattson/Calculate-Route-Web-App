@@ -156,7 +156,7 @@
 			"name": "Tour",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "Tour Optimization",
 					"event": [
 						{
 							"listen": "test",
@@ -232,12 +232,12 @@
 	],
 	"variable": [
 		{
-			"id": "d0598e50-c6fe-495d-89f1-165680fc9e73",
+			"id": "0818f683-eb77-4660-a778-ecbbc9ac6b46",
 			"key": "BASE_URL",
 			"value": "https://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "49fadd8a-7761-4eac-9618-b568653f4bd0",
+			"id": "47d461c3-c65f-43fe-aff7-ed13546305f1",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
