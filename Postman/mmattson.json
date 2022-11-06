@@ -408,6 +408,12 @@
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.places).to.not.equal(null);\r",
 									"    pm.expect(jsonData.places.length).to.equal(0);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"places test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.places).to.not.equal(null);\r",
+									"    pm.expect(jsonData.places.length).to.equal(11033);\r",
 									"})"
 								],
 								"type": "text/javascript"
@@ -423,7 +429,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"requestType\": \"tour\",\r\n    \"earthRadius\": 1,\r\n    \"response\": 0,\r\n    \"places\" : []\r\n}"
+							"raw": "{\r\n    \"requestType\": \"tour\",\r\n    \"earthRadius\": 6371.0,\r\n    \"response\": 1.0,\r\n    \"places\": [\r\n        {\r\n            \"name\": \"Canyon Ranch Lenox\",\r\n            \"latitude\": \"42.344754\",\r\n            \"longitude\": \"-73.278324\"\r\n        },\r\n        {\r\n            \"name\": \"Lake Austin Spa Resort\",\r\n            \"latitude\": \"30.327341\",\r\n            \"longitude\": \"-97.925930\"\r\n        },\r\n        {\r\n            \"name\": \"Miraval Arizona Resort & Spa\",\r\n            \"latitude\": \"32.507908\",\r\n            \"longitude\": \"-110.884746\"\r\n        },\r\n        {\r\n            \"name\": \"The Lodge at Woodloch\",\r\n            \"latitude\": \"41.503652\",\r\n            \"longitude\": \"-75.100350\"\r\n        },\r\n        {\r\n            \"name\": \"Woodloch Pines Resort\",\r\n            \"latitude\": \"41.519637\",\r\n            \"longitude\": \"-75.088776\"\r\n        },\r\n        {\r\n            \"name\": \"The Ranch at Rock Creek\",\r\n            \"latitude\": \"46.256488\",\r\n            \"longitude\": \"-113.522112\"\r\n        },\r\n        {\r\n            \"name\": \"Vista Verde Guest Ranch\",\r\n            \"latitude\": \"40.764112\",\r\n            \"longitude\": \"-106.828677\"\r\n        }\r\n    ]\r\n}"
 						},
 						"url": "{{BASE_URL}}/api/tour"
 					},
@@ -498,12 +504,12 @@
 	],
 	"variable": [
 		{
-			"id": "429216e9-59e5-4f79-b1b8-bd17e213e61c",
+			"id": "94777a13-90bf-4a05-8863-18ba6024a8e5",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "1b2f90a3-d038-4c1c-afaf-c0c62361a68c",
+			"id": "e875a261-6f2d-414b-9a63-bfa4fceec0ff",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
