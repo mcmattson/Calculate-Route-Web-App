@@ -303,6 +303,26 @@
 				},
 				{
 					"name": "Find: Multi-Return",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "780128fd-fc54-4a96-bf8b-6cfe0ab174c4",
+								"exec": [
+									"pm.test(\"find test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.places).to.not.equal(null);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"limit test\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.limit).to.eql(10);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"id": "b48f230a-b34c-46cf-8728-c464e571fb1b",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -312,7 +332,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"requestType\": \"find\",\r\n    \"match\": [],\r\n    \"limit\": 0\r\n}"
+							"raw": "{\r\n    \"requestType\": \"find\",\r\n    \"match\": [],\r\n    \"limit\": 10\r\n}"
 						},
 						"url": "{{BASE_URL}}/api/find"
 					},
@@ -540,12 +560,12 @@
 	],
 	"variable": [
 		{
-			"id": "85361122-df9d-4c5e-9229-108d8380aa3f",
+			"id": "b7dfd224-fbd9-4708-806a-29d69d915084",
 			"key": "BASE_URL",
 			"value": "HTTP://black-bottle.cs.colostate.edu:31415/"
 		},
 		{
-			"id": "de1dbe43-1e4c-4cb9-b1ac-b6380d2c6183",
+			"id": "5876cfae-6634-4697-8852-14f8e36d6516",
 			"key": "TEAM_NAME",
 			"value": "txx team name",
 			"disabled": true
