@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestFindRequest {
 
@@ -27,5 +28,14 @@ public class TestFindRequest {
     public void testType() {
         String type = find.getRequestType();
         assertEquals("find", type);
+    }
+
+    @Test
+    @DisplayName("marilake: match \"dave\" should return found number")
+    public void testFound(){
+        FindRequest findFull = new FindRequest("dave", 10);
+        findFull.buildResponse();
+        boolean validFound = findFull.getFound() != null;
+        assertTrue(validFound);
     }
 }
