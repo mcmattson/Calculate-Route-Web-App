@@ -11,13 +11,13 @@ public class FindRequest extends Request{
     private ArrayList<String> type;
     private ArrayList<String> where;
     private Integer limit;
-    private Double found; 
+    private Integer found; 
     private Places places; 
 
     public void buildResponse() {
         try{
-            Integer found = Database.found(match);
-            Places places = Database.Places(match, limit); 
+            found = Database.found(match);
+            places = Database.Places(match, limit); 
         } catch (Exception e) {}
 
         log.trace("FindResponse -> {}", this);
@@ -26,4 +26,15 @@ public class FindRequest extends Request{
     public FindRequest() {
         this.requestType = "find";
     }
+
+    //For testing purposes
+    public FindRequest(String match, Integer limit) {
+        this.match = match;
+        this.limit = limit;  
+        this.requestType = "find";     
+    }
+
+    public Integer getFound(){return found;}
+    public Places getPlaces(){ return places;}
+    public Integer getLimit(){return limit;}
 }
