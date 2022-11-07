@@ -10,11 +10,17 @@ public class FindRequest extends Request{
     private String match;
     private ArrayList<String> type;
     private ArrayList<String> where;
-    private Double limit;
+    private Integer limit;
     private Double found; 
+    private Places places; 
 
     public void buildResponse() {
-        
+        try{
+            Integer found = Database.found(match);
+            Places places = Database.Places(match, limit); 
+        } catch (Exception e) {}
+
+        log.trace("FindResponse -> {}", this);
     }
     
     public FindRequest() {
