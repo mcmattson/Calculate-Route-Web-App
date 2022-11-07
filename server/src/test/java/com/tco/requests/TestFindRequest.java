@@ -38,4 +38,12 @@ public class TestFindRequest {
         boolean validFound = findFull.getFound() != null;
         assertTrue(validFound);
     }
-}
+
+    @Test
+    @DisplayName("marilake: match \"dave\" should return a list of places")
+    public void testPlaces(){
+        FindRequest findFull = new FindRequest("dave", 10);
+        findFull.buildResponse();
+        boolean validPlaces = findFull.getPlaces() != null;
+        assertTrue(validPlaces);
+        }
