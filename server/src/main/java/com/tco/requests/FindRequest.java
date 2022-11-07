@@ -18,9 +18,9 @@ public class FindRequest extends Request{
         try{
             Integer found = Database.found(match);
             Places places = Database.Places(match, limit); 
-        } catch (Exception e) {
-            System.out.println("No results found");
-        }
+        } catch (Exception e) {}
+
+        log.trace("FindResponse -> {}", this);
     }
     
     public FindRequest() {
