@@ -46,4 +46,5 @@ public class TestFindRequest {
         findFull.buildResponse();
         boolean validPlaces = findFull.getPlaces() != null;
         assertTrue(validPlaces);
-        }
+    }
+}
