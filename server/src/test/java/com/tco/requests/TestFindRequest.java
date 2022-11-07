@@ -16,6 +16,13 @@ public class TestFindRequest {
     }
 
     @Test
+    @DisplayName("Test the build response for find.")
+    public void testBuildReponse(){
+        find.buildResponse();
+    }
+
+
+    @Test
     @DisplayName("mikylab: Request type is \"find\"")
     public void testType() {
         String type = find.getRequestType();
