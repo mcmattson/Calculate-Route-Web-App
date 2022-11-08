@@ -40,8 +40,8 @@ function TripHeader(props) {
 				>
 					{props.tripName}
 				</th>
-				<th> Leg Distance (Kilometers) </th>
-				<th> Cumulative Distance (Kilometers)</th>
+				<th> Leg Distance (Miles) </th>
+				<th> Cumulative Distance (Miles)</th>
 			</tr>
 		</thead>
 	);
@@ -56,7 +56,7 @@ function TotalTripDistance(props){
 
 
 	return (
-		<th	 data-testid = {'header-total-dist'} > Total Trip Distance (Kilometers): {total}</th>
+		<th	 data-testid = {'header-total-dist'} > Total Trip Distance (Miles): {total}</th>
 	)
 
 }
