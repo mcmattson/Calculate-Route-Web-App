@@ -9,7 +9,7 @@ import { getOriginalServerUrl, sendAPIRequest } from '../../../utils/restfulAPI'
 
 
 export default function Itinerary(props) {
-	const distanceSettings = useDistances(props.places, 6371.0, getOriginalServerUrl());
+	const distanceSettings = useDistances(props.places, 3959.0, getOriginalServerUrl());
 	return (
 		<Table responsive>
 			<TripHeader
