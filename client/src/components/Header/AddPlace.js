@@ -15,6 +15,7 @@ import { reverseGeocode } from '../../utils/reverseGeocode';
 export default function AddPlace(props) {
 	const [foundPlace, setFoundPlace] = useState();
 	const [coordString, setCoordString] = useState('');
+	// const [typeSearch, setTypeSearch] = useState();
 	return (
 		<Modal isOpen={props.isOpen} toggle={props.toggleAddPlace}>
 			<AddPlaceHeader toggleAddPlace={props.toggleAddPlace} />
@@ -23,11 +24,14 @@ export default function AddPlace(props) {
 				setFoundPlace={setFoundPlace}
 				coordString={coordString}
 				setCoordString={setCoordString}
+				// typeSearch={typeSearch}
+				// setTypeSearch={setTypeSearch}
 			/>
 			<AddPlaceFooter
 				append={props.append}
 				foundPlace={foundPlace}
 				setCoordString={setCoordString}
+				// typeSearch = {typeSearch}
 			/>
 		</Modal>
 	);
@@ -69,6 +73,19 @@ function PlaceSearch(props, coordString, nameString) {
 			</Col>
 		</ModalBody>
 	);
+}
+async function checkSearchType(coordString){
+	let newCoordString = coordString.replace(/,/g, '')
+	let stringLength = newCoordString.length
+
+	if (textLength(newCoordString)){
+		let isNumber = Number(newCoordString)
+		if (isNaN(isNumber)){
+			return false
+		}else{
+			return true
+		}
+	}
 }
 
 function PlaceInfo(props) {
