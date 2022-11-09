@@ -70,6 +70,19 @@ function PlaceSearch(props, coordString, nameString) {
 		</ModalBody>
 	);
 }
+async function checkSearchType(coordString){
+	let newCoordString = coordString.replace(/,/g, '')
+	let stringLength = newCoordString.length
+
+	if (textLength(newCoordString)){
+		let isNumber = Number(newCoordString)
+		if (isNaN(isNumber)){
+			return false
+		}else{
+			return true
+		}
+	}
+}
 
 function PlaceInfo(props) {
 	return (
