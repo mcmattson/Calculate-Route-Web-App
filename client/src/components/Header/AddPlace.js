@@ -53,6 +53,7 @@ function PlaceSearch(props, coordString, nameString) {
 		}
 	}, [props.nameString]);
 	useEffect(() => {
+		checkSearchType(props.coordString);
 		verifyCoordinates(props.coordString, props.setFoundPlace);
 	}, [props.coordString]);
 	return (
