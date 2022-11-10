@@ -19,6 +19,7 @@ public class ConfigRequest extends Request {
         features = new ArrayList<>();
         features.add("config");
         features.add("distances");
+        features.add("find");
         log.trace("buildResponse -> {}", this);
     }
 
