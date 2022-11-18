@@ -10,14 +10,14 @@ import {
 	ModalFooter,
 } from 'reactstrap';
 import Coordinates from 'coordinate-parser';
+import { LOG } from '../../utils/constants';
 import { reverseGeocode } from '../../utils/reverseGeocode';
 import { getOriginalServerUrl, sendAPIRequest } from '../../utils/restfulAPI';
-import { LOG } from '../../utils/constants';
 
 export default function AddPlace(props) {
 	const [foundPlace, setFoundPlace] = useState();
-	const [places, setPlaces] = useState([]);
-	const [coordString, setCoordString] = useState('');
+	const [coordString, setCoordString] = useState();
+	const findSettings = useFind(props.places, 10, getOriginalServerUrl());
 	return (
 		<Modal isOpen={props.isOpen} toggle={props.toggleAddPlace}>
 			<AddPlaceHeader toggleAddPlace={props.toggleAddPlace} />
@@ -26,13 +26,15 @@ export default function AddPlace(props) {
 				setFoundPlace={setFoundPlace}
 				coordString={coordString}
 				setCoordString={setCoordString}
-				places = {places}
-				setPlaces = {setPlaces}
+				findSettings={findSettings}
+				places={props.places}
 			/>
 			<AddPlaceFooter
 				append={props.append}
 				foundPlace={foundPlace}
+				findSettings={findSettings}
 				setCoordString={setCoordString}
+				places={props.places}
 			/>
 		</Modal>
 	);
@@ -47,28 +49,23 @@ function AddPlaceHeader(props) {
 }
 
 function textLength(value) {
-	return value.length >= 3;
+	return (value.length >= 3);
+}
+
+function textComma(value) {
+	return (value.indexOf(',') > -1);
 }
 
 function PlaceSearch(props) {
 	useEffect(() => {
 		document.getElementById('search').onkeyup = function () {
-			if (textLength(this.value))
-				console.log("Return Place Search"); //replace with verifyPlace Function
+			if (textComma(this.value)) {
+				verifyCoordinates(props.coordString, props.setFoundPlace);
+			} else if (textLength(this.value)) {
+				verifyPlacesName(props.coordString, props.setFoundPlace);
+			}
 		}
-	}, [props.nameString]);
-
-	if (!props.coordString) {
-		useEffect(() => {
-			verifyCoordinates(props.coordString, props.setFoundPlace);		
-		}, [props.coordString]);
-	}
-
-	else{
-		let response = useFind(props.coordString, props.places, props.setPlaces);
-		props.setPlaces(response.ServerFound.places);
-	}
-
+	}, [props.coordString]);
 	return (
 		<ModalBody>
 			<Col>
@@ -84,19 +81,19 @@ function PlaceSearch(props) {
 		</ModalBody>
 	);
 }
-async function checkSearchType(coordString){
+/* async function checkSearchType(coordString) {
 	let newCoordString = coordString.replace(/,/g, '')
 	let stringLength = newCoordString.length
 
-	if (textLength(newCoordString)){
+	if (textLength(newCoordString)) {
 		let isNumber = Number(newCoordString)
-		if (isNaN(isNumber)){
+		if (isNaN(isNumber)) {
 			return false
-		}else{
+		} else {
 			return true
 		}
 	}
-}
+} */
 
 function PlaceInfo(props) {
 	return (
@@ -135,41 +132,68 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 			setFoundPlace(fullPlace);
 		}
 	} catch (error) {
-		let response = useFind(coordString);
-		setFoundPlace(response.ServerFound);
+		setFoundPlace(undefined);
 	}
 }
 
+async function verifyPlacesName(nameString, setFoundPlace) {
+	try {
+		
+		if (isPlaceValid(nameString)) {
+			const fullPlace = useFind(nameString);
+			setFoundPlace(fullPlace);
+		}
+	} catch (error) {
+		setFoundPlace(undefined);
+	}
+}
 function isLatLngValid(lat, lng) {
 	return (lat !== undefined && lng !== undefined);
 }
 
-export function useFind(match, places, setPlaces) {
-	const ServerFound = {
-		places: places
+function isPlaceValid(coordString) {
+	return (coordString == "dave");
+}
+
+function useFind(matchStr, listLimit, serverURL) {
+	console.log("match: ", matchStr);
+	//console.log("limit: ", listLimit);
+	//console.log("serverURL: ", serverURL);
+
+	matchStr = "dave";
+	listLimit = 10;
+	const [found, setFoundPlace] = useState([]);
+
+	const find = {
+		found: found
 	}
 
-	const PlaceActions = {
-		setPlaces : setPlaces
+	const findActions = {
+		setFoundPlace: setFoundPlace
 	}
+	
+	useEffect(() => {
+		sendFindRequest(matchStr, listLimit, serverURL, findActions);
+	}, [matchStr, listLimit])
 
-	useEffect( () => {
-		sendFindRequest(match, 10 , getOriginalServerUrl(), PlaceActions);
-	}, match);  
+	console.log(find);
+	return { find };
 
+	async function sendFindRequest(matchStr, listLimit, serverUrl) {
 
-	async function sendFindRequest(match, limit, serverUrl, PlaceActions) {
-		const findResponse = await sendAPIRequest({
-			requestType: 'find',
-			match: match,
-			limit: limit}, serverUrl);
+		const { setPlace, setFound } = findActions;
+
+		const requestBody = { requestType: 'find', matchStr: "dave", listLimit: listLimit};
+		const findResponse = await sendAPIRequest(requestBody, serverUrl);
+
 		if (findResponse) {
-			setPlaces(findResponse.places)
+			setPlace(findResponse.find);
+			setFound(findResponse.find);
 		} else {
-			setPlaces([]);
-			LOG.error(`Find request to ${serverUrl} failed. Check the log for more details.`, "error");
+			LOG.error(`Find request to ${serverURL} failed. Check the log for more details.`, "error");
+
 		}
 	}
 
-	return {ServerFound};
+	//return [{ serverUrl: serverUrl, serverFind: serverFind }, processServerFindSuccess,];
 }
