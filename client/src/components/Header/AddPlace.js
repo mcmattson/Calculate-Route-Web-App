@@ -17,9 +17,9 @@ import { usePlaces } from '../../hooks/usePlaces';
 
 export default function AddPlace(props) {
 	const [foundPlace, setFoundPlace] = useState();
-	const { places, selectedIndex, placeActions } = usePlaces();
-	const [coordString, setCoordString] = useState();
-	const [nameString, setNameString] = useState(' ');
+	const { places, selectedIndex } = usePlaces();
+	const [coordString, setCoordString] = useState('');
+	const [nameString, setNameString] = useState('');
 	const findSettings = useFind(props.places, getOriginalServerUrl());
 	return (
 		<Modal isOpen={props.isOpen} toggle={props.toggleAddPlace}>
@@ -63,27 +63,31 @@ function textLength(value) {
 
 function textComma(value) {
 	return (value.indexOf(',') > -1);
-}
+} 
+
 
 function PlaceSearch(props) {
-	 useEffect(() => {
-		 document.getElementById('search').onkeyup = function () {
+	useEffect(() => {
+		document.getElementById('search').onkeyup = function () {
+			if (textComma(this.value)) {
 				verifyCoordinates(props.coordString, props.setFoundPlace);
+			}
 		}
 	}, [props.coordString]);
+
 	useEffect(() => {
 		document.getElementById('search-name').onkeyup = function () {
 			if (textLength(this.value)) {
 				verifyPlacesName(props.nameString, props.setFoundPlace);
 			}
-			}
+		}
 	}, [props.nameString]);
 
 	return (
 		<ModalBody>
 			<Col>
 				Enter a Coordinates Search (EX: 50,50)
-				 <Input
+				<Input
 					type='search' id='search'
 					onChange={(input) => props.setCoordString(input.target.value)}
 					placeholder='Enter Coordinates'
@@ -92,7 +96,7 @@ function PlaceSearch(props) {
 				/>
 				<br />
 				Enter a Name Search
-				 <Input
+				<Input
 					type='search' id='search-name'
 					onChange={(input) => props.setNameString(input.target.value)}
 					placeholder='Enter Name'
@@ -136,10 +140,9 @@ function AddPlaceFooter(props) {
 				onClick={() => {
 					props.append(props.foundPlace);
 					props.setCoordString('');
-					props.setNameString('')
 				}}
 				data-testid='add-place-button'
-				//disabled={!props.foundPlace}
+			//disabled={!props.foundPlace}
 			>
 				Add Place(s)
 			</Button>
@@ -163,10 +166,10 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 
 async function verifyPlacesName(nameString, setFoundPlace) {
 	try {
-		if (isPlaceValid(nameString)) {
+		/* if (isPlaceValid(nameString)) { */
 			const fullPlace = useFind(nameString);
 			setFoundPlace(fullPlace);
-		}
+		/* } */
 	} catch (error) {
 		setFoundPlace(undefined);
 	}
@@ -176,56 +179,61 @@ function isLatLngValid(lat, lng) {
 	return (lat !== undefined && lng !== undefined);
 }
 
-function isPlaceValid(coordString) {
-	return (coordString !== undefined);
-}
+/* function isPlaceValid(nameString) {
+	return (nameString !== undefined);
+} */
 
 function useFind(match, serverURL) {
-	console.log("BEFORE || match: %s | serverURL: %s", match, serverURL);
-
+	if (match == undefined) {
+		match = "dave";
+	}
+	console.log(match);
 	const [found, setFoundPlace] = useState(1);
 	const [places, setPlaces] = useState([]);
-	const [limit, setLimit] = useState(0);
-	
-	console.log("AFTER  || match: %s | limit: %d | serverURL: %s", match, limit, serverURL);
+	const [limit, setLimit] = useState(1);
+	const [type, setType] = useState(['airport']);
+	const [where, setWhere] = useState(['United States']);
+	const [lng, setLng] = useState();
+	const [lat, setLat] = useState();
 
 	const find = {
+		type: type,
+		where: where,
+		limit: limit,
 		found: found,
 		places: places,
-		limit : limit
+
 	}
 
 	const findActions = {
-		setFoundPlace: setFoundPlace, 
-		setPlaces: setPlaces,
-		setLimit: setLimit
+		setLng: setLng,
+		setLat: setLat,
+		setPlaces: setPlaces
+
 	}
-	console.log("AFTER  || places: [%s] | limit: %d | found: %d", places, limit, found);
 
 	useEffect(() => {
-		sendFindRequest("davee", limit, serverURL/* , findActions */);
-
+		sendFindRequest(match, serverURL, findActions);
 	}, [match, limit])
 	return { find };
-	
-	async function sendFindRequest(match, serverUrl) {
-		console.log("BEFORE Return || match: %s | limit: %d | serverURL: %s", match, limit, serverURL);
-		const { setPlaces, setFoundPlace, setLimit } = findActions;
 
+	async function sendFindRequest(match, serverURL, findActions) {
+		const { setLng, setLat, setPlaces, setFoundPlace } = findActions;
+		//TODO: FixME
+		/* match = "dave"; */
 		const requestBody = {
-			requestType: 'find', match: match, type: ["airport"], where: ["United States"], limit: limit, places: places};
-		const findResponse = await sendAPIRequest(requestBody, serverUrl);
+			requestType: 'find', match: match, type: type, where: where, limit: limit
+		};
+		console.log("requestBody: ", requestBody);
+		const findResponse = await sendAPIRequest(requestBody, serverURL);
 
 		if (findResponse) {
 			setPlaces(findResponse.find);
-			setFoundPlace(findResponse.find);
-			setLimit(findResponse.find);
-			console.log("AFTER Return || findResponse.places: %d | findResponse.foundPlace: %s | limit: %d | serverURL: %s", findResponse.places, findResponse.foundPlace, limit, serverURL);
 		} else {
+			setPlaces([]);
 			LOG.error(`Find request to ${serverURL} failed. Check the log for more details.`, "error");
-
 		}
-	}
+		console.log("findResponse: ", findResponse);
 
-	//return [{ serverUrl: serverUrl, serverFind: serverFind }, processServerFindSuccess,];
+	}
 }
