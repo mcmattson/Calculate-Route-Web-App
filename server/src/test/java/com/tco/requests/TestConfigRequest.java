@@ -35,6 +35,12 @@ public class TestConfigRequest {
     public void testDistanceFeature(){
         assertTrue(conf.validFeature("distances"));
     }
+    
+    @Test
+     @DisplayName("mikylab: Features includes \"find\"")
+     public void testFindFeature(){
+         assertTrue(conf.validFeature("find"));
+     }
 
     @Test
     @DisplayName("base: Team name is correct")
