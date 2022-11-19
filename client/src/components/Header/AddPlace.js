@@ -13,14 +13,14 @@ import Coordinates from 'coordinate-parser';
 import { LOG } from '../../utils/constants';
 import { reverseGeocode } from '../../utils/reverseGeocode';
 import { getOriginalServerUrl, sendAPIRequest } from '../../utils/restfulAPI';
-import { usePlaces } from '../../hooks/usePlaces';
 
 export default function AddPlace(props) {
 	const [foundPlace, setFoundPlace] = useState();
-	const { places, selectedIndex } = usePlaces();
 	const [coordString, setCoordString] = useState('');
 	const [nameString, setNameString] = useState('');
-	const findSettings = useFind(props.places, getOriginalServerUrl());
+	const [limit, setLimit] = useState(2);
+	
+	const findSettings = useFind(props.places, 10, getOriginalServerUrl());
 	return (
 		<Modal isOpen={props.isOpen} toggle={props.toggleAddPlace}>
 			<AddPlaceHeader toggleAddPlace={props.toggleAddPlace} />
@@ -32,8 +32,9 @@ export default function AddPlace(props) {
 				setNameString={setNameString}
 				nameString={nameString}
 				findSettings={findSettings}
-				//places={props.places}
-				places={places}
+				places={props.places}
+				//places={places}
+				placeActions={props.placeActions}
 			/>
 			<AddPlaceFooter
 				append={props.append}
@@ -41,8 +42,11 @@ export default function AddPlace(props) {
 				setFoundPlace={setFoundPlace}
 				findSettings={findSettings}
 				setCoordString={setCoordString}
-				//places={props.places}
-				places={places}
+				nameString={nameString}
+				setNameString={setNameString}
+				places={props.places}
+				placeActions={props.placeActions}
+				//places={places}
 				selectedIndex={props.selectedIndex}
 			/>
 		</Modal>
@@ -63,7 +67,7 @@ function textLength(value) {
 
 function textComma(value) {
 	return (value.indexOf(',') > -1);
-} 
+}
 
 
 function PlaceSearch(props) {
@@ -101,7 +105,7 @@ function PlaceSearch(props) {
 					onChange={(input) => props.setNameString(input.target.value)}
 					placeholder='Enter Name'
 					data-testid='name-input'
-					value={props.nameString}
+					value={props.nameString || "dave"}
 				/>
 				<PlaceInfo foundPlace={props.foundPlace} />
 			</Col>
@@ -166,10 +170,10 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 
 async function verifyPlacesName(nameString, setFoundPlace) {
 	try {
-		/* if (isPlaceValid(nameString)) { */
+		if (isPlaceValid(nameString)) {
 			const fullPlace = useFind(nameString);
 			setFoundPlace(fullPlace);
-		/* } */
+		}
 	} catch (error) {
 		setFoundPlace(undefined);
 	}
@@ -179,48 +183,38 @@ function isLatLngValid(lat, lng) {
 	return (lat !== undefined && lng !== undefined);
 }
 
-/* function isPlaceValid(nameString) {
+function isPlaceValid(nameString) {
 	return (nameString !== undefined);
-} */
+}
 
-function useFind(match, serverURL) {
-	if (match == undefined) {
-		match = "dave";
-	}
-	console.log(match);
-	const [found, setFoundPlace] = useState(1);
+function useFind(match, limit, serverURL) {
+	const [found, setFound] = useState(1);
 	const [places, setPlaces] = useState([]);
-	const [limit, setLimit] = useState(1);
 	const [type, setType] = useState(['airport']);
 	const [where, setWhere] = useState(['United States']);
-	const [lng, setLng] = useState();
-	const [lat, setLat] = useState();
 
 	const find = {
-		type: type,
-		where: where,
-		limit: limit,
-		found: found,
 		places: places,
-
+		found: found,
 	}
 
 	const findActions = {
-		setLng: setLng,
-		setLat: setLat,
-		setPlaces: setPlaces
-
+		setPlaces: setPlaces,
+		setFound: setFound
 	}
 
 	useEffect(() => {
+		console.log("match: ", match);
 		sendFindRequest(match, serverURL, findActions);
-	}, [match, limit])
+	}, [match])
 	return { find };
 
 	async function sendFindRequest(match, serverURL, findActions) {
-		const { setLng, setLat, setPlaces, setFoundPlace } = findActions;
-		//TODO: FixME
-		/* match = "dave"; */
+		const { setPlaces, setFound } = findActions;
+		console.log("match: ", match);
+		
+		match = "Seattle"; //TODO: FixME
+
 		const requestBody = {
 			requestType: 'find', match: match, type: type, where: where, limit: limit
 		};
@@ -228,12 +222,10 @@ function useFind(match, serverURL) {
 		const findResponse = await sendAPIRequest(requestBody, serverURL);
 
 		if (findResponse) {
+			setFound(findResponse.find);
 			setPlaces(findResponse.find);
 		} else {
-			setPlaces([]);
 			LOG.error(`Find request to ${serverURL} failed. Check the log for more details.`, "error");
 		}
-		console.log("findResponse: ", findResponse);
-
 	}
 }
