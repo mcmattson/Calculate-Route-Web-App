@@ -235,36 +235,18 @@ export function useFind(match, limit, serverURL) {
 			};
 
 			console.log("requestBody: ", requestBody);
-		
 			const findResponse = await sendAPIRequest(requestBody, serverURL);
-		
 
-			if (findResponse) {
-				const newPlace = new Place({ ...name, ...findResponse.name });
-				setFound(findResponse.found);
-				found = findResponse.found;
-				if (findResponse.found > limit) {
-				}
-			
-				//console.log("finalFound: ", found);
-				setPlaces(findResponse.places);
+			if (findResponse.found !== 0) {
+				const newPlace = new Place({ ...match, ...findResponse.places });
 				console.log("findResponse.places: ", findResponse.places);
-				for (var i = 0; i < found; i++) {
-					setName(findResponse.places[i].locationFeatures.name);
-					//console.log("findResponse.name: %s", findResponse.places[i].locationFeatures.name);
-					//console.log("findResponse.setName: %s", name);
-					setLat(findResponse.places[i].locationFeatures.latitude);
-					//console.log("findResponse.lat: %f", findResponse.places[i].locationFeatures.latitude);
-					setLng(findResponse.places[i].locationFeatures.longitude);
-					//console.log("findResponse.lng: %f", findResponse.places[i].locationFeatures.longitude );
-					setIndex(findResponse.places[i].locationFeatures.index);
-					//console.log("findResponse.index: %d", findResponse.places[i].locationFeatures.index);
-					return newPlace;
-				}
+				return newPlace;
+
 				
 			} else {
-				setPlaces([]);
-				LOG.error(`Find request to ${serverURL} failed. Check the log for more details.`, "error");
+				const unknownPlace = new Place({ name: 'Unkown', ...match });
+				console.log("findResponse.places - Unkown: ", findResponse.places);
+				return unknownPlace;
 			}
 		} catch (error) { console.log(error); }
 	}
