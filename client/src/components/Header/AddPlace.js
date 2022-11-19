@@ -19,10 +19,10 @@ import { latLngToPlace } from "../../utils/transformers";
 export default function AddPlace(props) {
 	const [foundPlace, setFoundPlace] = useState();
 	const [coordString, setCoordString] = useState('');
-	const [nameString, setNameString] = useState('');
-	const [limit, setLimit] = useState(2);
+	var [nameString, setNameString] = useState('');
+	var [limit, setLimit] = useState(10);
 	
-	const findSettings = useFind(props.places, 10, getOriginalServerUrl());
+	const findSettings = useFind(nameString, limit, getOriginalServerUrl());
 	return (
 		<Modal isOpen={props.isOpen} toggle={props.toggleAddPlace}>
 			<AddPlaceHeader toggleAddPlace={props.toggleAddPlace} />
@@ -35,6 +35,7 @@ export default function AddPlace(props) {
 				nameString={nameString}
 				findSettings={findSettings}
 				places={props.places}
+				setLimit={setLimit}
 				//places={places}
 				placeActions={props.placeActions}
 			/>
@@ -63,10 +64,6 @@ function AddPlaceHeader(props) {
 	);
 }
 
-function textLength(value) {
-	return (value.length >= 3);
-}
-
 function textComma(value) {
 	return (value.indexOf(',') > -1);
 }
@@ -77,19 +74,13 @@ function PlaceSearch(props) {
 		document.getElementById('search').onkeyup = function () {
 			if (textComma(this.value)) {
 				verifyCoordinates(props.coordString, props.setFoundPlace);
-				console.log("coord - props.setFoundPlace: ", props.setFoundPlace);
-				console.log("props.coordString: ", props.coordString);
 			}
 		}
 	}, [props.coordString]);
 
 	useEffect(() => {
 		document.getElementById('search-name').onkeyup = function () {
-			if (textLength(this.value)) {
 				verifyPlacesName(props.nameString, props.setFoundPlace);
-				console.log("props.setFoundPlace: ", props.setFoundPlace);
-				console.log("props.nameString: ", props.nameString);
-			}
 		}
 	}, [props.nameString]);
 
@@ -99,6 +90,7 @@ function PlaceSearch(props) {
 				Enter a Coordinates Search (EX: 50,50)
 				<Input
 					type='search' id='search'
+					
 					onChange={(input) => props.setCoordString(input.target.value)}
 					placeholder='Enter Coordinates'
 					data-testid='coord-input'
@@ -108,6 +100,7 @@ function PlaceSearch(props) {
 				Enter a Name Search
 				<Input
 					type='search' id='search-name'
+					
 					onChange={(input) => props.setNameString(input.target.value)}
 					placeholder='Enter Name'
 					data-testid='name-input'
@@ -177,8 +170,7 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 async function verifyPlacesName(nameString, setFoundPlace) {
 	try {
 		if (isPlaceValid(nameString)) {
-			console.log("nameString: ", nameString);
-			const fullPlace = await useFind(nameString);
+			const fullPlace = useFind(nameString);
 			console.log("fullPlace: ", fullPlace);
 			setFoundPlace(fullPlace);
 		}
@@ -195,8 +187,12 @@ function isPlaceValid(nameString) {
 	return (nameString !== undefined);
 }
 
-function useFind(match, limit, serverURL) {
-	//console.log("match-useFind: ", match);
+export function useFind(match, limit, serverURL) {
+	
+	if (match == undefined || match.length < 3 ) {
+		match = "";
+		limit = 0;
+	}
 	var [found, setFound] = useState(1);
 	const [places, setPlaces] = useState([]);
 	const [type, setType] = useState(['airport']);
@@ -207,7 +203,7 @@ function useFind(match, limit, serverURL) {
 	const [name, setName] = useState("");
 
 
-	const find = {
+	var find = {
 		places: places,
 		found: found,
 		name: name,
@@ -216,7 +212,7 @@ function useFind(match, limit, serverURL) {
 		lng: lng
 	}
 
-	const findActions = {
+	var findActions = {
 		setPlaces: setPlaces,
 		setFound: setFound,
 		setName: setName,
@@ -226,50 +222,50 @@ function useFind(match, limit, serverURL) {
 	}
 	//console.log("match-After useFind: ", match);
 	useEffect(() => {
-		//console.log("match: ", match);
-		sendFindRequest(match, serverURL, findActions);
-	}, [match, limit])
+		sendFindRequest(match, limit, serverURL, findActions);
+	}, [match])
 	return { find };
 
-	async function sendFindRequest(match, serverURL, findActions) {
+	async function sendFindRequest(match, limit, serverURL, findActions) {
 		const { setName, setPlaces, setFound, setLat, setLng, setIndex } = findActions;
-		//console.log("match: %s", match);
 		
-		match = "dave"; //TODO: FixME
+		try {
+			const requestBody = {
+				requestType: 'find', match: match, type: type, where: where, limit: limit
+			};
 
-		const requestBody = {
-			requestType: 'find', match: match, type: type, where: where, limit: limit
-		};
+			console.log("requestBody: ", requestBody);
+		
+			const findResponse = await sendAPIRequest(requestBody, serverURL);
+		
 
-		console.log("requestBody: ", requestBody);
-		const findResponse = await sendAPIRequest(requestBody, serverURL);
-		console.log("findResponse: ", findResponse);
-		if (findResponse) {
-			const newPlace = new Place({ ...match, ...findResponse.name });
-			setFound(findResponse.found);
-			found = findResponse.found;
-			if (findResponse.found > limit) {
-				found = limit;
-			}
+			if (findResponse) {
+				const newPlace = new Place({ ...name, ...findResponse.name });
+				setFound(findResponse.found);
+				found = findResponse.found;
+				if (findResponse.found > limit) {
+				}
 			
-			console.log("finalFound: ", found);
-			setPlaces(findResponse.places);
-			console.log("findResponse.places: ", findResponse.places);
-			for (var i = 0; i < found; i++) {
-				setName(findResponse.places[i].locationFeatures.name);
-				console.log("findResponse.name: %s", findResponse.places[i].locationFeatures.name);
-				console.log("findResponse.setName: %s", name);
-				setLat(findResponse.places[i].locationFeatures.latitude);
-				console.log("findResponse.lat: %f", findResponse.places[i].locationFeatures.latitude);
-				setLng(findResponse.places[i].locationFeatures.longitude);
-				console.log("findResponse.lng: %f", findResponse.places[i].locationFeatures.longitude );
-				setIndex(findResponse.places[i].locationFeatures.index);
-				console.log("findResponse.index: %d", findResponse.places[i].locationFeatures.index);
-				return newPlace;
+				//console.log("finalFound: ", found);
+				setPlaces(findResponse.places);
+				console.log("findResponse.places: ", findResponse.places);
+				for (var i = 0; i < found; i++) {
+					setName(findResponse.places[i].locationFeatures.name);
+					//console.log("findResponse.name: %s", findResponse.places[i].locationFeatures.name);
+					//console.log("findResponse.setName: %s", name);
+					setLat(findResponse.places[i].locationFeatures.latitude);
+					//console.log("findResponse.lat: %f", findResponse.places[i].locationFeatures.latitude);
+					setLng(findResponse.places[i].locationFeatures.longitude);
+					//console.log("findResponse.lng: %f", findResponse.places[i].locationFeatures.longitude );
+					setIndex(findResponse.places[i].locationFeatures.index);
+					//console.log("findResponse.index: %d", findResponse.places[i].locationFeatures.index);
+					return newPlace;
+				}
+				
+			} else {
+				setPlaces([]);
+				LOG.error(`Find request to ${serverURL} failed. Check the log for more details.`, "error");
 			}
-		} else {
-			setPlaces([]);
-			LOG.error(`Find request to ${serverURL} failed. Check the log for more details.`, "error");
-		}
+		} catch (error) { console.log(error); }
 	}
 }
