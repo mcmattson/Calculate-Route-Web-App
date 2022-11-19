@@ -13,6 +13,8 @@ import Coordinates from 'coordinate-parser';
 import { LOG } from '../../utils/constants';
 import { reverseGeocode } from '../../utils/reverseGeocode';
 import { getOriginalServerUrl, sendAPIRequest } from '../../utils/restfulAPI';
+import { Place } from "../../models/place.model";
+import { latLngToPlace } from "../../utils/transformers";
 
 export default function AddPlace(props) {
 	const [foundPlace, setFoundPlace] = useState();
@@ -75,6 +77,8 @@ function PlaceSearch(props) {
 		document.getElementById('search').onkeyup = function () {
 			if (textComma(this.value)) {
 				verifyCoordinates(props.coordString, props.setFoundPlace);
+				console.log("coord - props.setFoundPlace: ", props.setFoundPlace);
+				console.log("props.coordString: ", props.coordString);
 			}
 		}
 	}, [props.coordString]);
@@ -83,6 +87,8 @@ function PlaceSearch(props) {
 		document.getElementById('search-name').onkeyup = function () {
 			if (textLength(this.value)) {
 				verifyPlacesName(props.nameString, props.setFoundPlace);
+				console.log("props.setFoundPlace: ", props.setFoundPlace);
+				console.log("props.nameString: ", props.nameString);
 			}
 		}
 	}, [props.nameString]);
@@ -105,7 +111,7 @@ function PlaceSearch(props) {
 					onChange={(input) => props.setNameString(input.target.value)}
 					placeholder='Enter Name'
 					data-testid='name-input'
-					value={props.nameString || "dave"}
+					value={props.nameString}
 				/>
 				<PlaceInfo foundPlace={props.foundPlace} />
 			</Col>
@@ -171,7 +177,9 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 async function verifyPlacesName(nameString, setFoundPlace) {
 	try {
 		if (isPlaceValid(nameString)) {
-			const fullPlace = useFind(nameString);
+			console.log("nameString: ", nameString);
+			const fullPlace = await useFind(nameString);
+			console.log("fullPlace: ", fullPlace);
 			setFoundPlace(fullPlace);
 		}
 	} catch (error) {
@@ -188,43 +196,79 @@ function isPlaceValid(nameString) {
 }
 
 function useFind(match, limit, serverURL) {
-	const [found, setFound] = useState(1);
+	//console.log("match-useFind: ", match);
+	var [found, setFound] = useState(1);
 	const [places, setPlaces] = useState([]);
 	const [type, setType] = useState(['airport']);
 	const [where, setWhere] = useState(['United States']);
+	const [index, setIndex] = useState(0);
+	const [lat, setLat] = useState(0);
+	const [lng, setLng] = useState(0);
+	const [name, setName] = useState("");
+
 
 	const find = {
 		places: places,
 		found: found,
+		name: name,
+		index: index,
+		lat: lat,
+		lng: lng
 	}
 
 	const findActions = {
 		setPlaces: setPlaces,
-		setFound: setFound
+		setFound: setFound,
+		setName: setName,
+		setIndex: setIndex,
+		setLat: setLat,
+		setLng: setLng
 	}
-
+	//console.log("match-After useFind: ", match);
 	useEffect(() => {
-		console.log("match: ", match);
+		//console.log("match: ", match);
 		sendFindRequest(match, serverURL, findActions);
-	}, [match])
+	}, [match, limit])
 	return { find };
 
 	async function sendFindRequest(match, serverURL, findActions) {
-		const { setPlaces, setFound } = findActions;
-		console.log("match: ", match);
+		const { setName, setPlaces, setFound, setLat, setLng, setIndex } = findActions;
+		//console.log("match: %s", match);
 		
-		match = "Seattle"; //TODO: FixME
+		match = "dave"; //TODO: FixME
 
 		const requestBody = {
 			requestType: 'find', match: match, type: type, where: where, limit: limit
 		};
+
 		console.log("requestBody: ", requestBody);
 		const findResponse = await sendAPIRequest(requestBody, serverURL);
-
+		console.log("findResponse: ", findResponse);
 		if (findResponse) {
-			setFound(findResponse.find);
-			setPlaces(findResponse.find);
+			const newPlace = new Place({ ...match, ...findResponse.name });
+			setFound(findResponse.found);
+			found = findResponse.found;
+			if (findResponse.found > limit) {
+				found = limit;
+			}
+			
+			console.log("finalFound: ", found);
+			setPlaces(findResponse.places);
+			console.log("findResponse.places: ", findResponse.places);
+			for (var i = 0; i < found; i++) {
+				setName(findResponse.places[i].locationFeatures.name);
+				console.log("findResponse.name: %s", findResponse.places[i].locationFeatures.name);
+				console.log("findResponse.setName: %s", name);
+				setLat(findResponse.places[i].locationFeatures.latitude);
+				console.log("findResponse.lat: %f", findResponse.places[i].locationFeatures.latitude);
+				setLng(findResponse.places[i].locationFeatures.longitude);
+				console.log("findResponse.lng: %f", findResponse.places[i].locationFeatures.longitude );
+				setIndex(findResponse.places[i].locationFeatures.index);
+				console.log("findResponse.index: %d", findResponse.places[i].locationFeatures.index);
+				return newPlace;
+			}
 		} else {
+			setPlaces([]);
 			LOG.error(`Find request to ${serverURL} failed. Check the log for more details.`, "error");
 		}
 	}
