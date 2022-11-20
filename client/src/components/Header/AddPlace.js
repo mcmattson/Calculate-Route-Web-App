@@ -19,9 +19,9 @@ import { latLngToPlace } from "../../utils/transformers";
 export default function AddPlace(props) {
 	const [foundPlace, setFoundPlace] = useState();
 	const [coordString, setCoordString] = useState('');
-	var [nameString, setNameString] = useState('');
+	const [nameString, setNameString] = useState('');
 	var [limit, setLimit] = useState(10);
-	
+
 	const findSettings = useFind(nameString, limit, getOriginalServerUrl());
 	return (
 		<Modal isOpen={props.isOpen} toggle={props.toggleAddPlace}>
@@ -31,26 +31,19 @@ export default function AddPlace(props) {
 				setFoundPlace={setFoundPlace}
 				coordString={coordString}
 				setCoordString={setCoordString}
-				setNameString={setNameString}
 				nameString={nameString}
+				setNameString={setNameString}
 				findSettings={findSettings}
 				places={props.places}
 				setLimit={setLimit}
-				//places={places}
-				placeActions={props.placeActions}
+				limit={limit}
 			/>
 			<AddPlaceFooter
 				append={props.append}
 				foundPlace={foundPlace}
 				setFoundPlace={setFoundPlace}
-				findSettings={findSettings}
 				setCoordString={setCoordString}
-				nameString={nameString}
 				setNameString={setNameString}
-				places={props.places}
-				placeActions={props.placeActions}
-				//places={places}
-				selectedIndex={props.selectedIndex}
 			/>
 		</Modal>
 	);
@@ -80,7 +73,7 @@ function PlaceSearch(props) {
 
 	useEffect(() => {
 		document.getElementById('search-name').onkeyup = function () {
-				verifyPlacesName(props.nameString, props.setFoundPlace);
+			verifyPlacesName(props.nameString);
 		}
 	}, [props.nameString]);
 
@@ -90,17 +83,17 @@ function PlaceSearch(props) {
 				Enter a Coordinates Search (EX: 50,50)
 				<Input
 					type='search' id='search'
-					
+
 					onChange={(input) => props.setCoordString(input.target.value)}
 					placeholder='Enter Coordinates'
 					data-testid='coord-input'
 					value={props.coordString}
 				/>
-				<br />
+				<br /><p>Or:</p>
 				Enter a Name Search
 				<Input
 					type='search' id='search-name'
-					
+
 					onChange={(input) => props.setNameString(input.target.value)}
 					placeholder='Enter Name'
 					data-testid='name-input'
@@ -163,22 +156,24 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 			setFoundPlace(fullPlace);
 		}
 	} catch (error) {
+		console.log(error);
 		setFoundPlace(undefined);
 	}
 }
 
-async function verifyPlacesName(nameString, setFoundPlace) {
-	try {
-		if (isPlaceValid(nameString)) {
-			const fullPlace = useFind(nameString);
+ async function verifyPlacesName(props) {
+	/*try {
+		const fullPlace = useFind(str);
+		if (isPlaceValid(str)) {
 			console.log("fullPlace: ", fullPlace);
-			setFoundPlace(fullPlace);
-		}
+			return fullPlace;
+		 }
 	} catch (error) {
-		setFoundPlace(undefined);
-	}
+		console.log(error);
+		return undefined;
+	}*/
 }
-
+ 
 function isLatLngValid(lat, lng) {
 	return (lat !== undefined && lng !== undefined);
 }
@@ -188,12 +183,12 @@ function isPlaceValid(nameString) {
 }
 
 export function useFind(match, limit, serverURL) {
-	
-	if (match == undefined || match.length < 3 ) {
+
+	if (match == undefined || match.length < 3) {
 		match = "";
 		limit = 0;
 	}
-	var [found, setFound] = useState(1);
+	const [found, setFound] = useState(1);
 	const [places, setPlaces] = useState([]);
 	const [type, setType] = useState(['airport']);
 	const [where, setWhere] = useState(['United States']);
@@ -228,24 +223,24 @@ export function useFind(match, limit, serverURL) {
 
 	async function sendFindRequest(match, limit, serverURL, findActions) {
 		const { setName, setPlaces, setFound, setLat, setLng, setIndex } = findActions;
-		
+
 		try {
 			const requestBody = {
-				requestType: 'find', match: match, type: type, where: where, limit: limit
+				requestType: 'find', match: match, /* type: type, where: where,  */limit: limit
 			};
 
 			console.log("requestBody: ", requestBody);
+			
 			const findResponse = await sendAPIRequest(requestBody, serverURL);
-
+			const formattedLatLng = latLngToPlace(findResponse);
 			if (findResponse.found !== 0) {
-				const newPlace = new Place({ ...match, ...findResponse.places });
+				const newPlace = new Place({ ...formattedLatLng, ...findResponse.address });
+				console.log("newPlace: ", newPlace);
 				console.log("findResponse.places: ", findResponse.places);
 				return newPlace;
 
-				
 			} else {
-				const unknownPlace = new Place({ name: 'Unkown', ...match });
-				console.log("findResponse.places - Unkown: ", findResponse.places);
+				const unknownPlace = new Place({ name: 'Unkown', ...places });
 				return unknownPlace;
 			}
 		} catch (error) { console.log(error); }
