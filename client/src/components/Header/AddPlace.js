@@ -15,12 +15,14 @@ import { reverseGeocode } from '../../utils/reverseGeocode';
 import { getOriginalServerUrl, sendAPIRequest } from '../../utils/restfulAPI';
 import { Place } from "../../models/place.model";
 import { latLngToPlace } from "../../utils/transformers";
+const newPlace = new Array();
 
 export default function AddPlace(props) {
-	const [foundPlace, setFoundPlace] = useState();
+	var [foundPlace, setFoundPlace] = useState();
 	const [coordString, setCoordString] = useState('');
 	const [nameString, setNameString] = useState('');
 	var [limit, setLimit] = useState(10);
+	
 
 	const findSettings = useFind(nameString, limit, getOriginalServerUrl());
 	return (
@@ -73,7 +75,7 @@ function PlaceSearch(props) {
 
 	useEffect(() => {
 		document.getElementById('search-name').onkeyup = function () {
-			verifyPlacesName(props.nameString);
+			verifyPlacesName(props.nameString, props.setFoundPlace);
 		}
 	}, [props.nameString]);
 
@@ -161,19 +163,30 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 	}
 }
 
- async function verifyPlacesName(props) {
-	/*try {
-		const fullPlace = useFind(str);
-		if (isPlaceValid(str)) {
+async function verifyPlacesName(nameString, setFoundPlace) {
+	/* try {
+		if (isPlaceValid(nameString)) {
+			console.log(setFoundPlace());
+			let fullname = useFind(nameString);
+			console.log(fullname);
+		}
+	} catch (error) {
+		console.log(error);
+		setFoundPlace(undefined);
+	} */
+	
+	/* try {
+		const fullPlace = useFind(nameString);
+		if (isPlaceValid(nameString)) {
 			console.log("fullPlace: ", fullPlace);
-			return fullPlace;
+			setFoundPlace(fullPlace);
 		 }
 	} catch (error) {
 		console.log(error);
-		return undefined;
-	}*/
+		setFoundPlace(undefined);
+	} */
 }
- 
+
 function isLatLngValid(lat, lng) {
 	return (lat !== undefined && lng !== undefined);
 }
@@ -188,7 +201,7 @@ export function useFind(match, limit, serverURL) {
 		match = "";
 		limit = 0;
 	}
-	const [found, setFound] = useState(1);
+	var [found, setFound] = useState(1);
 	const [places, setPlaces] = useState([]);
 	const [type, setType] = useState(['airport']);
 	const [where, setWhere] = useState(['United States']);
@@ -229,20 +242,46 @@ export function useFind(match, limit, serverURL) {
 				requestType: 'find', match: match, /* type: type, where: where,  */limit: limit
 			};
 
-			console.log("requestBody: ", requestBody);
-			
+			//console.log("requestBody: ", requestBody);
 			const findResponse = await sendAPIRequest(requestBody, serverURL);
-			const formattedLatLng = latLngToPlace(findResponse);
-			if (findResponse.found !== 0) {
-				const newPlace = new Place({ ...formattedLatLng, ...findResponse.address });
-				console.log("newPlace: ", newPlace);
-				console.log("findResponse.places: ", findResponse.places);
+			//console.log("findResponse: ", findResponse);
+
+			
+			if (findResponse) {
+				found = findResponse.found;
+				if (findResponse.found > limit) {
+					found = limit;
+				}
+				
+				//console.log("findResponse.places: ", findResponse.places);
+
+				
+				for (var i = 0; i < found; ++i) {
+					
+					
+					let lat = findResponse.places[i].locationFeatures.latitude,
+						lng = findResponse.places[i].locationFeatures.longitude,
+						name = findResponse.places[i].locationFeatures.name,
+						index = findResponse.places[i].locationFeatures.index;
+					
+					setLat(lat);
+					setLng(lng);
+					setName(name);
+					setIndex(index);
+
+					const formattedLatLng = latLngToPlace({ lat, lng });
+					newPlace[i] = new Place({ ...formattedLatLng, name, index });
+					//console.log("newPlace: ", newPlace);
+					console.log(newPlace[i]);
+				}
 				return newPlace;
+				
 
 			} else {
 				const unknownPlace = new Place({ name: 'Unkown', ...places });
 				return unknownPlace;
 			}
+			
 		} catch (error) { console.log(error); }
 	}
 }
