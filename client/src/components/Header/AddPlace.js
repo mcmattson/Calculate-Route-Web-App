@@ -48,6 +48,8 @@ export default function AddPlace(props) {
 				append={props.append}
 				setCoordString={setCoordString}
 				coordString={coordString}
+				nameString={nameString}
+				setNameString={setNameString}
 			/>
 
 			<PlaceNameSearch
@@ -63,6 +65,8 @@ export default function AddPlace(props) {
 				append={props.append}
 				foundNamePlace={foundNamePlace}
 				setNameString={setNameString}
+				setCoordString={setCoordString}
+				coordString={coordString}
 			/>
 		</Modal>
 	);
@@ -150,22 +154,22 @@ function PlaceCoordInfo(props) {
 function PlaceNameInfo(props) {
 
 	return (
-		<Collapse isOpen/* ={!!props.foundNamePlace} */>
-			<ModalBody>
-				<div style={{ width: 440, marginLeft: -18/* marginRight: -155 */ }}>
-					<div id='places0'></div>
-					<div id='places1'></div>
-					<div id='places2'></div>
-					<div id='places3'></div>
-					<div id='places4'></div>
-					<div id='places5'></div>
-					<div id='places6'></div>
-					<div id='places7'></div>
-					<div id='places8'></div>
-					<div id='places9'></div>
-				</div>
-			</ModalBody>
-		</Collapse>
+		//<Collapse isOpen ={!!props.foundNamePlace} >
+		<ModalBody>
+			<div style={{ width: 440, marginLeft: -18/* marginRight: -155 */ }}>
+				<div id='places0'></div>
+				<div id='places1'></div>
+				<div id='places2'></div>
+				<div id='places3'></div>
+				<div id='places4'></div>
+				<div id='places5'></div>
+				<div id='places6'></div>
+				<div id='places7'></div>
+				<div id='places8'></div>
+				<div id='places9'></div>
+			</div>
+		</ModalBody>
+		//</Collapse>
 	);
 }
 
@@ -176,7 +180,8 @@ function show(places, limit) {
 		for (let i = 0; i < 1; i++) {
 			elem = document.getElementById('places' + `${i}`);
 		}
-		elem.innerHTML += `<button type="button" class="list-group-item list-group-item-action" >${places.get('name')}</button>`
+		elem.innerHTML += `<button id="places' + ${places.get('index')}" data-testid="places' + ${places.get('index')}"
+			type="button" class="list-group-item list-group-item-action" >${places.get('name')}</button>`
 		return;
 	} else {
 		for (let i = 0; i < 1; i++) {
@@ -200,7 +205,7 @@ function AddCoordFooter(props) {
 					props.setNameString('');
 				}}
 				data-testid='add-place-button'
-				disabled={!props.foundPlace}
+			//disabled={!props.foundPlace}
 			>
 				Add Place
 			</Button>
