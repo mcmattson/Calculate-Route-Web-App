@@ -181,16 +181,16 @@ function show(places, limit) {
 			elem = document.getElementById('places' + `${i}`);
 		}
 		elem.innerHTML += `<button id="places' + ${places.get('index')}" data-testid="places' + ${places.get('index')}"
-			type="button" class="list-group-item list-group-item-action" >${places.get('name')}</button>`
-		return;
+			type="button" class="list-group-item list-group-item-action" >${places.get('name')}</button>`;
 	} else {
 		for (let i = 0; i < 1; i++) {
 			elem = document.getElementById('places' + `${i}`);
 		}
-		elem.innerHTML = `<div class="list-group">No results <div>`;
-		return;
+		elem.innerHTML = `<div class="list-group">No results found<div>`;
 	}
 }
+
+
 
 
 
@@ -312,27 +312,38 @@ export function useFind(match, limit, serverURL) {
 			};
 			findResponse = await sendAPIRequest(requestBody, serverURL);
 
+			//Set Limit to 10 if more than 10
 			found = findResponse.found;
 			if (findResponse.found > limit) {
 				found = limit;
 			} setFound(found);
 
-			if (findResponse) {
+
+			if (findResponse && (found > 0)) {
 				processServerFindSuccess(findResponse, serverUrl);
+				
 				for (var i = 0; i < found; i++) {
+					//Clears Divs & Map
+					const container = document.getElementById('places' + `${i}`);
+					container.textContent = '';
+					map1.clear();
+
+					//Sets Map
 					places = findResponse.places[i];
 					name = places.locationFeatures.name;
 					index = places.locationFeatures.index;
 					latitude = places.locationFeatures.latitude;
-					longitude = places.locationFeatures.longitude;
+					longitude = places.locationFeatures.longitude;					
 					map1.set('index', index);
 					map1.set('name', name);
 					map1.set('latitude', latitude);
 					map1.set('longitude', longitude);
-					//console.log(map1.get('name'));
 					show(map1, found);
 				}
 			} else {
+				map1.set('name', 'Not Found');
+				show(map1, found);
+				console.log(map1)
 				setServerFind({ places: [] });
 			}
 		} catch (error) { console.log(error); }
