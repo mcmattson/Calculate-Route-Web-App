@@ -148,33 +148,46 @@ function PlaceCoordInfo(props) {
 }
 
 function PlaceNameInfo(props) {
+
 	return (
-		<Collapse isOpen={!!props.foundNamePlace}>
+		<Collapse isOpen/* ={!!props.foundNamePlace} */>
 			<ModalBody>
-				<div style={{ width: 450, marginLeft: -18, marginRight: -50 }}>
-					<ListGroup flush >
-						<ListGroupItem action href={'${props.index}'}>
-							<table id="employees"></table>
-						</ListGroupItem>
-					</ListGroup>
+				<div style={{ width: 440, marginLeft: -18/* marginRight: -155 */ }}>
+					<div id='places0'></div>
+					<div id='places1'></div>
+					<div id='places2'></div>
+					<div id='places3'></div>
+					<div id='places4'></div>
+					<div id='places5'></div>
+					<div id='places6'></div>
+					<div id='places7'></div>
+					<div id='places8'></div>
+					<div id='places9'></div>
 				</div>
 			</ModalBody>
 		</Collapse>
 	);
 }
 
-function show(data) {
-	let tab =
-		`<tr></tr>
-         </tr>`;
-	for (let r of data) {
-		tab += `<tr> 
-    <td>${r.name} </td>      
-</tr>`;
+function show(places, limit) {
+	places["name"] = [{ "index": places.get('index'), "name": places.get('name'), "latitude": places.get('latitude'), "longitude": places.get('longitude') }];
+	let elem;
+	if (limit > 0) {
+		for (let i = 0; i < 1; i++) {
+			elem = document.getElementById('places' + `${i}`);
+		}
+		elem.innerHTML += `<button type="button" class="list-group-item list-group-item-action" >${places.get('name')}</button>`
+		return;
+	} else {
+		for (let i = 0; i < 1; i++) {
+			elem = document.getElementById('places' + `${i}`);
+		}
+		elem.innerHTML = `<div class="list-group">No results <div>`;
+		return;
 	}
-	// Setting innerHTML as tab variable
-	document.getElementById("employees").innerHTML = tab;
 }
+
+
 
 function AddCoordFooter(props) {
 	return (
@@ -278,37 +291,41 @@ export function useFind(match, limit, serverURL) {
 	return { find };
 
 	function processServerFindSuccess(places, url) {
-		//LOG.info('Switching to Server:', url);
+		LOG.info('Switching to Server:', url);
 		setServerFind(places);
 		setServerUrl(url);
 	}
 
 	async function sendFindRequest(match, limit, serverURL, findActions) {
 		const { setServerFind } = findActions;
+		let found, name, index, latitude, longitude, findResponse;
+		const map1 = new Map();
+
 		try {
 			const requestBody = {
 				requestType: 'find', match: match, type: type, where: where, limit: limit
 			};
+			findResponse = await sendAPIRequest(requestBody, serverURL);
 
-			var findResponse = await sendAPIRequest(requestBody, serverURL);
-
-			let found = findResponse.found;
-
-			console.log("found: ", found);
+			found = findResponse.found;
 			if (findResponse.found > limit) {
 				found = limit;
-			}
-			setFound(found);
+			} setFound(found);
 
 			if (findResponse) {
 				processServerFindSuccess(findResponse, serverUrl);
-				for (var i = 0; i < found; ++i) {
+				for (var i = 0; i < found; i++) {
 					places = findResponse.places[i];
-					let name = findResponse.places[i].locationFeatures.name,
-						//newPlace[i] = new Place({ ...formattedLatLng, name, index });
-						newPlace = new Place({ ...name });
-					show(newPlace);
-					setPlaces(newPlace[i]);
+					name = places.locationFeatures.name;
+					index = places.locationFeatures.index;
+					latitude = places.locationFeatures.latitude;
+					longitude = places.locationFeatures.longitude;
+					map1.set('index', index);
+					map1.set('name', name);
+					map1.set('latitude', latitude);
+					map1.set('longitude', longitude);
+					//console.log(map1.get('name'));
+					show(map1, found);
 				}
 			} else {
 				setServerFind({ places: [] });
