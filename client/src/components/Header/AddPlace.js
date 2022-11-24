@@ -30,6 +30,9 @@ export default function AddPlace(props) {
 	var [limit, setLimit] = useState(10);
 	var [found, setFound] = useState(0);
 	var [places, setPlaces] = useState([]);
+	var [index, setIndex] = useState(1);
+
+
 
 
 	const findSettings = useFind(nameString, limit, getOriginalServerUrl());
@@ -53,6 +56,8 @@ export default function AddPlace(props) {
 			/>
 
 			<PlaceNameSearch
+				index={index}
+				setIndex={setIndex}
 				foundPlace={foundPlace}
 				setFoundPlace={setFoundPlace}
 				nameString={nameString}
@@ -151,15 +156,19 @@ function PlaceCoordInfo(props) {
 	);
 }
 
+
 function PlaceNameInfo(props) {
+	 useEffect(() => {
+		 function reply_click(clicked_id) {
+			 console.log("HI " + clicked_id);
+		 }
+	}, []);
 
 	return (
-		//<Collapse isOpen ={!!props.foundNamePlace} >
 		<ModalBody>
-			<div style={{ width: 440, marginLeft: -18/* marginRight: -155 */ }}>
-				<div id='places0'></div>
-				<div id='places1'></div>
-				<div id='places2'></div>
+			<div style={{ width: 440, marginLeft: -18 }}>
+				<div id='places1' ></div>
+				<div id='places2' /* need click call */></div>
 				<div id='places3'></div>
 				<div id='places4'></div>
 				<div id='places5'></div>
@@ -167,27 +176,26 @@ function PlaceNameInfo(props) {
 				<div id='places7'></div>
 				<div id='places8'></div>
 				<div id='places9'></div>
+				<div id='places10'></div>
 			</div>
 		</ModalBody>
-		//</Collapse>
 	);
 }
 
 function show(places, limit) {
 	places["name"] = [{ "index": places.get('index'), "name": places.get('name'), "latitude": places.get('latitude'), "longitude": places.get('longitude') }];
-	let elem;
+	let elem = "";
+	let index = places.get('index');
 	if (limit > 0) {
-		for (let i = 0; i < 1; i++) {
-			elem = document.getElementById('places' + `${i}`);
-		}
-		elem.innerHTML += `<button id="places' + ${places.get('index')}" data-testid="places' + ${places.get('index')}"
+		elem = document.getElementById('places' + `${index}`);
+		elem.innerHTML += `<button id="places-${index}-found'" data-testid="places-${index}-found'"
 			type="button" class="list-group-item list-group-item-action" >${places.get('name')}</button>`;
 	} else {
-		for (let i = 0; i < 1; i++) {
-			elem = document.getElementById('places' + `${i}`);
-		}
-		elem.innerHTML = `<div class="list-group">No results found<div>`;
+		elem = document.getElementById('places' + `${index}`);
+		elem.innerHTML = `<div id="places-${index}-notfound'" data-testid="places-${index}-notfound'" class="list-group" style="align "center">No results found<div>`;
+		
 	}
+	console.log(elem);
 }
 
 
@@ -318,22 +326,23 @@ export function useFind(match, limit, serverURL) {
 				found = limit;
 			} setFound(found);
 
-
+			console.log(findResponse);
 			if (findResponse && (found > 0)) {
 				processServerFindSuccess(findResponse, serverUrl);
-				
-				for (var i = 0; i < found; i++) {
-					//Clears Divs & Map
-					const container = document.getElementById('places' + `${i}`);
-					container.textContent = '';
-					map1.clear();
 
-					//Sets Map
+				for (var i = 0; i < found; i++) {
 					places = findResponse.places[i];
 					name = places.locationFeatures.name;
 					index = places.locationFeatures.index;
 					latitude = places.locationFeatures.latitude;
-					longitude = places.locationFeatures.longitude;					
+					longitude = places.locationFeatures.longitude;
+					
+					//Clears Divs & Map before new search
+					const container = document.getElementById('places' + index);
+					container.textContent = '';
+					map1.clear();
+
+					//Sets Map
 					map1.set('index', index);
 					map1.set('name', name);
 					map1.set('latitude', latitude);
@@ -343,7 +352,7 @@ export function useFind(match, limit, serverURL) {
 			} else {
 				map1.set('name', 'Not Found');
 				show(map1, found);
-				console.log(map1)
+				console.log(map1);
 				setServerFind({ places: [] });
 			}
 		} catch (error) { console.log(error); }
