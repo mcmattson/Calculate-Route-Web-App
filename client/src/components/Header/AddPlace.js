@@ -49,10 +49,9 @@ export default function AddPlace(props) {
 
 			<AddCoordFooter
 				append={props.append}
+				foundPlace={foundPlace}
 				setCoordString={setCoordString}
-				coordString={coordString}
-				nameString={nameString}
-				setNameString={setNameString}
+		
 			/>
 
 			<PlaceNameSearch
@@ -68,10 +67,8 @@ export default function AddPlace(props) {
 			/>
 			<AddNameFooter
 				append={props.append}
-				foundNamePlace={foundNamePlace}
+				foundPlace={foundPlace}
 				setNameString={setNameString}
-				setCoordString={setCoordString}
-				coordString={coordString}
 			/>
 		</Modal>
 	);
@@ -158,11 +155,7 @@ function PlaceCoordInfo(props) {
 
 
 function PlaceNameInfo(props) {
-	 useEffect(() => {
-		 function reply_click(clicked_id) {
-			 console.log("HI " + clicked_id);
-		 }
-	}, []);
+	
 
 	return (
 		<ModalBody>
@@ -186,14 +179,17 @@ function show(places, limit) {
 	places["name"] = [{ "index": places.get('index'), "name": places.get('name'), "latitude": places.get('latitude'), "longitude": places.get('longitude') }];
 	let elem = "";
 	let index = places.get('index');
+	
 	if (limit > 0) {
+		elem = "";
 		elem = document.getElementById('places' + `${index}`);
-		elem.innerHTML += `<button id="places-${index}-found'" data-testid="places-${index}-found'"
+		elem.innerHTML += `<button id="places${index}-btn" data-testid="places${index}-btn"
 			type="button" class="list-group-item list-group-item-action" >${places.get('name')}</button>`;
 	} else {
-		elem = document.getElementById('places' + `${index}`);
-		elem.innerHTML = `<div id="places-${index}-notfound'" data-testid="places-${index}-notfound'" class="list-group" style="align "center">No results found<div>`;
-		
+		elem = "";
+		elem = document.getElementById('places1');
+		elem.innerHTML = `<div id="places-notfound'" data-testid="places-notfound'" class="list-group" style="text-align: center">No Results Found<div><br/>`;
+
 	}
 	console.log(elem);
 }
@@ -210,10 +206,9 @@ function AddCoordFooter(props) {
 				onClick={() => {
 					props.append(props.foundPlace);
 					props.setCoordString('');
-					props.setNameString('');
 				}}
 				data-testid='add-place-button'
-			//disabled={!props.foundPlace}
+				disabled={!props.foundPlace}
 			>
 				Add Place
 			</Button>
@@ -336,10 +331,10 @@ export function useFind(match, limit, serverURL) {
 					index = places.locationFeatures.index;
 					latitude = places.locationFeatures.latitude;
 					longitude = places.locationFeatures.longitude;
-					
+
 					//Clears Divs & Map before new search
-					const container = document.getElementById('places' + index);
-					container.textContent = '';
+					const container = document.getElementById('places' + `${index}`);
+					container.replaceChildren();
 					map1.clear();
 
 					//Sets Map
@@ -350,9 +345,8 @@ export function useFind(match, limit, serverURL) {
 					show(map1, found);
 				}
 			} else {
-				map1.set('name', 'Not Found');
+				map1.set('name', 'unknown');
 				show(map1, found);
-				console.log(map1);
 				setServerFind({ places: [] });
 			}
 		} catch (error) { console.log(error); }
