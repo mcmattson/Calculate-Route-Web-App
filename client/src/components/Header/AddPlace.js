@@ -51,7 +51,7 @@ export default function AddPlace(props) {
 				append={props.append}
 				foundPlace={foundPlace}
 				setCoordString={setCoordString}
-		
+
 			/>
 
 			<PlaceNameSearch
@@ -154,37 +154,56 @@ function PlaceCoordInfo(props) {
 }
 
 
-function PlaceNameInfo(props) {
-	
+function PlaceNameInfo(props, label) {
 
 	return (
 		<ModalBody>
-			<div style={{ width: 440, marginLeft: -18 }}>
-				<div id='places1' ></div>
-				<div id='places2' /* need click call */></div>
-				<div id='places3'></div>
-				<div id='places4'></div>
-				<div id='places5'></div>
-				<div id='places6'></div>
-				<div id='places7'></div>
-				<div id='places8'></div>
-				<div id='places9'></div>
-				<div id='places10'></div>
+
+			<div id="wrapper" className="wrapperBlock" style={{ width: 440, marginLeft: -18 }}>
+				<div id='places1' className="block"></div>
+				<div id='places2' className="block"></div>
+				<div id='places3' className="block"></div>
+				<div id='places4' className="block"></div>
+				<div id='places5' className="block"></div>
+				<div id='places6' className="block"></div>
+				<div id='places7' className="block"></div>
+				<div id='places8' className="block"></div>
+				<div id='places9' className="block"></div>
+				<div id='places10' className="block"></div>
 			</div>
+
 		</ModalBody>
 	);
 }
 
 function show(places, limit) {
 	places["name"] = [{ "index": places.get('index'), "name": places.get('name'), "latitude": places.get('latitude'), "longitude": places.get('longitude') }];
-	let elem = "";
+	let elem;
 	let index = places.get('index');
-	
+	let lat = places.get('latitude');
+	let lng = places.get('longitude');
+	let name = places.get('name');
+	let buttons = document.querySelectorAll('.arrList')
+	let placeArr = []
+	let value = ''
+
+	buttons.forEach(el => el.addEventListener('click', () => {
+		value = el.innerHTML
+		let i = placeArr.indexOf(value);
+		if (i > -1) {
+			placeArr.splice(i, 1);
+			console.log('deleted', placeArr)
+		}
+		else {
+			placeArr.push(value)
+			console.log('added', placeArr)
+		}
+	}))
 	if (limit > 0) {
 		elem = "";
 		elem = document.getElementById('places' + `${index}`);
-		elem.innerHTML += `<button id="places${index}-btn" data-testid="places${index}-btn"
-			type="button" class="list-group-item list-group-item-action" >${places.get('name')}</button>`;
+		elem.innerHTML += `<button value="${lat},${lng}" id="places${index}-btn" data-testid="places${index}-btn"
+			type="button" class="arrList list-group-item list-group-item-action" >${name}</button>`;
 	} else {
 		elem = "";
 		elem = document.getElementById('places1');
