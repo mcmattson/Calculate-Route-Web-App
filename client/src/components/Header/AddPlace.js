@@ -165,6 +165,11 @@ function PlaceNameInfo(props) {
 	);
 }
 
+function newPlaceArr(){
+	let placeArr = [];
+	return placeArr;
+}
+
 function show(places, limit) {
 	places["name"] = [{ "index": places.get('index'), "name": places.get('name'), "latitude": places.get('latitude'), "longitude": places.get('longitude') }];
 	let elem;
@@ -186,7 +191,7 @@ function show(places, limit) {
 			placeArr.splice(index, 1);
 			set.delete(text);
 		}
-		console.log(placeArr);
+		newPlaceArr().push(placeArr);
 	}))
 	
 	if (limit > 0) {
@@ -198,7 +203,6 @@ function show(places, limit) {
 		elem.innerHTML = `<button id="places-notfound" data-testid="places-notfound" style="text-align: center">No Results Found<button><br/>`;
 		//FIXME: ^^ TypeError: Cannot set property 'innerHTML' of null ^^
 	}
-	console.log(elem)
 }
 
 function AddCoordFooter(props) {
@@ -225,12 +229,10 @@ function AddNameFooter(props) {
 			<Button
 				color='primary'
 				onClick={() => {
-					const newPlace = new Place({ ...placeArr });
-					console.log('newPlace: ', newPlace)
 					//props.append(props.foundPlace);
 				}}
 				data-testid='add-name-button'
-				disabled={!props.foundPlace}
+				//disabled={!props.foundPlace}
 			>
 				Add Place(s)
 			</Button>
@@ -329,6 +331,7 @@ export function useFind(match, limit, serverURL) {
 
 				for (var i = 0; i < found; i++) {
 					places = findResponse.places[i];
+				
 					name = places.locationFeatures.name;
 					index = places.locationFeatures.index;
 					latitude = places.locationFeatures.latitude;
@@ -338,7 +341,7 @@ export function useFind(match, limit, serverURL) {
 					const container = document.getElementById('places' + `${index}`);
 					container.replaceChildren();
 					map1.clear();
-
+				
 					//Sets Map
 					map1.set('index', index);
 					map1.set('name', name);
