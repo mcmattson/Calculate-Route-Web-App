@@ -7,13 +7,7 @@ import {
 	ModalHeader,
 	Input,
 	Collapse,
-	ModalFooter,
-	ListGroup,
-	ListGroupItem,
-	Grid,
-	Row,
-	Panel,
-	Table,
+	ModalFooter
 } from 'reactstrap';
 import Coordinates from 'coordinate-parser';
 import { LOG } from '../../utils/constants';
@@ -82,11 +76,6 @@ function AddPlaceHeader(props) {
 	);
 }
 
-function textComma(value) {
-	return (value.indexOf(',') > -1);
-}
-
-
 function PlaceCoordSearch(props) {
 	useEffect(() => {
 		verifyCoordinates(props.coordString, props.setFoundPlace);
@@ -110,7 +99,7 @@ function PlaceCoordSearch(props) {
 function PlaceNameSearch(props) {
 	useEffect(() => {
 		document.getElementById('search-name').onkeyup = function () {
-			verifyPlacesName(props.findSettings, props.setFoundNamePlace);
+			verifyPlacesName(props.findSettings, props.setFoundPlace);
 		}
 	}, [props.nameString]);
 
@@ -154,22 +143,22 @@ function PlaceCoordInfo(props) {
 }
 
 
-function PlaceNameInfo(props, label) {
+function PlaceNameInfo(props) {
 
 	return (
 		<ModalBody>
 
-			<div id="wrapper" className="wrapperBlock" style={{ width: 440, marginLeft: -18 }}>
-				<div id='places1' className="block"></div>
-				<div id='places2' className="block"></div>
-				<div id='places3' className="block"></div>
-				<div id='places4' className="block"></div>
-				<div id='places5' className="block"></div>
-				<div id='places6' className="block"></div>
-				<div id='places7' className="block"></div>
-				<div id='places8' className="block"></div>
-				<div id='places9' className="block"></div>
-				<div id='places10' className="block"></div>
+			<div id="wrapper" className="list-group adjustList">
+				<div id='places1'></div>
+				<div id='places2'></div>
+				<div id='places3'></div>
+				<div id='places4'></div>
+				<div id='places5'></div>
+				<div id='places6'></div>
+				<div id='places7'></div>
+				<div id='places8'></div>
+				<div id='places9'></div>
+				<div id='places10'></div>
 			</div>
 
 		</ModalBody>
@@ -183,39 +172,33 @@ function show(places, limit) {
 	let lat = places.get('latitude');
 	let lng = places.get('longitude');
 	let name = places.get('name');
-	let buttons = document.querySelectorAll('.arrList')
-	let placeArr = []
-	let value = ''
-
+	let buttons = document.querySelectorAll('.arrList');
+	let placeArr = [];
+	let value = '';
+	
 	buttons.forEach(el => el.addEventListener('click', () => {
 		value = el.innerHTML
-		let i = placeArr.indexOf(value);
+		let i = placeArr.indexOf(index);
 		if (i > -1) {
 			placeArr.splice(i, 1);
 			console.log('deleted', placeArr)
 		}
 		else {
-			placeArr.push(value)
+			placeArr.push(value);
 			console.log('added', placeArr)
 		}
 	}))
 	if (limit > 0) {
-		elem = "";
 		elem = document.getElementById('places' + `${index}`);
 		elem.innerHTML += `<button value="${lat},${lng}" id="places${index}-btn" data-testid="places${index}-btn"
-			type="button" class="arrList list-group-item list-group-item-action" >${name}</button>`;
+			type="button" class="arrList list-group-item list-group-item-action list-group-item-mine">${lat},${lng}</button>`; //FIXME: Need to show name ${name}
 	} else {
-		elem = "";
-		elem = document.getElementById('places1');
-		elem.innerHTML = `<div id="places-notfound'" data-testid="places-notfound'" class="list-group" style="text-align: center">No Results Found<div><br/>`;
-
+		elem = document.getElementById('places' + `${index}`);
+		elem.innerHTML = `<button id="places-notfound" data-testid="places-notfound" style="text-align: center">No Results Found<button><br/>`;
+		//FIXME: ^^ TypeError: Cannot set property 'innerHTML' of null ^^
 	}
-	console.log(elem);
+	console.log(elem)
 }
-
-
-
-
 
 function AddCoordFooter(props) {
 	return (
@@ -226,7 +209,7 @@ function AddCoordFooter(props) {
 					props.append(props.foundPlace);
 					props.setCoordString('');
 				}}
-				data-testid='add-place-button'
+				data-testid='add-coord-button'
 				disabled={!props.foundPlace}
 			>
 				Add Place
@@ -241,11 +224,11 @@ function AddNameFooter(props) {
 			<Button
 				color='primary'
 				onClick={() => {
-					props.append(props.foundPlace);
-					props.setCoordString('');
-					props.setNameString('');
+					const newPlace = new Place({ ...placeArr });
+					console.log('newPlace: ', newPlace)
+					//props.append(props.foundPlace);
 				}}
-				data-testid='add-place-button'
+				data-testid='add-name-button'
 				disabled={!props.foundPlace}
 			>
 				Add Place(s)
@@ -335,12 +318,11 @@ export function useFind(match, limit, serverURL) {
 			findResponse = await sendAPIRequest(requestBody, serverURL);
 
 			//Set Limit to 10 if more than 10
-			found = findResponse.found;
+			 found = findResponse.found;
 			if (findResponse.found > limit) {
 				found = limit;
 			} setFound(found);
 
-			console.log(findResponse);
 			if (findResponse && (found > 0)) {
 				processServerFindSuccess(findResponse, serverUrl);
 
