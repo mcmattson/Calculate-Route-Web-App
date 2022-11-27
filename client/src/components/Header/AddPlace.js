@@ -149,7 +149,7 @@ function PlaceNameInfo(props) {
 		<ModalBody>
 
 			<div id="wrapper" className="list-group adjustList">
-				<div id='places1'></div>
+				<div id='places1' data-testid="places1-div"></div>
 				<div id='places2'></div>
 				<div id='places3'></div>
 				<div id='places4'></div>
@@ -174,24 +174,25 @@ function show(places, limit) {
 	let name = places.get('name');
 	let buttons = document.querySelectorAll('.arrList');
 	let placeArr = [];
-	let value = '';
+	const set = new Set();
 	
 	buttons.forEach(el => el.addEventListener('click', () => {
-		value = el.innerHTML
-		let i = placeArr.indexOf(index);
-		if (i > -1) {
-			placeArr.splice(i, 1);
-			console.log('deleted', placeArr)
+		const text = el.getAttribute("value");
+		if (!set.has(text)) {
+			set.add(text);
+			placeArr.push(text);
+		} else {
+			const index = placeArr.indexOf(text);
+			placeArr.splice(index, 1);
+			set.delete(text);
 		}
-		else {
-			placeArr.push(value);
-			console.log('added', placeArr)
-		}
+		console.log(placeArr);
 	}))
+	
 	if (limit > 0) {
 		elem = document.getElementById('places' + `${index}`);
 		elem.innerHTML += `<button value="${lat},${lng}" id="places${index}-btn" data-testid="places${index}-btn"
-			type="button" class="arrList list-group-item list-group-item-action list-group-item-mine">${lat},${lng}</button>`; //FIXME: Need to show name ${name}
+			type="button" class="arrList list-group-item list-group-item-action list-group-item-mine">${name}</button>`;
 	} else {
 		elem = document.getElementById('places' + `${index}`);
 		elem.innerHTML = `<button id="places-notfound" data-testid="places-notfound" style="text-align: center">No Results Found<button><br/>`;
