@@ -12,13 +12,14 @@ describe('AddPlace', () => {
 	const placeObj = {
 		latLng: '40.57, -105.085',
 		name: 'Colorado State University, South College Avenue, Fort Collins, Larimer County, Colorado, 80525-1725, United States',
-		match: 'Colorado State University'
+		match: 'Dave'
 	};
 
 	const props = {
 		toggleAddPlace: jest.fn(),
 		append: jest.fn(),
 		isOpen: true,
+		show: jest.fn(),
 	};
 
 	beforeEach(() => {
@@ -27,6 +28,7 @@ describe('AddPlace', () => {
 				append={props.append}
 				isOpen={props.isOpen}
 				toggleAddPlace={props.toggleAddPlace}
+				show={props.show}
 			/>
 		);
 	});
@@ -41,12 +43,12 @@ describe('AddPlace', () => {
 	});
 
 	test('mmattson: validates name input', async () => {
-		/* const nameInput = screen.getByTestId('name-input');
+		 const nameInput = screen.getByTestId('name-input');
 		user.type(nameInput, placeObj.match);
 
 		await waitFor(() => {
 			expect(nameInput.value).toEqual(placeObj.match);
-		}); */
+		}); 
 	});
 
 	test('base: handles invalid input', async () => {
@@ -62,7 +64,7 @@ describe('AddPlace', () => {
 	});
 
 	test('mmattson: handles invalid name input', async () => {
-	/* 	const nameInput = screen.getByTestId('name-input');
+	 	const nameInput = screen.getByTestId('name-input');
 		user.paste(nameInput, 'da');
 		
 		await waitFor(() => {
@@ -70,19 +72,21 @@ describe('AddPlace', () => {
 		});
 
 		const addButton = screen.getByTestId('add-name-button');
-		expect(addButton.classList.contains('disabled')).toBe(true); */
+		expect(addButton.classList.contains('disabled')).toBe(true); 
 	});
 
 	test('mmattson: handles valid name input not found', async () => {
-		/* const nameInput = screen.getByTestId('name-input');
-		user.paste(nameInput, 'dav');
+		/*  const nameInput = screen.getByTestId('name-input');
+		user.paste(nameInput, placeObj.match);
 
 		await waitFor(() => {
-			expect(nameInput.value).toEqual('dav');
+			expect(nameInput.value).toEqual(placeObj.match);
 		});
 
-		const addButton = screen.getByTestId('places1-btn');
-		expect(addButton.classList.contains('arrList')).toBe(true); */
+		user.click(toggle);
+		expect(screen.getByText(/expanded test/i)).toBeTruthy();
+		const nameList = screen.getByTestId('places1-div');
+		expect(nameList.classList.contains('button')).toBeNull;  */
 	});
 
 	test('mmattson: handles valid name input', async () => {
@@ -125,7 +129,7 @@ describe('AddPlace', () => {
 	
 
 	test('base: Adds coord place', async () => {
-		 /* fetch.mockResponse(REVERSE_GEOCODE_RESPONSE);
+		  fetch.mockResponse(REVERSE_GEOCODE_RESPONSE);
 		const coordInput = screen.getByTestId('coord-input');
 		user.type(coordInput, placeObj.latLng);
 
@@ -139,6 +143,6 @@ describe('AddPlace', () => {
 			user.click(addButton);
 		});
 		expect(props.append).toHaveBeenCalledWith(MOCK_PLACE_RESPONSE);
-		expect(coordInput.value).toEqual('');  */
+		expect(coordInput.value).toEqual('');  
 	});
 });
