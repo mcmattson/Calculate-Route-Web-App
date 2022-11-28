@@ -53,24 +53,20 @@ public class Database {
     }
 
     public static Places convertQueryResultsToLocations(ResultSet results, String columns) throws Exception {
-        int count = 0;
         String[] cols = columns.split(",");
-        Places Places = new Places();
+        Places Places = new Places();  
         while (results.next()) {
-        Place Place = new Place("0", "0");  
-        HashMap<String, String> hashFeatures = new HashMap<String, String>();
-        Place.locationFeatures = hashFeatures;
-            for (String col : cols){
-                if (col == "latitude"){
-                    Place.latitude = results.getString(col);
-                }else if (col == "longitude"){
-                    Place.longitude = results.getString(col);
-                }else{
-                    Place.locationFeatures.put(col, results.getString(col));
-                }
-            }
-        Place.locationFeatures.put("index", String.format("%d", ++count));    
-        Places.add(Place);  
+        Place Place = new Place(results.getString("latitude"), 
+                                results.getString("longitude"), 
+                                results.getString("continent"),  
+                                results.getString("altitude") ,
+                                results.getString("iso_country"),
+                                results.getString("name"),
+                                results.getString("municipality"),
+                                results.getString("iso_region"),
+                                results.getString("id")
+                                );
+        Places.add(Place);
         }
         return Places;
     }

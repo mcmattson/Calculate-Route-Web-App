@@ -13,12 +13,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestPlace {
 
-    Place origin = new Place("0.0", "0.0");
-    Place coordinatesBurma = new Place("21.9162", "95.9560");
-    Place coordinatesFoCo = new Place("40.5853" , "-105.0844");
-    Place coordinatesAntarctic = new Place("-82.8628", "135.0000");
-
-    Place coordinatesEverest = new Place("27.9881", "86.9250");
+    Place origin = new Place("0.0", "0.0", "NA", "430"  ,"US", "Burma", "CO", "CO", "CI12") ;
+    Place coordinatesBurma = new Place("21.9162", "95.9560" , "NA", "430" , "US", "Burma", "CO", "CO", "CI12");
+    Place coordinatesFoCo = new Place("40.5853" , "-105.0844" , "NA", "430" , "US", "Burma", "CO", "CO", "CI12");
+    Place coordinatesAntarctic = new Place("-82.8628", "135.0000", "NA", "430", "US" , "Burma", "CO", "CO", "CI12");
+    Place coordinatesEverest = new Place("27.9881", "86.9250" , "NA", "430" , "US", "Burma", "CO", "CO", "CI12");
 
     public boolean TestRadians(String typeCoordinates, String mockValue, Place location){
         double convertedMockValue = toRadians(parseDouble(mockValue)); 
