@@ -13,8 +13,6 @@ import Coordinates from 'coordinate-parser';
 import { LOG } from '../../utils/constants';
 import { reverseGeocode } from '../../utils/reverseGeocode';
 import { getOriginalServerUrl, sendAPIRequest } from '../../utils/restfulAPI';
-import { Place } from "../../models/place.model";
-import { latLngToPlace } from "../../utils/transformers";
 
 export default function AddPlace(props) {
 	var [foundPlace, setFoundPlace] = useState();
@@ -135,7 +133,6 @@ function PlaceCoordInfo(props) {
 	);
 }
 
-
 function PlaceNameInfo() {
 	return (
 		<ModalBody>
@@ -144,20 +141,7 @@ function PlaceNameInfo() {
 	);
 }
 
-function find(name, placeArr) {
-	var results = [];
-	var idx = placeArr.indexOf(name);
-	//console.log("results: ", results);
-	//console.log("idx: ", idx);
-	while (idx != -1) {
-		results.push(idx);
-		idx = placeArr.indexOf(name, idx + 1);
-	}
-	
-	return results;
-}
-
-function show() {
+function addDeletePlaceList() {
 	let buttons = document.querySelectorAll('.arrList');
 	let placeArr = [];
 	let name = '';
@@ -169,21 +153,26 @@ function show() {
 		const latLngPlace = new Coordinates(text);
 		const lat = latLngPlace.getLatitude();
 		const lng = latLngPlace.getLongitude();
-		const formattedLatLng = latLngToPlace({ lat, lng });
-		const index = find(name, placeArr);
-		
-
-		//FIXME: Does not Delete - does not change index #, so always -1
-		if (index > 0) {
+		const formattedLatLng = lat + "," + lng;
+		const index = placeArr.indexOf(formattedLatLng); ;
+	
+		//Adds and Deletes Lat/Lng to Array
+		if (index > -1) {
 			placeArr.splice(index, 1);
 			//console.log('deleted', placeArr)
 		}
 		//---------------------------
 		else {
-			placeArr.push(new Place({ name: name, index: index, ...formattedLatLng, ...placeArr[index] }));
+			placeArr.push(formattedLatLng);
 			//console.log('added: ', placeArr)
 		}
 	}))
+}
+
+function removeAllChildNodes(parent) {
+	while (parent.firstChild) {
+		parent.removeChild(parent.firstChild);
+	}
 }
 
 export function placesList(places, limit) {
@@ -193,9 +182,7 @@ export function placesList(places, limit) {
 	let buttonElement = document.createElement('button');
 	var buttonsAmount = document.querySelectorAll('#outerDivElement button');
 	if (limit > 0) {
-		{/* FIXME: appends to end instead of refresh list */ }
 		if (buttonsAmount.length < 10) {
-			//console.log(buttonElement);
 			buttonElementtext = document.createTextNode(`${places.get('name')}`)
 			buttonElement.setAttribute("index", `${places.get('index')}`);
 			buttonElement.setAttribute("latlng", `${places.get('latitude')}` + "," + `${places.get('longitude')}`);
@@ -206,9 +193,11 @@ export function placesList(places, limit) {
 			parent.appendChild(buttonElement);
 			buttonElement.appendChild(buttonElementtext);
 		} else {
-			return
+			removeAllChildNodes(parent);
+			return;
 		}
 	} else {
+		removeAllChildNodes(parent);
 		let divElement = document.createElement('div');
 		divElement.setAttribute("id", "places-notfound");
 		divElement.setAttribute("data-testid", "places-notfound");
@@ -216,11 +205,9 @@ export function placesList(places, limit) {
 		let divElementtext = document.createTextNode("No Results Found");
 		<br/>
 		divElement.appendChild(divElementtext);
-		//FIXME: TypeError: Cannot read properties of null (reading 'appendChild') when first loading
 		parent.appendChild(divElement);
-		//
 	}
-	show();
+	addDeletePlaceList();
 }
 
 function AddCoordFooter(props) {
@@ -299,13 +286,13 @@ function isPlaceValid(nameString) {
 export function useFind(match, limit, serverURL) {
 
 	if (match == undefined || match.length < 3) {
-		match = '';
+		match = ' ';
 		limit = 0;
 	}
 	let [found, setFound] = useState();
 	let [places, setPlaces] = useState([]);
 	const [type, setType] = useState(['airport']);
-	const [where, setWhere] = useState(['United States']);
+	const [where, setWhere] = useState(['US']);
 	const [serverUrl, setServerUrl] = useState(getOriginalServerUrl());
 	const [serverFind, setServerFind] = useState({ places: [] });
 
@@ -335,12 +322,16 @@ export function useFind(match, limit, serverURL) {
 
 		try {
 			const requestBody = {
-				requestType: 'find', match: match, type: type, where: where, limit: limit
+				requestType: "find",
+				match: match,
+				type: type,
+				where: where,
+				limit: limit
 			};
 			findResponse = await sendAPIRequest(requestBody, serverURL);
-
 			//Set Limit to 10 if more than 10
 			found = findResponse.found;
+			console.log(findResponse);
 			if (findResponse.found > limit) {
 				found = limit;
 			} setFound(found);
@@ -350,10 +341,10 @@ export function useFind(match, limit, serverURL) {
 
 				for (let i = 0; i < found; i++) {
 					places = findResponse.places[i];
-					name = places.locationFeatures.name;
-					index = places.locationFeatures.index;
-					latitude = places.locationFeatures.latitude;
-					longitude = places.locationFeatures.longitude;
+					name = places.name;
+					index = i;
+					latitude = places.latitude;
+					longitude = places.longitude;
 					map1.clear();
 
 					//Sets Map
@@ -362,13 +353,14 @@ export function useFind(match, limit, serverURL) {
 					map1.set('latitude', latitude);
 					map1.set('longitude', longitude);
 					setPlaces(placesList(map1, found));
+					setServerFind({ places });
 				}
 			} else {
 				map1.set('name', 'unknown');
 				placesList(map1, found);
 				setServerFind({ places: [] });
 			}
-		} catch (error) { console.log(error); }
+		} catch (error) { /* console.log(error); */ }
 
 		return [{ serverUrl: serverUrl, serverFind: serverFind }, processServerFindSuccess,];
 	}
