@@ -18,16 +18,11 @@ import { latLngToPlace } from "../../utils/transformers";
 
 export default function AddPlace(props) {
 	var [foundPlace, setFoundPlace] = useState();
-	var [foundNamePlace, setFoundNamePlace] = useState();
 	const [coordString, setCoordString] = useState('');
 	const [nameString, setNameString] = useState('');
 	var [limit, setLimit] = useState(10);
 	var [found, setFound] = useState(0);
-	var [places, setPlaces] = useState([]);
 	var [index, setIndex] = useState(1);
-
-
-
 
 	const findSettings = useFind(nameString, limit, getOriginalServerUrl());
 	return (
@@ -38,14 +33,12 @@ export default function AddPlace(props) {
 				setFoundPlace={setFoundPlace}
 				coordString={coordString}
 				setCoordString={setCoordString}
-
 			/>
 
 			<AddCoordFooter
 				append={props.append}
 				foundPlace={foundPlace}
 				setCoordString={setCoordString}
-
 			/>
 
 			<PlaceNameSearch
@@ -114,7 +107,7 @@ function PlaceNameSearch(props) {
 					data-testid='name-input'
 					value={props.nameString}
 				/>
-				<PlaceNameInfo foundNamePlace={props.foundNamePlace} />
+				<PlaceNameInfo foundPlace={props.foundPlace} />
 			</Col>
 		</ModalBody>
 	);
@@ -143,66 +136,91 @@ function PlaceCoordInfo(props) {
 }
 
 
-function PlaceNameInfo(props) {
-
+function PlaceNameInfo() {
 	return (
 		<ModalBody>
-
-			<div id="wrapper" className="list-group adjustList">
-				<div id='places1' data-testid="places1-div"></div>
-				<div id='places2'></div>
-				<div id='places3'></div>
-				<div id='places4'></div>
-				<div id='places5'></div>
-				<div id='places6'></div>
-				<div id='places7'></div>
-				<div id='places8'></div>
-				<div id='places9'></div>
-				<div id='places10'></div>
-			</div>
-
+			<div id="outerDivElement" className="list-group adjustList"></div>
 		</ModalBody>
 	);
 }
 
-function newPlaceArr(){
-	let placeArr = [];
-	return placeArr;
+function find(name, placeArr) {
+	var results = [];
+	var idx = placeArr.indexOf(name);
+	//console.log("results: ", results);
+	//console.log("idx: ", idx);
+	while (idx != -1) {
+		results.push(idx);
+		idx = placeArr.indexOf(name, idx + 1);
+	}
+	
+	return results;
 }
 
-function show(places, limit) {
-	places["name"] = [{ "index": places.get('index'), "name": places.get('name'), "latitude": places.get('latitude'), "longitude": places.get('longitude') }];
-	let elem;
-	let index = places.get('index');
-	let lat = places.get('latitude');
-	let lng = places.get('longitude');
-	let name = places.get('name');
+function show() {
 	let buttons = document.querySelectorAll('.arrList');
 	let placeArr = [];
-	const set = new Set();
+	let name = '';
 	
+	/* FIXME: repeats depending on list index - related to last selection error and dynamic list */
 	buttons.forEach(el => el.addEventListener('click', () => {
-		const text = el.getAttribute("value");
-		if (!set.has(text)) {
-			set.add(text);
-			placeArr.push(text);
-		} else {
-			const index = placeArr.indexOf(text);
+		const text = el.getAttribute("latlng");
+		name = el.innerHTML;
+		const latLngPlace = new Coordinates(text);
+		const lat = latLngPlace.getLatitude();
+		const lng = latLngPlace.getLongitude();
+		const formattedLatLng = latLngToPlace({ lat, lng });
+		const index = find(name, placeArr);
+		
+
+		//FIXME: Does not Delete - does not change index #, so always -1
+		if (index > 0) {
 			placeArr.splice(index, 1);
-			set.delete(text);
+			//console.log('deleted', placeArr)
 		}
-		newPlaceArr().push(placeArr);
+		//---------------------------
+		else {
+			placeArr.push(new Place({ name: name, index: index, ...formattedLatLng, ...placeArr[index] }));
+			//console.log('added: ', placeArr)
+		}
 	}))
-	
+}
+
+export function placesList(places, limit) {
+	places["name"] = [{ "index": places.get('index'), "name": places.get('name'), "latitude": places.get('latitude'), "longitude": places.get('longitude') }];
+	let buttonElementtext = document.createTextNode("")
+	let parent = document.querySelector('#outerDivElement')
+	let buttonElement = document.createElement('button');
+	var buttonsAmount = document.querySelectorAll('#outerDivElement button');
 	if (limit > 0) {
-		elem = document.getElementById('places' + `${index}`);
-		elem.innerHTML += `<button value="${lat},${lng}" id="places${index}-btn" data-testid="places${index}-btn"
-			type="button" class="arrList list-group-item list-group-item-action list-group-item-mine">${name}</button>`;
+		{/* FIXME: appends to end instead of refresh list */ }
+		if (buttonsAmount.length < 10) {
+			//console.log(buttonElement);
+			buttonElementtext = document.createTextNode(`${places.get('name')}`)
+			buttonElement.setAttribute("index", `${places.get('index')}`);
+			buttonElement.setAttribute("latlng", `${places.get('latitude')}` + "," + `${places.get('longitude')}`);
+			buttonElement.setAttribute("id", "places" + `${places.get('index')}` + "-btn");
+			buttonElement.setAttribute("data-testid", "places" + `${places.get('index')}` + "-btn");
+			buttonElement.setAttribute("type", "button");
+			buttonElement.setAttribute("class", "arrList list-group-item list-group-item-action list-group-item-mine");
+			parent.appendChild(buttonElement);
+			buttonElement.appendChild(buttonElementtext);
+		} else {
+			return
+		}
 	} else {
-		elem = document.getElementById('places' + `${index}`);
-		elem.innerHTML = `<button id="places-notfound" data-testid="places-notfound" style="text-align: center">No Results Found<button><br/>`;
-		//FIXME: ^^ TypeError: Cannot set property 'innerHTML' of null ^^
+		let divElement = document.createElement('div');
+		divElement.setAttribute("id", "places-notfound");
+		divElement.setAttribute("data-testid", "places-notfound");
+		divElement.setAttribute("style", "text-align: center");
+		let divElementtext = document.createTextNode("No Results Found");
+		<br/>
+		divElement.appendChild(divElementtext);
+		//FIXME: TypeError: Cannot read properties of null (reading 'appendChild') when first loading
+		parent.appendChild(divElement);
+		//
 	}
+	show();
 }
 
 function AddCoordFooter(props) {
@@ -229,10 +247,12 @@ function AddNameFooter(props) {
 			<Button
 				color='primary'
 				onClick={() => {
-					//props.append(props.foundPlace);
+					/* FIXME: Does not add to map - issues setting foundPlace LAT/LNG */
+					props.append(props.foundPlace);
+					props.setNameString('');
 				}}
 				data-testid='add-name-button'
-				//disabled={!props.foundPlace}
+			disabled={!props.foundPlace}
 			>
 				Add Place(s)
 			</Button>
@@ -259,6 +279,7 @@ async function verifyPlacesName(props, setFoundPlace) {
 	try {
 		if (isPlaceValid(props.nameString)) {
 			fullPlace = useFind(nameString);
+			//console.log("fullPlace: ", fullPlace);
 			setFoundPlace(fullPlace);
 		}
 	} catch (error) {
@@ -281,26 +302,24 @@ export function useFind(match, limit, serverURL) {
 		match = '';
 		limit = 0;
 	}
-	var [found, setFound] = useState();
-	var [places, setPlaces] = useState([]);
+	let [found, setFound] = useState();
+	let [places, setPlaces] = useState([]);
 	const [type, setType] = useState(['airport']);
 	const [where, setWhere] = useState(['United States']);
 	const [serverUrl, setServerUrl] = useState(getOriginalServerUrl());
 	const [serverFind, setServerFind] = useState({ places: [] });
 
-
-	var find = {
+	let find = {
 		serverFind
 	}
 
-	var findActions = {
+	let findActions = {
 		setServerFind: setServerFind
 	}
 
 	useEffect(() => {
 		sendFindRequest(match, limit, serverURL, findActions);
 	}, [match, limit])
-
 	return { find };
 
 	function processServerFindSuccess(places, url) {
@@ -311,7 +330,7 @@ export function useFind(match, limit, serverURL) {
 
 	async function sendFindRequest(match, limit, serverURL, findActions) {
 		const { setServerFind } = findActions;
-		let found, name, index, latitude, longitude, findResponse;
+		let name, index, latitude, longitude, findResponse;
 		const map1 = new Map();
 
 		try {
@@ -321,37 +340,32 @@ export function useFind(match, limit, serverURL) {
 			findResponse = await sendAPIRequest(requestBody, serverURL);
 
 			//Set Limit to 10 if more than 10
-			 found = findResponse.found;
+			found = findResponse.found;
 			if (findResponse.found > limit) {
 				found = limit;
 			} setFound(found);
-
-			if (findResponse && (found > 0)) {
+			
+			if (found > 0) {
 				processServerFindSuccess(findResponse, serverUrl);
 
-				for (var i = 0; i < found; i++) {
+				for (let i = 0; i < found; i++) {
 					places = findResponse.places[i];
-				
 					name = places.locationFeatures.name;
 					index = places.locationFeatures.index;
 					latitude = places.locationFeatures.latitude;
 					longitude = places.locationFeatures.longitude;
-
-					//Clears Divs & Map before new search
-					const container = document.getElementById('places' + `${index}`);
-					container.replaceChildren();
 					map1.clear();
-				
+
 					//Sets Map
 					map1.set('index', index);
 					map1.set('name', name);
 					map1.set('latitude', latitude);
 					map1.set('longitude', longitude);
-					show(map1, found);
+					setPlaces(placesList(map1, found));
 				}
 			} else {
 				map1.set('name', 'unknown');
-				show(map1, found);
+				placesList(map1, found);
 				setServerFind({ places: [] });
 			}
 		} catch (error) { console.log(error); }
