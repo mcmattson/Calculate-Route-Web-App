@@ -159,12 +159,20 @@ function addDeletePlaceList() {
 		//Adds and Deletes Lat/Lng to Array
 		if (index > -1) {
 			placeArr.splice(index, 1);
-			//console.log('deleted', placeArr)
+			console.log('deleted', placeArr)
+			document.addEventListener('click', function handleClick(event) {
+				event.target.classList.remove('active');
+			});
+			
 		}
 		//---------------------------
 		else {
 			placeArr.push(formattedLatLng);
-			//console.log('added: ', placeArr)
+			console.log('added: ', placeArr)
+			document.addEventListener('click', function handleClick(event) {
+				event.target.classList.add('active');
+			});
+			
 		}
 	}))
 }
@@ -194,7 +202,6 @@ export function placesList(places, limit) {
 			buttonElement.appendChild(buttonElementtext);
 		} else {
 			removeAllChildNodes(parent);
-			return;
 		}
 	} else {
 		removeAllChildNodes(parent);
@@ -360,7 +367,7 @@ export function useFind(match, limit, serverURL) {
 				placesList(map1, found);
 				setServerFind({ places: [] });
 			}
-		} catch (error) { /* console.log(error); */ }
+		} catch (error) {}
 
 		return [{ serverUrl: serverUrl, serverFind: serverFind }, processServerFindSuccess,];
 	}
