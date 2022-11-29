@@ -12,4 +12,8 @@ public class TourRequest extends Request{
         
     }
 
+    public Places buildPlaces(){
+        return null;
+    }
+
 }
