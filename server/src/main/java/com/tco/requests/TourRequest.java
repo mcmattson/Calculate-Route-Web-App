@@ -9,11 +9,13 @@ public class TourRequest extends Request{
 
     @Override
     public void buildResponse(){
-        
+   
     }
 
     public Places buildPlaces(){
         return null;
     }
+
+    public void optimizePlaces(){}
 
 }
