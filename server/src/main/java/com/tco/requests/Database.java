@@ -57,22 +57,28 @@ public class Database {
         String[] cols = columns.split(",");
         Places Places = new Places();
         while (results.next()) {
-        Place Place = new Place("0", "0");  
-        HashMap<String, String> hashFeatures = new HashMap<String, String>();
-        Place.locationFeatures = hashFeatures;
-            for (String col : cols){
-                if (col == "latitude"){
-                    Place.latitude = results.getString(col);
-                }else if (col == "longitude"){
-                    Place.longitude = results.getString(col);
-                }else{
-                    Place.locationFeatures.put(col, results.getString(col));
-                }
-            }
-        Place.locationFeatures.put("index", String.format("%d", ++count));    
-        Places.add(Place);  
+            Place Place = new Place("0", "0");  
+            Place.locationFeatures = new HashMap<String, String>();
+
+            Place = parseResults(results, Place, cols);
+            Place.locationFeatures.put("index", String.format("%d", ++count));    
+            Places.add(Place);  
         }
+
         return Places;
+    }
+
+    private static Place parseResults(ResultSet results, Place Place, String[] cols) throws Exception{
+        for (String col : cols){
+            if (col == "latitude"){
+                Place.latitude = results.getString(col);
+            }else if (col == "longitude"){
+                Place.longitude = results.getString(col);
+            }else{
+                Place.locationFeatures.put(col, results.getString(col));
+            }
+        }
+        return Place; 
     }
 
 
