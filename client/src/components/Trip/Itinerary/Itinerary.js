@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useToggle } from '../../../hooks/useToggle';
-import { Table, Collapse } from 'reactstrap';
+import { Table, Collapse, Button } from 'reactstrap';
 import { latLngToText, placeToLatLng } from '../../../utils/transformers';
 import { BsChevronDown } from 'react-icons/bs';
 import { LOG } from '../../../utils/constants';
@@ -39,12 +39,23 @@ function TripHeader(props) {
 					data-testid='trip-header-title'
 				>
 					{props.tripName}
+					{' '}
+					{RemoveAll(props)}
 				</th>
 				<th> Leg Distance (Miles) </th>
 				<th> Cumulative Distance (Miles)</th>
 			</tr>
 		</thead>
 	);
+}
+
+function RemoveAll(props) { //1
+	return( //1
+		<Button data-testid={'remove-all-button'} color='primary' 
+		id='remove-all-button'>
+			Remove All Places
+		</Button>//1
+	)//1
 }
 
 function TotalTripDistance(props){
