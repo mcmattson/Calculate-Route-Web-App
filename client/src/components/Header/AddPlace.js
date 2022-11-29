@@ -145,12 +145,8 @@ function PlaceNameInfo() {
 function addOrDeletePlaceListItems() {
 	let buttons = document.querySelectorAll('.arrList');
 	let placeArr = [];
-	let name = '';
-	
-	/* FIXME: repeats depending on list index - related to last selection error and dynamic list */
 	buttons.forEach(el => el.addEventListener('click', () => {
 		const text = el.getAttribute("latlng");
-		name = el.innerHTML;
 		const latLngPlace = new Coordinates(text);
 		const lat = latLngPlace.getLatitude();
 		const lng = latLngPlace.getLongitude();
@@ -165,15 +161,12 @@ function addOrDeletePlaceListItems() {
 				event.target.classList.remove('active');
 			});
 			
-		}
-		//---------------------------
-		else {
+		} else {
 			placeArr.push(formattedLatLng);
 			console.log('added: ', placeArr)
 			document.addEventListener('click', function handleClick(event) {
 				event.target.classList.add('active');
 			});
-			
 		}
 	}))
 }
@@ -235,6 +228,9 @@ function AddCoordFooter(props) {
 		</ModalFooter>
 	);
 }
+
+//FIXME: Helper function to convert array from addOrDeletePlaceListItems() 
+//	to Places({}) then added one at a time to map 
 
 function AddNameFooter(props) {
 	return (
