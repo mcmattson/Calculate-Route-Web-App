@@ -57,4 +57,8 @@ describe('Itinerary', () => {
 		expect(distance.textContent).toContain(" 0");
 
 	});
+
+	// test('ianDunc: test button works with places', () => {
+	// 	expect(screen.getByTestId('remove-all-button').disabled).toBeFalsy();
+	// });
 });
