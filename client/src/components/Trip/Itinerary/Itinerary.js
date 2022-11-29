@@ -215,3 +215,10 @@ function calcTotal(distances){
 }
 
 
+function useTour(){
+	function processServerTourSuccess(){}
+
+	async function sendTourRequest() {}
+
+ 	return null;
+}
