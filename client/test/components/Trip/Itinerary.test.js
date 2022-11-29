@@ -7,7 +7,7 @@ import { MOCK_PLACES } from '../../sharedMocks';
 import Itinerary from '../../../src/components/Trip/Itinerary/Itinerary.js';
 
 describe('Itinerary', () => {
-	const placeActions = { append: jest.fn(), selectIndex: jest.fn()};
+	const placeActions = { append: jest.fn(), selectIndex: jest.fn(), removeAll: jest.fn()};
 	beforeEach(() => {
 		render(
 			<Itinerary
@@ -62,13 +62,13 @@ describe('Itinerary', () => {
 		expect(screen.getByTestId('remove-all-button').disabled).toBeFalsy();
 	});
 
-	// test('ianDunc: test button calls removeAll hook', () => {
-	// 	expect(screen.getByTestId('remove-all-button').disabled).toBeFalsy();
-	// 	expect(placeActions.removeAll).toBeCalledTimes(0);
+	test('ianDunc: test button calls removeAll hook', () => {
+		expect(screen.getByTestId('remove-all-button').disabled).toBeFalsy();
+		expect(placeActions.removeAll).toBeCalledTimes(0);
 
-	// 	const toggle = screen.getByTestId('remove-all-button');
-	// 	user.click(toggle);
+		const toggle = screen.getByTestId('remove-all-button');
+		user.click(toggle);
 		
-	// 	expect(placeActions.removeAll).toBeCalledTimes(1);
-	// });
+		expect(placeActions.removeAll).toBeCalledTimes(1);
+	});
 });
