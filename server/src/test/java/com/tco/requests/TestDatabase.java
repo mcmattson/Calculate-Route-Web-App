@@ -57,7 +57,7 @@ public class TestDatabase {
         }
         catch(Exception e){
         }
-        assertEquals(16, count);
+        assertEquals(28, count);
 
     }
 
