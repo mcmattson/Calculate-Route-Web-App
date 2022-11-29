@@ -50,7 +50,7 @@ function TripHeader(props) {
 	);
 }
 
-function RemoveAll(props) { 
+function RemoveAll(props) {
 	return( 
 		<Button data-testid={'remove-all-button'} color='primary' 
 		id='remove-all-button' disabled={props.places.length === 0}>
