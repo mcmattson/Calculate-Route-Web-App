@@ -1,4 +1,6 @@
-public class TourRequest {
+package com.tco.requests;
+
+public class TourRequest{
     
     private String requestType;
     private Double earthRadius;
