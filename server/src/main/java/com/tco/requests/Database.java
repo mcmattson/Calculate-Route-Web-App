@@ -53,32 +53,22 @@ public class Database {
     }
 
     public static Places convertQueryResultsToLocations(ResultSet results, String columns) throws Exception {
-        int count = 0;
         String[] cols = columns.split(",");
         Places Places = new Places();
         while (results.next()) {
-            Place Place = new Place("0", "0");  
-            Place.locationFeatures = new HashMap<String, String>();
-
-            Place = parseResults(results, Place, cols);
-            Place.locationFeatures.put("index", String.format("%d", ++count));    
+            Place Place = new Place(results.getString("latitude"), 
+                                    results.getString("longitude"),
+                                    results.getString("name"), 
+                                    results.getString("id"), 
+                                    results.getString("continent"),
+                                    results.getString("altitude"), 
+                                    results.getString("iso_country"), 
+                                    results.getString("municipality"), 
+                                    results.getString("iso_region"));
             Places.add(Place);  
         }
 
         return Places;
-    }
-
-    private static Place parseResults(ResultSet results, Place Place, String[] cols) throws Exception{
-        for (String col : cols){
-            if (col == "latitude"){
-                Place.latitude = results.getString(col);
-            }else if (col == "longitude"){
-                Place.longitude = results.getString(col);
-            }else{
-                Place.locationFeatures.put(col, results.getString(col));
-            }
-        }
-        return Place; 
     }
 
 
