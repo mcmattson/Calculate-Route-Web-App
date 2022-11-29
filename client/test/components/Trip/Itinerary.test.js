@@ -61,4 +61,14 @@ describe('Itinerary', () => {
 	test('ianDunc: test button works with places', () => {
 		expect(screen.getByTestId('remove-all-button').disabled).toBeFalsy();
 	});
+
+	// test('ianDunc: test button calls removeAll hook', () => {
+	// 	expect(screen.getByTestId('remove-all-button').disabled).toBeFalsy();
+	// 	expect(placeActions.removeAll).toBeCalledTimes(0);
+
+	// 	const toggle = screen.getByTestId('remove-all-button');
+	// 	user.click(toggle);
+		
+	// 	expect(placeActions.removeAll).toBeCalledTimes(1);
+	// });
 });

@@ -50,13 +50,13 @@ function TripHeader(props) {
 	);
 }
 
-function RemoveAll(props) { //1
-	return( //1
+function RemoveAll(props) { 
+	return( 
 		<Button data-testid={'remove-all-button'} color='primary' 
 		id='remove-all-button' disabled={props.places.length === 0}>
 			Remove All Places
-		</Button>//1
-	)//1
+		</Button>
+	)
 }
 
 function TotalTripDistance(props){
