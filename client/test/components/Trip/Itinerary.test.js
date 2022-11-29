@@ -58,7 +58,7 @@ describe('Itinerary', () => {
 
 	});
 
-	// test('ianDunc: test button works with places', () => {
-	// 	expect(screen.getByTestId('remove-all-button').disabled).toBeFalsy();
-	// });
+	test('ianDunc: test button works with places', () => {
+		expect(screen.getByTestId('remove-all-button').disabled).toBeFalsy();
+	});
 });

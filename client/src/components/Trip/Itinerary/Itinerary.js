@@ -15,6 +15,7 @@ export default function Itinerary(props) {
 			<TripHeader
 				tripName={props.tripName}
 				distanceSettings= {distanceSettings}
+				places={props.places}
 			/>
 			<PlaceList
 				places={props.places}
@@ -52,7 +53,7 @@ function TripHeader(props) {
 function RemoveAll(props) { //1
 	return( //1
 		<Button data-testid={'remove-all-button'} color='primary' 
-		id='remove-all-button'>
+		id='remove-all-button' disabled={props.places.length === 0}>
 			Remove All Places
 		</Button>//1
 	)//1
