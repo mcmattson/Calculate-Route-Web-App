@@ -129,32 +129,3 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 function isLatLngValid(lat, lng) {
 	return (lat !== undefined && lng !== undefined);
 }
-
-function useFind(match) {
-	const [serverUrl, setServerUrl] = useState(getOriginalServerUrl());
-	const [serverFind, setServerFind] = useState({places: []});
-
-	useEffect( () => {
-		sendFindRequest();
-	}, match);  
-
-	function processServerFindSuccess(places, url){
-		LOG.info('Switching to Server: ', url);
-		setServerFind(places);
-		setServerUrl(url);
-	}
-
-	async function sendFindRequest() {
-		const findResponse = await sendAPIRequest({
-			requestType: 'find',
-			match: "",
-			limit: 10}, serverUrl);
-		if (findResponse) {
-			processServerFindSuccess(findResponse,serverUrl);
-		} else {
-			setServerFind({places: []});
-		}
-	}
-
-	return [{serverUrl: serverUrl, serverFind: serverFind}, processServerFindSuccess,];
-}
