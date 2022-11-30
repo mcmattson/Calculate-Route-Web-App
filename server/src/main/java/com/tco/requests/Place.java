@@ -21,30 +21,9 @@ class Place implements GeographicCoordinate {
     public String iso_region;
     //Test
     //Constructor
-    Place(String lat, String lon, String continent, String altitude , 
-            String iso_country, String name, String municipality, 
-            String iso_region, String id) {
+    Place(String lat, String lon) {
         this.latitude = lat;
         this.longitude = lon;
-        this.continent = continent;
-        this.altitude = altitude;
-        this.iso_country = iso_country;
-        this.name = name;
-        this.municipality = municipality;
-        this.iso_region = iso_region;
-        this.id = id;
-    }
-
-    Place(String lat, String lon, String name, String id, String continent, String altitude, String iso_country, String municipality, String iso_region) {
-        this.latitude = lat;
-        this.longitude = lon;
-        this.name = name;
-        this.id = id;
-        this.continent = continent; 
-        this.altitude = altitude;
-        this.iso_country = iso_country;
-        this.municipality = municipality;
-        this.iso_region = iso_region;
     }
 
     Place(String lat, String lon, String name, String id, String continent, String altitude, String iso_country, String municipality, String iso_region) {
