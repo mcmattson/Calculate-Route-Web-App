@@ -56,18 +56,18 @@ public class Database {
         String[] cols = columns.split(",");
         Places Places = new Places();  
         while (results.next()) {
-        Place Place = new Place(results.getString("latitude"), 
-                                results.getString("longitude"), 
-                                results.getString("continent"),  
-                                results.getString("altitude") ,
-                                results.getString("iso_country"),
-                                results.getString("name"),
-                                results.getString("municipality"),
-                                results.getString("iso_region"),
-                                results.getString("id")
-                                );
-        Places.add(Place);
+            Place Place = new Place(results.getString("latitude"), 
+                                    results.getString("longitude"),
+                                    results.getString("name"), 
+                                    results.getString("id"), 
+                                    results.getString("continent"),
+                                    results.getString("altitude"), 
+                                    results.getString("iso_country"), 
+                                    results.getString("municipality"), 
+                                    results.getString("iso_region"));
+            Places.add(Place);  
         }
+
         return Places;
     }
 

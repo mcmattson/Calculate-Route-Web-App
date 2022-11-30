@@ -43,6 +43,8 @@ function TripHeader(props) {
 					{props.tripName}
 					{' '}
 					{RemoveAll(props)}
+					{' '}
+					{Optimize(props)}
 				</th>
 				<th> Leg Distance (Miles) </th>
 				<th> Cumulative Distance (Miles)</th>
@@ -56,6 +58,15 @@ function RemoveAll(props) {
 		<Button data-testid={'remove-all-button'} color='primary' 
 		id='remove-all-button' disabled={props.places.length === 0} onClick={() => props.removeAll()}>
 			Remove All Places
+		</Button>
+	)
+}
+
+function Optimize(props) {
+	return( 
+		<Button data-testid={'optimize-button'} color='primary' 
+		id='optimize-button' disabled={props.places.length === 0}>
+			Optimize Trip
 		</Button>
 	)
 }
@@ -213,5 +224,3 @@ function calcTotal(distances){
     }
   return total;
 }
-
-
