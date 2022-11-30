@@ -24,7 +24,7 @@ public class DistancesRequest extends Request {
         log.trace("distanceResponse -> {}", this);
     }
 
-    private Distances buildDistanceList() {
+    public Distances buildDistanceList() {
         Distances distances = new Distances();
         
         for(int i = 0; i < places.size(); i++ ){
