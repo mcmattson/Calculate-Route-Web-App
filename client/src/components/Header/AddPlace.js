@@ -15,6 +15,7 @@ import { reverseGeocode } from '../../utils/reverseGeocode';
 export default function AddPlace(props) {
 	const [foundPlace, setFoundPlace] = useState();
 	const [coordString, setCoordString] = useState('');
+	const [placeString, setPlaceString] = useState('');
 	return (
 		<Modal isOpen={props.isOpen} toggle={props.toggleAddPlace}>
 			<AddPlaceHeader toggleAddPlace={props.toggleAddPlace} />
