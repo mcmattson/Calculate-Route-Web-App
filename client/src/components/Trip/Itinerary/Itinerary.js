@@ -213,5 +213,3 @@ function calcTotal(distances){
     }
   return total;
 }
-
-
