@@ -42,4 +42,9 @@ public class DistancesRequest extends Request {
     public DistancesRequest() {
         this.requestType = "distances";
     }
+
+    public DistancesRequest(Places places) {
+        this.places = places;
+    }
+    
 }
