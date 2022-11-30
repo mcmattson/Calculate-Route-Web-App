@@ -26,7 +26,7 @@ public class Select {
         return "SELECT "
             + data
             + " FROM " + getTABLE()
-            + " WHERE name LIKE \"%" + match + "%\" "
+            + " WHERE name LIKE \"%" + match + "%\" OR id LIKE \"%" + match + "%\" OR municipality LIKE \"%" + match + "%\" OR iso_country LIKE \"%" + match + "%\" OR continent LIKE \"%" + match + "%\" "
             + limit
             + " ;";
     }
