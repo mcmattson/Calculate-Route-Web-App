@@ -213,12 +213,3 @@ function calcTotal(distances){
     }
   return total;
 }
-
-
-function useTour(){
-	function processServerTourSuccess(){}
-
-	async function sendTourRequest() {}
-
- 	return null;
-}
