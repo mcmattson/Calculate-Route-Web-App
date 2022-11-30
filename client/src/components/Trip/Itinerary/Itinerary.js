@@ -65,7 +65,7 @@ function RemoveAll(props) {
 function Optimize(props) {
 	return( 
 		<Button data-testid={'optimize-button'} color='primary' 
-		id='optimize-button'>
+		id='optimize-button' disabled={props.places.length === 0}>
 			Optimize Trip
 		</Button>
 	)
