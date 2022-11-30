@@ -4,7 +4,7 @@ public final class DistanceCalculator {
     
     final static boolean useRandom = false;
 
-    private DistanceCalculator() {}
+    public DistanceCalculator() {}
 
     public static Long calculate(GeographicCoordinate from, GeographicCoordinate to, double earthRadius){
         Double delta_lambda = Math.abs(to.lonRadians() - from.lonRadians());
