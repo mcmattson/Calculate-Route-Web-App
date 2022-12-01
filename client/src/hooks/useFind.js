@@ -24,17 +24,18 @@ function useFind(match, limit, serverURL) {
         setServerUrl(url);
     }
     async function sendFindRequest(match, limit, serverURL, findActions) {
-        const { setServerFind } = findActions;
+        const { setServerFind } = findActions, map1 = new Map();
         let name, index, latitude, longitude, findResponse;
-        const map1 = new Map();
         try {
             const requestBody = { requestType: "find", match: match, type: type, where: where, limit: limit }; findResponse = await sendAPIRequest(requestBody, serverURL);
             found = setNewFound(findResponse.found, limit); //Set Limit to 10 if more than 10 
             if (found > 0) {
                 processServerFindSuccess(findResponse, serverUrl);
                 for (let i = 0; i < found; i++) {
-                    places = findResponse.places[i], name = places.name, index = i, latitude = places.latitude, longitude = places.longitude;
-                    let mapPlaces = setMapInfo(index, name, latitude, longitude, map1); //Clears and Sets Map
+                    places = findResponse.places[i], index = i, name, latitude, longitude;
+                    let mapPlaces = setMapInfo(name = places.name, latitude = places.latitude, longitude = places.longitude, map1); //Clears and Sets Map
+                    map1.set('index', index);
+                    console.log(mapPlaces);
                     placesList(mapPlaces, found);
                     setServerFind({ places });
                 }
@@ -52,9 +53,8 @@ function setMapInfoUnknown(map1) {
     return map1;
 }
 
-function setMapInfo(index, name, latitude, longitude, map1) {
+function setMapInfo(name, latitude, longitude, map1) {
     map1.clear();
-    map1.set('index', index);
     map1.set('name', name);
     map1.set('latitude', latitude);
     map1.set('longitude', longitude);
