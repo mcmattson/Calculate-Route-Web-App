@@ -19,7 +19,7 @@ function useFind(match, limit, serverURL) {
         sendFindRequest(match, limit, serverURL, findActions);
     }, [match, limit])
     return { find };
-
+    
     function processServerFindSuccess(places, url) {
         LOG.info('Switching to Server:', url);
         setServerFind(places);
@@ -29,35 +29,39 @@ function useFind(match, limit, serverURL) {
         const { setServerFind } = findActions;
         let name, index, latitude, longitude, findResponse;
         const map1 = new Map();
-
         try {
             const requestBody = { requestType: "find", match: match, type: type, where: where, limit: limit }; findResponse = await sendAPIRequest(requestBody, serverURL);
-            //Set Limit to 10 if more than 10
-            found = setNewFound(findResponse.found, limit);
-
+            found = setNewFound(findResponse.found, limit); //Set Limit to 10 if more than 10 
             if (found > 0) {
                 processServerFindSuccess(findResponse, serverUrl);
                 for (let i = 0; i < found; i++) {
                     places = findResponse.places[i], name = places.name, index = i, latitude = places.latitude, longitude = places.longitude;
-                    map1.clear();
-
-                    //Sets Map
-                    map1.set('index', index);
-                    map1.set('name', name);
-                    map1.set('latitude', latitude);
-                    map1.set('longitude', longitude);
-                    placesList(map1, found);
+                    let mapPlaces = setMapInfo(index, name, latitude, longitude, map1); //Clears and Sets Map
+                    placesList(mapPlaces, found);
                     setServerFind({ places });
                 }
             } else {
-                map1.clear();
-                map1.set('name', 'unknown');
-                placesList(map1, found);
+                let mapSetUnknown = setMapInfoUnknown(map1); //Clears and Sets Map to Unknown
+                placesList(mapSetUnknown, found);
                 setServerFind({ places: [] });
             }
         } catch (error) { }
     }
 
+}
+function setMapInfoUnknown(map1) {
+    map1.clear();
+    map1.set('name', 'unknown');
+    return map1;
+}
+
+function setMapInfo(index, name, latitude, longitude, map1) {
+    map1.clear();
+    map1.set('index', index);
+    map1.set('name', name);
+    map1.set('latitude', latitude);
+    map1.set('longitude', longitude);
+    return map1;
 }
 function setNewFound(found, limit) {
     if (found > limit) {
