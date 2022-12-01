@@ -4,14 +4,12 @@ import { getOriginalServerUrl, sendAPIRequest } from '../utils/restfulAPI';
 import { placesList } from '../components/Header/AddPlace';
 
 function useFind(match, limit, serverURL) {
-
     limit = limitUndefinedNull(match, limit);
     match = matchUndefinedNull(match);
     let found, places = [];
     const type = ['airport'], where = ['US'];
     const [serverUrl, setServerUrl] = useState(getOriginalServerUrl());
     const [serverFind, setServerFind] = useState({ places: [] });
-
     let find = { serverFind }
     let findActions = { setServerFind: setServerFind }
 
@@ -19,7 +17,7 @@ function useFind(match, limit, serverURL) {
         sendFindRequest(match, limit, serverURL, findActions);
     }, [match, limit])
     return { find };
-    
+
     function processServerFindSuccess(places, url) {
         LOG.info('Switching to Server:', url);
         setServerFind(places);
@@ -47,7 +45,6 @@ function useFind(match, limit, serverURL) {
             }
         } catch (error) { }
     }
-
 }
 function setMapInfoUnknown(map1) {
     map1.clear();
