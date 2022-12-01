@@ -14,6 +14,10 @@ public class Optimize {
         long distance = calculator.calculate(next, unvisited.get(0), earthRadius);
         closestDistance = distance;
 
+        public Places createNearestNeighborTour(Place start){
+            return null;
+        }
+
         for (int i = 1; i < unvisited.size(); i++){
             distance = calculator.calculate(next, unvisited.get(i), earthRadius);
             if (distance < closestDistance){
