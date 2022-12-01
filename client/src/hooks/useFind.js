@@ -7,10 +7,8 @@ function useFind(match, limit, serverURL) {
 
     limit = limitUndefinedNull(match, limit);
     match = matchUndefinedNull(match);
-    let [found, setFound] = useState();
-    let [places, setPlaces] = useState([]);
-    const [type, setType] = useState(['airport']);
-    const [where, setWhere] = useState(['US']);
+    let found, places = [];
+    const type = ['airport'], where = ['US'];
     const [serverUrl, setServerUrl] = useState(getOriginalServerUrl());
     const [serverFind, setServerFind] = useState({ places: [] });
 
@@ -48,7 +46,7 @@ function useFind(match, limit, serverURL) {
                     map1.set('name', name);
                     map1.set('latitude', latitude);
                     map1.set('longitude', longitude);
-                    setPlaces(placesList(map1, found));
+                    placesList(map1, found);
                     setServerFind({ places });
                 }
             } else {
