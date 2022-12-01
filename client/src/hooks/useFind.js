@@ -35,13 +35,10 @@ function useFind(match, limit, serverURL) {
         const map1 = new Map();
 
         try {
-            const requestBody = {
-                requestType: "find", match: match, type: type, where: where, limit: limit
-            }; findResponse = await sendAPIRequest(requestBody, serverURL);
+            const requestBody = {requestType: "find", match: match, type: type, where: where, limit: limit}; findResponse = await sendAPIRequest(requestBody, serverURL);
 
             //Set Limit to 10 if more than 10
-            found = findResponse.found;
-            if (findResponse.found > limit) { found = limit; }
+            found = setNewFound(findResponse.found, limit);
 
             if (found > 0) {
                 processServerFindSuccess(findResponse, serverUrl);
@@ -63,6 +60,15 @@ function useFind(match, limit, serverURL) {
                 setServerFind({ places: [] });
             }
         } catch (error) { }
+    }
+    
+}
+function setNewFound(found, limit) {
+    if (found > limit) {
+        found = limit;
+        return found;
+    } else {
+        return found;
     }
 }
 export { useFind };
