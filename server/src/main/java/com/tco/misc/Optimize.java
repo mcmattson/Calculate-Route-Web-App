@@ -6,6 +6,24 @@ public class Optimize {
     long totalDistance; 
     Double earthRadius;
 
+    public Places createNearestNeighborTour(Place start){
+        
+        Places tour = new Places();
+        Places unvisited = places;
+        tour.add(start);
+        unvisited.remove(start);
+        Place next = start;
+
+        while (!unvisited.isEmpty()){
+            next = findClosest(unvisited,next);
+            tour.add(next);
+            unvisited.remove(next);
+        }
+
+        return tour;
+        
+    }
+
     public Place findClosest(Places unvisited, Place next){
         Place closestPlace = unvisited.get(0);
         long closestDistance;
@@ -14,9 +32,6 @@ public class Optimize {
         long distance = calculator.calculate(next, unvisited.get(0), earthRadius);
         closestDistance = distance;
 
-        public Places createNearestNeighborTour(Place start){
-            return null;
-        }
 
         for (int i = 1; i < unvisited.size(); i++){
             distance = calculator.calculate(next, unvisited.get(i), earthRadius);
