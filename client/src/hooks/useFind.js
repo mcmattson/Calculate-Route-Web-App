@@ -4,11 +4,9 @@ import { getOriginalServerUrl, sendAPIRequest } from '../utils/restfulAPI';
 import { placesList } from '../components/Header/AddPlace';
 
 function useFind(match, limit, serverURL) {
-    if (match == undefined || match.length < 3) {
-        match = ' ';
-        limit = 0;
-    }
 
+    limit = limitUndefinedNull(match, limit);
+    match = matchUndefinedNull(match);
     let [found, setFound] = useState();
     let [places, setPlaces] = useState([]);
     const [type, setType] = useState(['airport']);
@@ -36,7 +34,6 @@ function useFind(match, limit, serverURL) {
 
         try {
             const requestBody = { requestType: "find", match: match, type: type, where: where, limit: limit }; findResponse = await sendAPIRequest(requestBody, serverURL);
-
             //Set Limit to 10 if more than 10
             found = setNewFound(findResponse.found, limit);
 
@@ -55,6 +52,7 @@ function useFind(match, limit, serverURL) {
                     setServerFind({ places });
                 }
             } else {
+                map1.clear();
                 map1.set('name', 'unknown');
                 placesList(map1, found);
                 setServerFind({ places: [] });
@@ -69,6 +67,23 @@ function setNewFound(found, limit) {
         return found;
     } else {
         return found;
+    }
+}
+
+function limitUndefinedNull(match, limit) {
+    if (match == undefined || match.length < 3) {
+        limit = 0;
+        return limit;
+    } else {
+        return limit;
+    }
+}
+function matchUndefinedNull(match) {
+    if (match == undefined || match.length < 3) {
+        match = ' ';
+        return match;
+    } else {
+        return match;
     }
 }
 export { useFind };
