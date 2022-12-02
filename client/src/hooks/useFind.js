@@ -6,8 +6,9 @@ import { placesList } from '../components/Header/AddPlace';
 function useFind(match, limit, serverURL) {
     limit = limitUndefinedNull(match, limit);
     match = matchUndefinedNull(match);
-    let found, places = [], find = { serverFind }, findActions = { setServerFind: setServerFind };
+    let found, places = []
     const type = ['airport'], where = ['US'], [serverUrl, setServerUrl] = useState(getOriginalServerUrl()), [serverFind, setServerFind] = useState({ places: [] });
+    let find = { serverFind }, findActions = { setServerFind: setServerFind };
     useEffect(() => {
         sendFindRequest(match, limit, serverURL, findActions);
     }, [match, limit])
