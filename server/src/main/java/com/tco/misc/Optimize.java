@@ -6,6 +6,32 @@ public class Optimize {
     long totalDistance; 
     Double earthRadius;
 
+    public Optimize(Places places, Double earthRadius){
+        this.places = places;
+        DistancesRequest distances = new DistancesRequest(places);
+        this.totalDistance = distances.buildDistanceList().total();
+        this.earthRadius = earthRadius;
+    }
+
+
+    public Places findBestTour(){
+        Places bestTour = places;
+        long bestDistance = totalDistance;
+
+        for (Place start : places){
+            Places current = createNearestNeighborTour(start);
+            DistancesRequest distances = new DistancesRequest(current);
+            Distances currentDistanceList = distances.buildDistanceList();
+            long totalDistance = currentDistanceList.total();
+            if (totalDistance < bestDistance){
+                bestTour = current;
+                bestDistance = totalDistance;
+            }
+        }
+        return bestTour;
+    }
+
+
     public Places createNearestNeighborTour(Place start){
         
         Places tour = new Places();
