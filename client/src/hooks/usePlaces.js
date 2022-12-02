@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { reverseGeocode } from '../utils/reverseGeocode';
 import { LOG } from '../utils/constants';
+import { getOriginalServerUrl } from '../utils/restfulAPI';
 
 export function usePlaces() {
     const [places, setPlaces] = useState([]);
@@ -10,6 +11,7 @@ export function usePlaces() {
 
     const placeActions = {
         append: async (place) => append(place, context),
+        appendPlace: async (place) => appendPlace(place, context),
         removeAtIndex: (index) => removeAtIndex(index, context),
         removeAll: () => removeAll(context),
         selectIndex: (index) => selectIndex(index, context),
@@ -23,10 +25,18 @@ async function append(latLng, context) {
     const { places, setPlaces, setSelectedIndex } = context;
 
     const newPlaces = [...places];
-
     const fullPlace = await reverseGeocode(latLng);
     newPlaces.push(fullPlace);
 
+    setPlaces(newPlaces);
+    setSelectedIndex(newPlaces.length - 1);
+}
+
+async function appendPlace(latLng, context) {
+    const { places, setPlaces, setSelectedIndex } = context;
+    const newPlaces = [...places];
+    const fullPlace = latLng
+    newPlaces.push(fullPlace);
     setPlaces(newPlaces);
     setSelectedIndex(newPlaces.length - 1);
 }
