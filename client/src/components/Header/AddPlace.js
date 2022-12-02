@@ -21,8 +21,7 @@ export default function AddPlace(props) {
 	var [foundNamePlace, setFoundNamePlace] = useState();
 	const [coordString, setCoordString] = useState('');
 	const [nameString, setNameString] = useState('');
-	const [nameCoordString, setNameCoordString] = useState('');
-	var [limit, setLimit] = useState(10);
+	var limit = 10;
 	const findSettings = useFind(nameString, limit, getOriginalServerUrl());
 
 	return (
@@ -56,17 +55,15 @@ export default function AddPlace(props) {
 				setNameString={setNameString}
 				setFoundPlace={setFoundPlace}
 				nameString={nameString}
-				setLimit={setLimit}
-				limit={limit}
 				foundNamePlace={foundNamePlace}
 				setFoundNamePlace={setFoundNamePlace}
 			/>
 
 			<AddOrDeletePlaceListItems
 				appendPlace={props.appendPlace}
-				foundPlace={foundPlace}
+				foundNamePlace={foundNamePlace}
 				setFoundPlace={setFoundPlace}
-				setNameCoordString={setNameCoordString}
+				setFoundNamePlace={setFoundNamePlace}
 			/>
 		</Modal>
 	);
@@ -112,7 +109,7 @@ function PlaceNameSearch(props) {
 					data-testid='name-input'
 					value={props.nameString}
 				/>
-				<PlaceNameInfo foundNamePlace={props.foundPlace} />
+				<PlaceNameInfo foundNamePlace={props.foundNamePlace} />
 			</Col>
 		</ModalBody>
 	);
@@ -142,15 +139,14 @@ function PlaceCoordInfo(props) {
 
 function PlaceNameInfo() {
 	return (
-			<ModalBody>
-				<div id="outerDivElement" className="list-group adjustList"></div>
-			</ModalBody>
+		<ModalBody>
+			<div id="outerDivElement" className="list-group adjustList"></div>
+		</ModalBody>
 	);
 }
 
 function AddOrDeletePlaceListItems(props) {
 	let buttons = document.querySelectorAll('.arrList');
-	let placeArr = [];
 	buttons.forEach(el => el.addEventListener('click', () => {
 		const text = el.getAttribute("latlng");
 		const name = el.getAttribute("name");
@@ -158,27 +154,16 @@ function AddOrDeletePlaceListItems(props) {
 		const latLngPlace = new Coordinates(text);
 		const lat = latLngPlace.getLatitude();
 		const lng = latLngPlace.getLongitude();
-		const formattedLatLng = lat + "," + lng;
-		const i = placeArr.indexOf(formattedLatLng);
-
-		//FIXME:Adds and Deletes Lat/Lng to map
-		if (i > -1) {
-			placeArr.splice(i, 1);
-			//console.log('deleted', placeArr)
-			document.addEventListener('click', function handleClick(event) {
-				event.target.classList.remove('active');
-			});
-		} else {
-			placeArr.push(formattedLatLng);
-			//console.log('added: ', placeArr)
-			document.addEventListener('click', function handleClick(event) {
-				event.target.classList.add('active');
-				const newPlace = new Place({ latitude: lat, longitude: lng, name: name});
-				verifyPlacesName(newPlace, props.setFoundPlace);
-				console.log("props.foundPlace: ", props.foundPlace);
-				props.appendPlace(newPlace);
-			});
-		}
+		const latStr = lat.toString();
+		const lngStr = lng.toString();
+		
+		//FIXME:Adds but with requests equivalent to which list number user clicks
+		document.addEventListener('click', function handleClick(event) {
+			event.target.classList.add('active');
+			const newPlace = new Place({ latitude: latStr, longitude: lngStr, name: name, index: index });
+			verifyPlacesName(newPlace, props.setFoundNamePlace);
+			props.appendPlace(newPlace);
+		});
 	}))
 	return (null);
 }
@@ -250,9 +235,9 @@ function AddNameFooter(props) {
 					props.setNameString('');
 				}}
 				data-testid='add-name-button'
-				disabled={!props.foundPlace}
+				disabled={!props.foundNamePlace}
 			>
-				Clear All
+				Clear Search
 			</Button>
 		</ModalFooter>
 	);
@@ -266,7 +251,6 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 		const lng = latLngPlace.getLongitude();
 		if (isLatLngValid(lat, lng)) {
 			const fullPlace = await reverseGeocode({ lat, lng });
-			console.log("Coord-fullPlace: ", fullPlace);
 			setFoundPlace(fullPlace);
 		}
 	} catch (error) {
@@ -274,11 +258,11 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 	}
 }
 
-export async function verifyPlacesName(places, setFoundPlace) {
+export async function verifyPlacesName(places, setFoundNamePlace) {
 	try {
-		setFoundPlace(places);
+		setFoundNamePlace(places);
 	} catch (error) {
-		setFoundPlace(undefined);
+		setFoundNamePlace(undefined);
 	}
 }
 
