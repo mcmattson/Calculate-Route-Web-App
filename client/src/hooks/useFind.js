@@ -7,8 +7,10 @@ function useFind(match, limit, serverURL) {
     limit = limitUndefinedNull(match, limit); match = matchUndefinedNull(match);
     let found, places = []; const type = ['airport'], where = ['US'], [serverUrl, setServerUrl] = useState(getOriginalServerUrl()), [serverFind, setServerFind] = useState({ places: [] });
     let find = { serverFind }, findActions = { setServerFind: setServerFind };
+
     useEffect(() => { sendFindRequest(match, limit, serverURL, findActions); }, [match, limit]); return { find };
     function processServerFindSuccess(places, url) { LOG.info('Switching to Server:', url); setServerFind(places); setServerUrl(url); }
+
     async function sendFindRequest(match, limit, serverURL, findActions) {
         const { setServerFind } = findActions, map1 = new Map(); let name, index, latitude, longitude, findResponse, mapPlaces, i, mapSetUnknown;
         try {
