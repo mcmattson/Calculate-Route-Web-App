@@ -115,9 +115,9 @@ function PlaceRow(props) {
 	const location = latLngToText(placeToLatLng(props.place));
 	let distances = [0]; 
 	if (props.distanceSettings.distances){ 
-		
+
 	 	distances = props.distanceSettings.distances.leg;
-		
+	
 	}
 
 	return (
@@ -126,9 +126,7 @@ function PlaceRow(props) {
 				data-testid={`place-row-${props.index}`}
 				onClick={() =>
 					placeRowClicked(
-						toggleShowFullName,
-						props.placeActions.selectIndex,
-						props.index
+						toggleShowFullName,	props.placeActions.selectIndex,	props.index
 					)
 				}
 			>
