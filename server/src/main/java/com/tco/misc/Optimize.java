@@ -6,6 +6,14 @@ public class Optimize {
     long totalDistance; 
     Double earthRadius;
 
+    public Optimize(Places places, Double earthRadius){
+        this.places = places;
+        DistancesRequest distances = new DistancesRequest(places);
+        this.totalDistance = distances.buildDistanceList().total();
+        this.earthRadius = earthRadius;
+    }
+
+
     public Places findBestTour(){
         Places bestTour = places;
         long bestDistance = totalDistance;
