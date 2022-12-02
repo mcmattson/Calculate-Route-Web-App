@@ -21,11 +21,10 @@ export default function AddPlace(props) {
 	var [foundNamePlace, setFoundNamePlace] = useState();
 	const [coordString, setCoordString] = useState('');
 	const [nameString, setNameString] = useState('');
+	const [nameCoordString, setNameCoordString] = useState('');
 	var [limit, setLimit] = useState(10);
-	var [found, setFound] = useState(0);
-	var [index, setIndex] = useState(1);
-
 	const findSettings = useFind(nameString, limit, getOriginalServerUrl());
+
 	return (
 		<Modal isOpen={props.isOpen} toggle={props.toggleAddPlace}>
 			<AddPlaceHeader toggleAddPlace={props.toggleAddPlace} />
@@ -44,29 +43,30 @@ export default function AddPlace(props) {
 			/>
 
 			<PlaceNameSearch
-				index={index}
-				setIndex={setIndex}
 				foundPlace={foundPlace}
 				setFoundPlace={setFoundPlace}
-				foundNamePlace={foundNamePlace}
-				setFoundNamePlace={setFoundNamePlace}
-				nameString={nameString}
 				setNameString={setNameString}
 				findSettings={findSettings}
-				found={found}
-				setFound={setFound}
+				limit={limit}
 			/>
+
 			<AddNameFooter
-				append={props.append}
+				appendPlace={props.appendPlace}
 				foundPlace={foundPlace}
 				setNameString={setNameString}
 				setFoundPlace={setFoundPlace}
-
+				nameString={nameString}
+				setLimit={setLimit}
+				limit={limit}
+				foundNamePlace={foundNamePlace}
+				setFoundNamePlace={setFoundNamePlace}
 			/>
+
 			<AddOrDeletePlaceListItems
-				append={props.append}
+				appendPlace={props.appendPlace}
 				foundPlace={foundPlace}
 				setFoundPlace={setFoundPlace}
+				setNameCoordString={setNameCoordString}
 			/>
 		</Modal>
 	);
@@ -101,12 +101,6 @@ function PlaceCoordSearch(props) {
 }
 
 function PlaceNameSearch(props) {
-	/* useEffect(() => {
-		document.getElementById('search-name').onkeyup = function () {
-			verifyPlacesName(props.findSettings, props.setFoundPlace); //FIXME: Convert to lat/lng return from clicked
-		}
-	}, [props.nameString]); */
-
 	return (
 		<ModalBody>
 			<Col>
@@ -146,14 +140,11 @@ function PlaceCoordInfo(props) {
 	);
 }
 
-function PlaceNameInfo(props) {
+function PlaceNameInfo() {
 	return (
-		//<Collapse isOpen={!!props.foundNamePlace}>
-		<ModalBody>
-			<div id="outerDivElement" className="list-group adjustList"></div>
-			{props.foundPlace}
-		</ModalBody>
-		//</Collapse>
+			<ModalBody>
+				<div id="outerDivElement" className="list-group adjustList"></div>
+			</ModalBody>
 	);
 }
 
@@ -162,34 +153,31 @@ function AddOrDeletePlaceListItems(props) {
 	let placeArr = [];
 	buttons.forEach(el => el.addEventListener('click', () => {
 		const text = el.getAttribute("latlng");
+		const name = el.getAttribute("name");
+		const index = el.getAttribute("index");
 		const latLngPlace = new Coordinates(text);
 		const lat = latLngPlace.getLatitude();
 		const lng = latLngPlace.getLongitude();
 		const formattedLatLng = lat + "," + lng;
-		const index = placeArr.indexOf(formattedLatLng);
+		const i = placeArr.indexOf(formattedLatLng);
 
-		//verifyCoordinates(formattedLatLng, props.setFoundPlace);
-		/* document.addEventListener('click', function handleClick(event) {
-			event.target.classList.add('active');
-			verifyCoordinates(formattedLatLng, props.setFoundPlace); 
-		});*/
 		//FIXME:Adds and Deletes Lat/Lng to map
-		if (index > -1) {
-			placeArr.splice(index, 1);
-			console.log('deleted', placeArr)
+		if (i > -1) {
+			placeArr.splice(i, 1);
+			//console.log('deleted', placeArr)
 			document.addEventListener('click', function handleClick(event) {
 				event.target.classList.remove('active');
 			});
-			//index--;
 		} else {
 			placeArr.push(formattedLatLng);
-			console.log('added: ', placeArr)
+			//console.log('added: ', placeArr)
 			document.addEventListener('click', function handleClick(event) {
 				event.target.classList.add('active');
-				verifyPlacesName(formattedLatLng, props.setFoundPlace);
+				const newPlace = new Place({ latitude: lat, longitude: lng, name: name});
+				verifyPlacesName(newPlace, props.setFoundPlace);
+				console.log("props.foundPlace: ", props.foundPlace);
+				props.appendPlace(newPlace);
 			});
-			//index ++;
-			//return verifyCoordinates(props.placeArr, props.setFoundPlace);
 		}
 	}))
 	return (null);
@@ -210,6 +198,7 @@ export function placesList(places, limit) {
 	if (limit > 0) {
 		if (buttonsAmount.length < 10) {
 			buttonElementtext = document.createTextNode(`${places.get('name')}`)
+			buttonElement.setAttribute("name", `${places.get('name')}`);
 			buttonElement.setAttribute("index", `${places.get('index')}`);
 			buttonElement.setAttribute("latlng", `${places.get('latitude')}` + "," + `${places.get('longitude')}`);
 			buttonElement.setAttribute("id", "places" + `${places.get('index')}` + "-btn");
@@ -258,20 +247,18 @@ function AddNameFooter(props) {
 			<Button
 				color='primary'
 				onClick={() => {
-					props.append(props.foundPlace);
+					props.setNameString('');
 				}}
-				data-testid='add-coord-button'
+				data-testid='add-name-button'
 				disabled={!props.foundPlace}
 			>
-				Add Place
+				Clear All
 			</Button>
 		</ModalFooter>
 	);
 }
 
 async function verifyCoordinates(coordString, setFoundPlace) {
-	//console.log("Coord-coordString: ", coordString);
-	//console.log("Coord-setFoundPlace: ", setFoundPlace);
 	try {
 
 		const latLngPlace = new Coordinates(coordString);
@@ -279,30 +266,18 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 		const lng = latLngPlace.getLongitude();
 		if (isLatLngValid(lat, lng)) {
 			const fullPlace = await reverseGeocode({ lat, lng });
-			//props.append(props.foundPlace);
+			console.log("Coord-fullPlace: ", fullPlace);
 			setFoundPlace(fullPlace);
 		}
 	} catch (error) {
-		//console.log(error);
 		setFoundPlace(undefined);
 	}
 }
-// FIXME:convert to add to map with own DB
-async function verifyPlacesName(searchedCoordString, setFoundPlace) {
-	console.log("Place-searchedCoordString: ", searchedCoordString);
-	//console.log("Place-setFoundPlace: ", setFoundPlace);
-	try {
 
-		const latLngPlace = new Coordinates(searchedCoordString);
-		const lat = latLngPlace.getLatitude();
-		const lng = latLngPlace.getLongitude();
-		if (isLatLngValid(lat, lng)) {
-			const fullPlace = /* await reverseGeocode({ lat, lng }); */
-				setFoundPlace(lat, lng);
-			console.log("Place-fullPlace: ", fullPlace);
-		}
+export async function verifyPlacesName(places, setFoundPlace) {
+	try {
+		setFoundPlace(places);
 	} catch (error) {
-		//console.log(error);
 		setFoundPlace(undefined);
 	}
 }
