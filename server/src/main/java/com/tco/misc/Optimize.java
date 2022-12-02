@@ -6,6 +6,11 @@ public class Optimize {
     long totalDistance; 
     Double earthRadius;
 
+    public Places findBestTour(){
+        return null;
+    }
+
+
     public Places createNearestNeighborTour(Place start){
         
         Places tour = new Places();
