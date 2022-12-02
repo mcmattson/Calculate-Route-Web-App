@@ -7,7 +7,20 @@ public class Optimize {
     Double earthRadius;
 
     public Places findBestTour(){
-        return null;
+        Places bestTour = places;
+        long bestDistance = totalDistance;
+
+        for (Place start : places){
+            Places current = createNearestNeighborTour(start);
+            DistancesRequest distances = new DistancesRequest(current);
+            Distances currentDistanceList = distances.buildDistanceList();
+            long totalDistance = currentDistanceList.total();
+            if (totalDistance < bestDistance){
+                bestTour = current;
+                bestDistance = totalDistance;
+            }
+        }
+        return bestTour;
     }
 
 
