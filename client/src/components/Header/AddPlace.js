@@ -21,7 +21,10 @@ export default function AddPlace(props) {
 	var [foundNamePlace, setFoundNamePlace] = useState();
 	const [coordString, setCoordString] = useState('');
 	const [nameString, setNameString] = useState('');
-	var limit = 10;
+	const [nameCoordString, setNameCoordString] = useState('');
+	const [finalPlaceArr, setFinalPlaceArr] = useState([])
+	const [query, setQuery] = useState("")
+	var [limit, setLimit] = useState(10);
 	const findSettings = useFind(nameString, limit, getOriginalServerUrl());
 
 	return (
@@ -55,15 +58,21 @@ export default function AddPlace(props) {
 				setNameString={setNameString}
 				setFoundPlace={setFoundPlace}
 				nameString={nameString}
+				setLimit={setLimit}
+				limit={limit}
 				foundNamePlace={foundNamePlace}
 				setFoundNamePlace={setFoundNamePlace}
 			/>
 
 			<AddOrDeletePlaceListItems
 				appendPlace={props.appendPlace}
-				foundNamePlace={foundNamePlace}
+				foundPlace={foundPlace}
 				setFoundPlace={setFoundPlace}
-				setFoundNamePlace={setFoundNamePlace}
+				setNameCoordString={setNameCoordString}
+				finalPlaceArr={finalPlaceArr}
+				setFinalPlaceArr={setFinalPlaceArr}
+				query={query}
+				setQuery={setQuery}
 			/>
 		</Modal>
 	);
@@ -109,7 +118,7 @@ function PlaceNameSearch(props) {
 					data-testid='name-input'
 					value={props.nameString}
 				/>
-				<PlaceNameInfo foundNamePlace={props.foundNamePlace} />
+				<PlaceNameInfo foundNamePlace={props.foundPlace} />
 			</Col>
 		</ModalBody>
 	);
@@ -147,24 +156,44 @@ function PlaceNameInfo() {
 
 function AddOrDeletePlaceListItems(props) {
 	let buttons = document.querySelectorAll('.arrList');
+	let placeArr = [];
+	var newPlace = '';
+	//var newPlace = "";
+	//var finalNewPlaceArr = {};
 	buttons.forEach(el => el.addEventListener('click', () => {
-		const text = el.getAttribute("latlng");
+		const text = el.getAttribute("latlng").toString();
 		const name = el.getAttribute("name");
 		const index = el.getAttribute("index");
 		const latLngPlace = new Coordinates(text);
-		const lat = latLngPlace.getLatitude();
-		const lng = latLngPlace.getLongitude();
-		const latStr = lat.toString();
-		const lngStr = lng.toString();
-		
-		//FIXME:Adds but with requests equivalent to which list number user clicks
-		document.addEventListener('click', function handleClick(event) {
-			event.target.classList.add('active');
-			const newPlace = new Place({ latitude: latStr, longitude: lngStr, name: name, index: index });
-			verifyPlacesName(newPlace, props.setFoundNamePlace);
-			props.appendPlace(newPlace);
-		});
+		const lat = latLngPlace.getLatitude().toString();
+		const lng = latLngPlace.getLongitude().toString();
+		const formattedLatLng = lat + "," + lng;
+		const i = placeArr.indexOf(formattedLatLng);
+		newPlace = new Place({ latitude: lat, longitude: lng, name: name, index: index });
+
+		//FIXME:Adds and Deletes Lat/Lng to map
+		if (i > -1) {
+			placeArr.splice(i, 2);
+			console.log('deleted', placeArr)
+			document.addEventListener('click', function handleClick(event) {
+				event.target.classList.remove('active');
+
+			});
+		} else {
+			placeArr.push(formattedLatLng, index);
+			console.log('added: ', placeArr)
+
+			console.log("newPlace: ", newPlace);
+			props.setFinalPlaceArr(finalPlaceArr => [...finalPlaceArr, newPlace])
+			document.addEventListener('click', function handleClick(event) {
+				event.target.classList.add('active');
+				//verifyPlacesName(newPlace, props.setFoundPlace);
+				//props.appendPlace(newPlace);
+			});
+		} //props.finalPlaceArr = { newPlace };
 	}))
+	
+	console.log("props.finalPlaceArr: ", props.finalPlaceArr);
 	return (null);
 }
 
@@ -235,9 +264,9 @@ function AddNameFooter(props) {
 					props.setNameString('');
 				}}
 				data-testid='add-name-button'
-				disabled={!props.foundNamePlace}
+				disabled={!props.foundPlace}
 			>
-				Clear Search
+				Clear All
 			</Button>
 		</ModalFooter>
 	);
@@ -251,6 +280,7 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 		const lng = latLngPlace.getLongitude();
 		if (isLatLngValid(lat, lng)) {
 			const fullPlace = await reverseGeocode({ lat, lng });
+			console.log("Coord-fullPlace: ", fullPlace);
 			setFoundPlace(fullPlace);
 		}
 	} catch (error) {
@@ -258,11 +288,11 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 	}
 }
 
-export async function verifyPlacesName(places, setFoundNamePlace) {
+export async function verifyPlacesName(places, setFoundPlace) {
 	try {
-		setFoundNamePlace(places);
+		setFoundPlace(places);
 	} catch (error) {
-		setFoundNamePlace(undefined);
+		setFoundPlace(undefined);
 	}
 }
 
