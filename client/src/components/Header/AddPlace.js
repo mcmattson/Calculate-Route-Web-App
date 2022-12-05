@@ -255,7 +255,6 @@ function mapCorrection(array) {
 	//Remove Indexing Numbers
 	let i = array.length;
 	while (i--) (i) % 2 === 0 && (array.splice(i, 1));
-
 	//Remove Duplicates
 	const unique = [...new Map(array.map((m) => [m.name, m])).values()];
 	return unique
@@ -274,22 +273,24 @@ function AddNameFooter(props) {
 						return new Promise(resolve => {
 							setTimeout(() => {
 								resolve('resolved');
-							}, 50);
+							}, 10);
 						});
 					}
 
 					async function asyncCall() {
 						console.log('calling');
-						const result = await resolveAfter2Seconds();
 						while (unique.length != 0) {
+							const result = await resolveAfter2Seconds();
 							unique.splice(-1, 1).forEach(function (unique) {
-								props.appendPlace(props.foundNamePlace);
-								
-							});
+								props.appendPlace(unique);
+								console.log(result);
+								console.log(unique);
+							})		
 						}
-						console.log(result);
+						
 					}
 					asyncCall();
+					
 					//Clear Results and Input box
 					props.setNameString('');
 					props.setFinalPlaceArr('');
