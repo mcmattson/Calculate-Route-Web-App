@@ -8,7 +8,7 @@ import static java.lang.Math.toRadians;
 import com.tco.misc.GeographicCoordinate;
 import java.util.HashMap;
 
-class Place implements GeographicCoordinate {
+public class Place implements GeographicCoordinate {
 
     public String latitude;
     public String longitude;
