@@ -143,17 +143,16 @@ function PlaceNameInfo() {
 
 function AddOrDeletePlaceListItems(props) {
 	const buttons = document.querySelectorAll('.arrList');
-	const activeLimit = document.querySelectorAll('.active');
 	const placeArr = [];
 	let newPlace = '';
 	buttons.forEach(el => el.addEventListener('click', () => {
 		const text = el.getAttribute("latlng").toString(), name = el.getAttribute("name"), index = el.getAttribute("index"), latLngPlace = new Coordinates(text), lat = latLngPlace.getLatitude().toString(), lng = latLngPlace.getLongitude().toString(), i = placeArr.indexOf(index);
 		newPlace = new Place({ latitude: lat, longitude: lng, name: name, index: index });
 		if (i > -1) {//FIXME:Adds but doe not delete selection from list - have button disable on click to aviod errors.
-			placeArr.splice(i, 3);
+			/* placeArr.splice(i, 3);
 			document.addEventListener('click', function handleClick(event) {
 				event.target.classList.remove('active');
-			});
+			}); */
 		} else {
 			placeArr.push(index, newPlace);
 			props.setFinalPlaceArr(finalPlaceArr => [...finalPlaceArr, index, newPlace]);
@@ -175,11 +174,7 @@ function removeAllChildNodes(parent) {
 
 export function placesList(places, limit) {
 	places["name"] = [{ "index": places.get('index'), "name": places.get('name'), "latitude": places.get('latitude'), "longitude": places.get('longitude') }];
-	var parent = document.querySelector('#outerDivElement'),
-		buttonsAmount = document.querySelectorAll('#outerDivElement button');
-	var buttonElement = document.createElement('button');
-	var buttonElementtext = document.createTextNode("");
-
+	var parent = document.querySelector('#outerDivElement'), buttonsAmount = document.querySelectorAll('#outerDivElement button'), buttonElement = document.createElement('button'), buttonElementtext = document.createTextNode("");
 	if (limit > 0 && buttonsAmount.length < limit) {
 		buttonElementtext = document.createTextNode(`${places.get('name')}`); buttonElement.setAttribute("name", `${places.get('name')}`);
 		buttonElement.setAttribute("index", `${places.get('index')}`); buttonElement.setAttribute("latlng", `${places.get('latitude')}` + "," + `${places.get('longitude')}`);
@@ -187,7 +182,6 @@ export function placesList(places, limit) {
 		buttonElement.setAttribute("type", "button"); buttonElement.setAttribute("class", "arrList list-group-item list-group-item-action list-group-item-mine");
 		parent.appendChild(buttonElement);
 		buttonElement.appendChild(buttonElementtext);
-
 	} else {
 		removeAllChildNodes(parent);
 		const divElementtext = document.createTextNode("No Results Found"), divElement = document.createElement('div'); divElement.setAttribute("id", "places-notfound");
@@ -235,34 +229,17 @@ function AddNameFooter(props) {
 			<Button
 				color='primary'
 				onClick={() => {
-					
 					async function asyncCall() {
 						const unique = mapCorrection(props.finalPlaceArr);
-						console.log('calling');
-						var size = unique.length;
-						while (size != 0) {
+						while (unique.length != 0) {
 							const result = await resolveAfterSeconds();
-							unique.splice(-1, size).forEach(function (unique) {
-								props.appendPlace(unique);
-								return unique;
-								console.log(unique);
-								console.log(result);
-							})
+							unique.splice(-1, unique.length).forEach(function (unique) { props.appendPlace(unique); /* console.log(unique); */ return result; })
 						}
 					} asyncCall();
-
-					//Clear Results and Input box
-					props.setNameString('');
-					props.setFinalPlaceArr('');
-					props.setFoundNamePlace('');
-				}}
-
-				data-testid='add-name-button'
-				disabled={!props.foundNamePlace}
-			>
-				Add Place(s)
-			</Button>
-			{Clear(props)}
+					props.setNameString(''); props.setFinalPlaceArr(''); props.setFoundNamePlace('');
+				}} data-testid='add-name-button' disabled={!props.foundNamePlace}
+			>Add Place(s)
+			</Button>{Clear(props)}
 		</ModalFooter>
 	);
 }
@@ -284,7 +261,6 @@ function Clear(props) {
 }
 async function verifyCoordinates(coordString, setFoundPlace) {
 	try {
-
 		const latLngPlace = new Coordinates(coordString);
 		const lat = latLngPlace.getLatitude();
 		const lng = latLngPlace.getLongitude();
