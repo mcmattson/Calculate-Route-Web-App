@@ -20,10 +20,8 @@ export default function AddPlace(props) {
 	var [foundNamePlace, setFoundNamePlace] = useState();
 	const [coordString, setCoordString] = useState('');
 	const [nameString, setNameString] = useState('');
-	const [nameCoordString, setNameCoordString] = useState('');
 	const [finalPlaceArr, setFinalPlaceArr] = useState([])
-	const [query, setQuery] = useState("")
-	var [limit, setLimit] = useState(10);
+	var limit = 5;
 	const findSettings = useFind(nameString, limit, getOriginalServerUrl());
 
 	return (
@@ -48,33 +46,21 @@ export default function AddPlace(props) {
 				setFoundNamePlace={setFoundNamePlace}
 				setNameString={setNameString}
 				findSettings={findSettings}
-				limit={limit}
+			/>
+
+			<AddOrDeletePlaceListItems
+				setFoundNamePlace={setFoundNamePlace}
+				setFinalPlaceArr={setFinalPlaceArr}
 			/>
 
 			<AddNameFooter
 				appendPlace={props.appendPlace}
-				foundPlace={foundPlace}
 				setNameString={setNameString}
 				setFoundPlace={setFoundPlace}
-				nameString={nameString}
-				setLimit={setLimit}
-				limit={limit}
+				setFoundNamePlace={setFoundNamePlace}
 				foundNamePlace={foundNamePlace}
 				finalPlaceArr={finalPlaceArr}
 				setFinalPlaceArr={setFinalPlaceArr}
-				setFoundNamePlace={setFoundNamePlace}
-			/>
-
-			<AddOrDeletePlaceListItems
-				appendPlace={props.appendPlace}
-				foundPlace={foundPlace}
-				setFoundPlace={setFoundPlace}
-				foundNamePlace={foundNamePlace}
-				setFoundNamePlace={setFoundNamePlace}
-				setNameCoordString={setNameCoordString}
-				finalPlaceArr={finalPlaceArr}
-				setFinalPlaceArr={setFinalPlaceArr}
-
 			/>
 		</Modal>
 	);
@@ -110,9 +96,8 @@ function PlaceCoordSearch(props) {
 
 function PlaceNameSearch(props) {
 	return (
-		<ModalBody>
+		<ModalBody >
 			<Col>
-				Enter a Name Search
 				<Input
 					type='search' id='search-name'
 					onChange={(input) => props.setNameString(input.target.value)}
@@ -122,7 +107,7 @@ function PlaceNameSearch(props) {
 				/>
 				<PlaceNameInfo foundNamePlace={props.foundNamePlace} />
 			</Col>
-		</ModalBody>
+		</ModalBody >
 	);
 }
 /* async function checkSearchType(coordString) {
@@ -148,7 +133,7 @@ function PlaceCoordInfo(props) {
 	);
 }
 
-function PlaceNameInfo(props) {
+function PlaceNameInfo() {
 	return (
 		<ModalBody>
 			<div id="outerDivElement" className="list-group adjustList"></div>
@@ -157,34 +142,22 @@ function PlaceNameInfo(props) {
 }
 
 function AddOrDeletePlaceListItems(props) {
-	let buttons = document.querySelectorAll('.arrList');
-	let placeArr = [];
-	var newPlace = '';
+	const buttons = document.querySelectorAll('.arrList');
+	const activeLimit = document.querySelectorAll('.active');
+	const placeArr = [];
+	let newPlace = '';
 	buttons.forEach(el => el.addEventListener('click', () => {
-		const text = el.getAttribute("latlng").toString();
-		const name = el.getAttribute("name");
-		const index = el.getAttribute("index");
-		const latLngPlace = new Coordinates(text);
-		const lat = latLngPlace.getLatitude().toString();
-		const lng = latLngPlace.getLongitude().toString();
-		const formattedLatLng = lat + "," + lng;
-		const i = placeArr.indexOf(index);
+		const text = el.getAttribute("latlng").toString(), name = el.getAttribute("name"), index = el.getAttribute("index"), latLngPlace = new Coordinates(text), lat = latLngPlace.getLatitude().toString(), lng = latLngPlace.getLongitude().toString(), i = placeArr.indexOf(index);
 		newPlace = new Place({ latitude: lat, longitude: lng, name: name, index: index });
-
-
-		//FIXME:Adds and Deletes Lat/Lng to map
-		if (i > -1) {
+		if (i > -1) {//FIXME:Adds but doe not delete selection from list - have button disable on click to aviod errors.
 			placeArr.splice(i, 3);
-			console.log('deleted', placeArr)
 			document.addEventListener('click', function handleClick(event) {
 				event.target.classList.remove('active');
-				event.target.classList.remove('disabled');
 			});
-
 		} else {
 			placeArr.push(index, newPlace);
 			props.setFinalPlaceArr(finalPlaceArr => [...finalPlaceArr, index, newPlace]);
-			verifyPlacesName(newPlace, props.setFoundNamePlace)
+			verifyPlacesName(newPlace, props.setFoundNamePlace);
 			document.addEventListener('click', function handleClick(event) {
 				event.target.classList.add('active');
 				event.target.classList.add('disabled');
@@ -202,33 +175,23 @@ function removeAllChildNodes(parent) {
 
 export function placesList(places, limit) {
 	places["name"] = [{ "index": places.get('index'), "name": places.get('name'), "latitude": places.get('latitude'), "longitude": places.get('longitude') }];
-	let buttonElementtext = document.createTextNode("")
-	let parent = document.querySelector('#outerDivElement')
-	let buttonElement = document.createElement('button');
-	var buttonsAmount = document.querySelectorAll('#outerDivElement button');
-	if (limit > 0) {
-		if (buttonsAmount.length < 10) {
-			buttonElementtext = document.createTextNode(`${places.get('name')}`)
-			buttonElement.setAttribute("name", `${places.get('name')}`);
-			buttonElement.setAttribute("index", `${places.get('index')}`);
-			buttonElement.setAttribute("latlng", `${places.get('latitude')}` + "," + `${places.get('longitude')}`);
-			buttonElement.setAttribute("id", "places" + `${places.get('index')}` + "-btn");
-			buttonElement.setAttribute("data-testid", "places" + `${places.get('index')}` + "-btn");
-			buttonElement.setAttribute("type", "button");
-			buttonElement.setAttribute("class", "arrList list-group-item list-group-item-action list-group-item-mine");
-			parent.appendChild(buttonElement);
-			buttonElement.appendChild(buttonElementtext);
-		} else {
-			removeAllChildNodes(parent);
-		}
+	var parent = document.querySelector('#outerDivElement'),
+		buttonsAmount = document.querySelectorAll('#outerDivElement button');
+	var buttonElement = document.createElement('button');
+	var buttonElementtext = document.createTextNode("");
+
+	if (limit > 0 && buttonsAmount.length < limit) {
+		buttonElementtext = document.createTextNode(`${places.get('name')}`); buttonElement.setAttribute("name", `${places.get('name')}`);
+		buttonElement.setAttribute("index", `${places.get('index')}`); buttonElement.setAttribute("latlng", `${places.get('latitude')}` + "," + `${places.get('longitude')}`);
+		buttonElement.setAttribute("id", "places" + `${places.get('index')}` + "-btn"); buttonElement.setAttribute("data-testid", "places" + `${places.get('index')}` + "-btn");
+		buttonElement.setAttribute("type", "button"); buttonElement.setAttribute("class", "arrList list-group-item list-group-item-action list-group-item-mine");
+		parent.appendChild(buttonElement);
+		buttonElement.appendChild(buttonElementtext);
+
 	} else {
 		removeAllChildNodes(parent);
-		let divElement = document.createElement('div');
-		divElement.setAttribute("id", "places-notfound");
-		divElement.setAttribute("data-testid", "places-notfound");
-		divElement.setAttribute("style", "text-align: center");
-		let divElementtext = document.createTextNode("No Results Found");
-		<br />
+		const divElementtext = document.createTextNode("No Results Found"), divElement = document.createElement('div'); divElement.setAttribute("id", "places-notfound");
+		divElement.setAttribute("data-testid", "places-notfound"); divElement.setAttribute("style", "text-align: center");
 		divElement.appendChild(divElementtext);
 		parent.appendChild(divElement);
 	}
@@ -252,12 +215,18 @@ function AddCoordFooter(props) {
 	);
 }
 function mapCorrection(array) {
-	//Remove Indexing Numbers
 	let i = array.length;
-	while (i--) (i) % 2 === 0 && (array.splice(i, 1));
-	//Remove Duplicates
-	const unique = [...new Map(array.map((m) => [m.name, m])).values()];
+	while (i--) (i) % 2 === 0 && (array.splice(i, 1));//Remove Indexing Numbers
+	const unique = [...new Map(array.map((m) => [m.name, m])).values()];//Remove Duplicates
 	return unique
+}
+
+function resolveAfterSeconds() {
+	return new Promise(resolve => {
+		setTimeout(() => {
+			resolve('resolved');
+		}, 10);
+	});
 }
 
 function AddNameFooter(props) {
@@ -266,58 +235,53 @@ function AddNameFooter(props) {
 			<Button
 				color='primary'
 				onClick={() => {
-					let unique = mapCorrection(props.finalPlaceArr)
-
-					//-- Append to Map--//
-					function resolveAfter2Seconds() {
-						return new Promise(resolve => {
-							setTimeout(() => {
-								resolve('resolved');
-							}, 10);
-						});
-					}
-
-					async function asyncCall() {
-						console.log('calling');
-						while (unique.length != 0) {
-							const result = await resolveAfter2Seconds();
-							unique.splice(-1, 1).forEach(function (unique) {
-								props.appendPlace(unique);
-								console.log(result);
-								console.log(unique);
-							})		
-						}
-						
-					}
-					asyncCall();
 					
+					async function asyncCall() {
+						const unique = mapCorrection(props.finalPlaceArr);
+						console.log('calling');
+						var size = unique.length;
+						while (size != 0) {
+							const result = await resolveAfterSeconds();
+							unique.splice(-1, size).forEach(function (unique) {
+								props.appendPlace(unique);
+								return unique;
+								console.log(unique);
+								console.log(result);
+							})
+						}
+					} asyncCall();
+
 					//Clear Results and Input box
 					props.setNameString('');
 					props.setFinalPlaceArr('');
 					props.setFoundNamePlace('');
 				}}
+
 				data-testid='add-name-button'
 				disabled={!props.foundNamePlace}
 			>
 				Add Place(s)
 			</Button>
-
-			<Button
-				color='danger'
-				onClick={() => {
-					props.setNameString('');
-					props.setFinalPlaceArr('');
-					props.setFoundNamePlace('');
-				}}
-				data-testid='add-clear-button'
-				disabled={!props.foundNamePlace}
-			>
-				Clear Search
-			</Button>
+			{Clear(props)}
 		</ModalFooter>
 	);
 }
-
+function Clear(props) {
+	return (
+		<Button
+			color='danger'
+			onClick={() => {
+				props.setNameString('');
+				props.setFinalPlaceArr('');
+				props.setFoundNamePlace('');
+			}}
+			data-testid='add-clear-button'
+			disabled={!props.foundNamePlace}
+		>
+			Clear Search
+		</Button>
+	)
+}
 async function verifyCoordinates(coordString, setFoundPlace) {
 	try {
 
@@ -333,7 +297,7 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 	}
 }
 
-export async function verifyPlacesName(places, setFoundNamePlace) {
+export function verifyPlacesName(places, setFoundNamePlace) {
 	try {
 		setFoundNamePlace(places);
 	} catch (error) {
@@ -343,8 +307,4 @@ export async function verifyPlacesName(places, setFoundNamePlace) {
 
 function isLatLngValid(lat, lng) {
 	return (lat !== undefined && lng !== undefined);
-}
-
-function isPlaceValid(nameString) {
-	return (nameString !== undefined);
 }
