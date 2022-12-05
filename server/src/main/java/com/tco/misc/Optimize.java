@@ -1,4 +1,9 @@
-package com.tco.requests;
+package com.tco.misc;
+import com.tco.requests.DistancesRequest;
+import com.tco.requests.Places;
+import com.tco.requests.Distances;
+import com.tco.requests.TourRequest;
+import com.tco.requests.Place;
 import com.tco.misc.DistanceCalculator;
 
 public class Optimize {
