@@ -166,6 +166,7 @@ function AddOrDeletePlaceListItems(props) {
 			event.target.classList.add('active');
 			event.target.classList.add('disabled');
 		});
+		
 
 	}))
 	return (null);
