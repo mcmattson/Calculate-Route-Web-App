@@ -43,8 +43,8 @@ function TripHeader(props) {
 					{props.tripName}
 					{' '}
 					{RemoveAll(props)}
-					{' '}
-					{Optimize(props)}
+					{/* {' '}
+					{Optimize(props)} */}
 				</th>
 				<th> Leg Distance </th>
 				<th> Cumulative Distance </th>
@@ -62,14 +62,14 @@ function RemoveAll(props) {
 	)
 }
 
-function Optimize(props) {
-	return( 
-		<Button data-testid={'optimize-button'} color='primary' 
-		id='optimize-button' disabled={props.places.length === 0}>
-			Optimize Trip
-		</Button>
-	)
-}
+// function Optimize(props) {
+// 	return( 
+// 		<Button data-testid={'optimize-button'} color='primary' 
+// 		id='optimize-button' disabled={props.places.length === 0}>
+// 			Optimize Trip
+// 		</Button>
+// 	)
+// }
 
 function TotalTripDistance(props){
 	let distances = [0]; 
