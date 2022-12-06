@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useToggle } from '../../../hooks/useToggle';
 import { Table, Collapse, Button } from 'reactstrap';
 import { latLngToText, placeToLatLng } from '../../../utils/transformers';
-import { BsChevronDown } from 'react-icons/bs';
+import { BsChevronDown, BsInfoCircleFill } from 'react-icons/bs';
 import { LOG } from '../../../utils/constants';
 import PlaceActions from './PlaceActions';
 import { getOriginalServerUrl, sendAPIRequest } from '../../../utils/restfulAPI';
@@ -43,8 +43,10 @@ function TripHeader(props) {
 					{props.tripName}
 					{' '}
 					{RemoveAll(props)}
+					{/* {' '}
+					{Optimize(props)} */}
 					{' '}
-					{Optimize(props)}
+					{Help(props)}
 				</th>
 				<th> Leg Distance </th>
 				<th> Cumulative Distance </th>
@@ -62,14 +64,14 @@ function RemoveAll(props) {
 	)
 }
 
-function Optimize(props) {
-	return( 
-		<Button data-testid={'optimize-button'} color='primary' 
-		id='optimize-button' disabled={props.places.length === 0}>
-			Optimize Trip
-		</Button>
-	)
-}
+// function Optimize(props) {
+// 	return( 
+// 		<Button data-testid={'optimize-button'} color='primary' 
+// 		id='optimize-button' disabled={props.places.length === 0}>
+// 			Optimize Trip
+// 		</Button>
+// 	)
+// }
 
 function TotalTripDistance(props){
 	let distances = [0]; 
@@ -115,9 +117,9 @@ function PlaceRow(props) {
 	const location = latLngToText(placeToLatLng(props.place));
 	let distances = [0]; 
 	if (props.distanceSettings.distances){ 
-		
+
 	 	distances = props.distanceSettings.distances.leg;
-		
+	
 	}
 
 	return (
@@ -126,9 +128,7 @@ function PlaceRow(props) {
 				data-testid={`place-row-${props.index}`}
 				onClick={() =>
 					placeRowClicked(
-						toggleShowFullName,
-						props.placeActions.selectIndex,
-						props.index
+						toggleShowFullName,	props.placeActions.selectIndex,	props.index
 					)
 				}
 			>
@@ -171,6 +171,12 @@ function RowArrow(props) {
 			<BsChevronDown data-testid={`place-row-toggle-${props.index}`} onClick={props.toggleShowFullName}/>
 		</td>
 	);
+}
+
+function Help(props) {
+	return( 
+		<BsInfoCircleFill data-testid={`help-icon`} size={18}/>	
+	)
 }
 
 export function useDistances(places, earthRadius, serverURL) {

@@ -39,4 +39,20 @@ public class TestGeographicCoordinate {
         assertEquals(geoLonToRadians, geoCoord.lonRadians());
     }
 
+    @Test
+    @DisplayName("cath2731 : Test that lonRadians() is NOT latRadians()")
+    public void testLonIsNotLat(){
+       if(geoCoord.latRadians() != geoCoord.lonRadians()){
+        assertTrue(geoLonToRadians != geoCoord.latRadians());
+       }
+    }
+
+    @Test
+    @DisplayName("cath2731 : Test that latRadians() is NOT lonRadians()")
+    public void testLatIsNotLon(){
+       if(geoCoord.latRadians() != geoCoord.lonRadians()){
+        assertTrue(geoLatToRadians != geoCoord.lonRadians());
+       }
+    }
+
 }
