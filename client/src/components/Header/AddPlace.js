@@ -95,6 +95,9 @@ function PlaceCoordSearch(props) {
 }
 
 function PlaceNameSearch(props) {
+	useEffect(() => {
+
+	}, [props.nameString]);
 	return (
 		<ModalBody >
 			<Col>
@@ -133,11 +136,13 @@ function PlaceCoordInfo(props) {
 	);
 }
 
-function PlaceNameInfo() {
+function PlaceNameInfo(props) {
 	return (
-		<ModalBody>
+		<Collapse isOpen={!props.foundNamePlace}>
 			<div id="outerDivElement" className="list-group adjustList"></div>
-		</ModalBody>
+
+			{props.foundNamePlace?.formatPlace()}
+		</Collapse>
 	);
 }
 
@@ -146,22 +151,24 @@ function AddOrDeletePlaceListItems(props) {
 	const placeArr = [];
 	let newPlace = '';
 	buttons.forEach(el => el.addEventListener('click', () => {
-		const text = el.getAttribute("latlng").toString(), name = el.getAttribute("name"), index = el.getAttribute("index"), latLngPlace = new Coordinates(text), lat = latLngPlace.getLatitude().toString(), lng = latLngPlace.getLongitude().toString(), i = placeArr.indexOf(index);
-		newPlace = new Place({ latitude: lat, longitude: lng, name: name, index: index });
-		if (i > -1) {//FIXME:Adds but doe not delete selection from list - have button disable on click to aviod errors.
-			/* placeArr.splice(i, 3);
-			document.addEventListener('click', function handleClick(event) {
-				event.target.classList.remove('active');
-			}); */
-		} else {
-			placeArr.push(index, newPlace);
-			props.setFinalPlaceArr(finalPlaceArr => [...finalPlaceArr, index, newPlace]);
-			verifyPlacesName(newPlace, props.setFoundNamePlace);
-			document.addEventListener('click', function handleClick(event) {
-				event.target.classList.add('active');
-				event.target.classList.add('disabled');
-			});
-		}
+		const text = el.getAttribute("latlng").toString(),
+			name = el.getAttribute("name"),
+			index = el.getAttribute("index"),
+			municipality = el.getAttribute("municipality"),
+			iso_region = el.getAttribute("iso_region"),
+			latLngPlace = new Coordinates(text),
+			lat = latLngPlace.getLatitude().toString(),
+			lng = latLngPlace.getLongitude().toString(),
+			newPlace = new Place({ latitude: lat, longitude: lng, name: name, index: index, municipality: municipality, iso_region: iso_region });
+
+		placeArr.push(index, newPlace);
+		props.setFinalPlaceArr(finalPlaceArr => [...finalPlaceArr, index, newPlace]);
+		verifyPlacesName(newPlace, props.setFoundNamePlace);
+		document.addEventListener('click', function handleClick(event) {
+			event.target.classList.add('active');
+			event.target.classList.add('disabled');
+		});
+
 	}))
 	return (null);
 }
@@ -172,16 +179,29 @@ function removeAllChildNodes(parent) {
 	}
 }
 
+function splitIso_Region(str) {
+	const result = str.split('-');
+	return result;
+}
+
 export function placesList(places, limit) {
-	places["name"] = [{ "index": places.get('index'), "name": places.get('name'), "latitude": places.get('latitude'), "longitude": places.get('longitude') }];
-	var parent = document.querySelector('#outerDivElement'), buttonsAmount = document.querySelectorAll('#outerDivElement button'), buttonElement = document.createElement('button'), buttonElementtext = document.createTextNode("");
-	if (limit > 0 && buttonsAmount.length < limit) {
-		buttonElementtext = document.createTextNode(`${places.get('name')}`); buttonElement.setAttribute("name", `${places.get('name')}`);
-		buttonElement.setAttribute("index", `${places.get('index')}`); buttonElement.setAttribute("latlng", `${places.get('latitude')}` + "," + `${places.get('longitude')}`);
-		buttonElement.setAttribute("id", "places" + `${places.get('index')}` + "-btn"); buttonElement.setAttribute("data-testid", "places" + `${places.get('index')}` + "-btn");
-		buttonElement.setAttribute("type", "button"); buttonElement.setAttribute("class", "arrList list-group-item list-group-item-action list-group-item-mine");
-		parent.appendChild(buttonElement);
-		buttonElement.appendChild(buttonElementtext);
+	places["name"] = [{ "index": places.get('index'), "name": places.get('name'), "latitude": places.get('latitude'), "longitude": places.get('longitude'), "municipality": places.get('municipality'), "iso_region": places.get('iso_region') }];
+	splitIso_Region(places.get('iso_region'));
+	var parent = document.querySelector('#outerDivElement'),
+		divAmount = document.querySelectorAll('#outerDivElement div'),
+		divElement = document.createElement('div'),
+		divElementtext = document.createTextNode("");
+	
+	if (limit > 0 && divAmount.length < limit) {
+		divElementtext = document.createTextNode(`${places.get('name')}`);
+		divElement.setAttribute("name", `${places.get('name')}`);
+		divElement.setAttribute("latlng", `${places.get('latitude')}` + "," + `${places.get('longitude')}`);
+		divElement.setAttribute("data-testid", "places" + `${places.get('index')}` + "-btn");
+		divElement.setAttribute("type", `${places.get('index')}`);
+		divElement.setAttribute("index", "button");
+		divElement.setAttribute("class", "arrList list-group-item list-group-item-action list-group-item-mine");
+		parent.appendChild(divElement);
+		divElement.appendChild(divElementtext);
 	} else {
 		removeAllChildNodes(parent);
 		const divElementtext = document.createTextNode("No Results Found"), divElement = document.createElement('div'); divElement.setAttribute("id", "places-notfound");
@@ -190,6 +210,53 @@ export function placesList(places, limit) {
 		parent.appendChild(divElement);
 	}
 }
+	
+	
+	/* var outerDivElement = document.createElement('div');
+	var infoDivElement = document.createElement('div');
+	var buttonDivElement = document.createElement('button');
+
+	var infoDivElementtext = document.createTextNode(`${places.get('name')}` + ", " + `${places.get('municipality')}` + ", " + splitIso_Region[1] + ", " + splitIso_Region[0]);
+	var buttonDivElementtext = document.createTextNode("Add")
+
+	outerDivElement = document.querySelectorAll('#outerDivElement') */
+	/* var parent = document.querySelector('#outerDivElement'),
+		buttonsAmount = document.querySelectorAll('#outerDivElement button'),
+		buttonElement = document.createElement('button'),
+		buttonElementtext = document.createTextNode(""); */
+	/* 
+	document.addEventListener('DOMContentLoaded', function () {
+		var div = document.createElement('div');
+		infoDivElement.appendChild(infoDivElementtext);
+		buttonDivElementtext.appendChild(buttonDivElementtext);
+		document.body.appendChild(div);
+
+		
+
+	}, false);
+	infoDivElement.setAttribute("class", "item");
+	infoDivElement.appendChild(infoDivElementtext);
+	buttonDivElementtext.appendChild(buttonDivElementtext); */
+
+	//divElement.setAttribute("data-testid", "places-notfound"); divElement.setAttribute("style", "text-align: center");
+	//divElement.appendChild(divElementtext);
+	//parent.appendChild(divElement);
+
+
+	/* buttonElementtext = document.createTextNode(`${places.get('name')}`); buttonElement.setAttribute("name", `${places.get('name')}`);
+	buttonElement.setAttribute("index", `${places.get('index')}`); buttonElement.setAttribute("latlng", `${places.get('latitude')}` + "," + `${places.get('longitude')}`);
+	buttonElement.setAttribute("data-testid", "places" + `${places.get('index')}` + "-btn");
+	buttonElement.setAttribute("type", "button"); buttonElement.setAttribute("class", "arrList list-group-item list-group-item-action list-group-item-mine");
+	parent.appendChild(buttonElement);
+	buttonElement.appendChild(buttonElementtext); */
+ /*else {
+		removeAllChildNodes(parent);
+		const divElementtext = document.createTextNode("No Results Found"), divElement = document.createElement('div'); divElement.setAttribute("id", "places-notfound");
+		divElement.setAttribute("data-testid", "places-notfound"); divElement.setAttribute("style", "text-align: center");
+		divElement.appendChild(divElementtext);
+		parent.appendChild(divElement);
+	} */
+/* } */
 
 function AddCoordFooter(props) {
 	return (
@@ -231,9 +298,10 @@ function AddNameFooter(props) {
 				onClick={() => {
 					async function asyncCall() {
 						const unique = mapCorrection(props.finalPlaceArr);
+						console.log(unique)
 						while (unique.length != 0) {
 							const result = await resolveAfterSeconds();
-							unique.splice(-1, unique.length).forEach(function (unique) { props.appendPlace(unique); /* console.log(unique); */ return result; })
+							unique.splice(-1, unique.length).forEach(function (unique) { props.appendPlace(unique); console.log(unique); return result; })
 						}
 					} asyncCall();
 					props.setNameString(''); props.setFinalPlaceArr(''); props.setFoundNamePlace('');
