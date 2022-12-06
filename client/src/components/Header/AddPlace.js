@@ -48,7 +48,7 @@ export default function AddPlace(props) {
 				findSettings={findSettings}
 			/>
 
-			<AddPlaceListItems
+			<AddOrDeletePlaceListItems
 				setFoundNamePlace={setFoundNamePlace}
 				setFinalPlaceArr={setFinalPlaceArr}
 			/>
@@ -96,7 +96,7 @@ function PlaceCoordSearch(props) {
 
 function PlaceNameSearch(props) {
 	useEffect(() => {
-		//Add checkSearchType() code here
+
 	}, [props.nameString]);
 	return (
 		<ModalBody >
@@ -136,7 +136,7 @@ function PlaceCoordInfo(props) {
 	);
 }
 
-function PlaceNameInfo() {
+function PlaceNameInfo(props) {
 	return (
 		<ModalBody>
 			<div id="outerDivElement" className="list-group adjustList"></div>
@@ -144,9 +144,10 @@ function PlaceNameInfo() {
 	);
 }
 
-function AddPlaceListItems(props) {
+function AddOrDeletePlaceListItems(props) {
 	const buttons = document.querySelectorAll('.arrList');
 	const placeArr = [];
+	let newPlace = '';
 	buttons.forEach(el => el.addEventListener('click', () => {
 		const text = el.getAttribute("latlng").toString(),
 			name = el.getAttribute("name"),
@@ -186,7 +187,7 @@ export function placesList(places, limit) {
 	let splitIso_RegionResults = splitIso_Region(places.get('iso_region'));
 	var parent = document.querySelector('#outerDivElement'),
 		buttonsAmount = document.querySelectorAll('#outerDivElement button');
-	var buttonElement = document.createElement('chec');
+	var buttonElement = document.createElement('button');
 	var buttonElementtext = document.createTextNode("");
 	if (limit != 0 && buttonsAmount.length < limit) {
 		buttonElementtext = document.createTextNode(`${places.get('name')}` + ", " + `${places.get('municipality')}` + ", " + splitIso_RegionResults[1] + ", " + splitIso_RegionResults[0]);
@@ -250,10 +251,10 @@ function AddNameFooter(props) {
 						const unique = mapCorrection(props.finalPlaceArr);
 						while (unique.length != 0) {
 							const result = await resolveAfterSeconds();
-							unique.splice(-1, unique.length).forEach(function (unique) { props.appendPlace(unique); return result; })
+							unique.splice(-1, unique.length).forEach(function (unique) { props.appendPlace(unique); console.log(unique); return result; })
 						}
 					} asyncCall();
-					props.setNameString(''); props.setFinalPlaceArr('');
+					props.setNameString(''); props.setFinalPlaceArr(''); /* props.setFoundNamePlace(''); */
 				}} data-testid='add-name-button' disabled={!props.foundNamePlace}
 			>Add Place(s)
 			</Button>
