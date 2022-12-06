@@ -7,12 +7,10 @@ function useFind(match, limit, serverURL) {
     limit = limitUndefinedNull(match, limit); match = matchUndefinedNull(match);
     let found, places = []; const type = ['airport'], where = ['US'], [serverUrl, setServerUrl] = useState(getOriginalServerUrl()), [serverFind, setServerFind] = useState({ places: [] });
     let find = { serverFind }, findActions = { setServerFind: setServerFind };
-    
     useEffect(() => { sendFindRequest(match, limit, serverURL, findActions); }, [match, limit]); return { find };
     function processServerFindSuccess(places, url) { LOG.info('Switching to Server:', url); setServerFind(places); setServerUrl(url); }
-    
     async function sendFindRequest(match, limit, serverURL, findActions) {
-        const { setServerFind } = findActions, map1 = new Map(); let name, latitude, longitude, municipality, iso_region, findResponse, mapPlaces, i, mapSetUnknown;
+        const { setServerFind } = findActions, map1 = new Map(); let name, index, latitude, longitude, municipality, iso_region, findResponse, mapPlaces, i, mapSetUnknown;
         try {
             const requestBody = { requestType: "find", match: match, type: type, where: where, limit: limit }; findResponse = await sendAPIRequest(requestBody, serverURL);
             found = setNewFound(findResponse.found, limit); //Set Limit to 10 if more than 10 
@@ -20,7 +18,7 @@ function useFind(match, limit, serverURL) {
                 processServerFindSuccess(findResponse, serverUrl);
                 for (i = 0; i < found; i++) {
                     places = findResponse.places[i]; mapPlaces = setMapInfo(name = places.name, latitude = places.latitude, longitude = places.longitude, municipality = places.municipality, iso_region = places.iso_region, map1); //Clears and Sets Map
-                    console.log(mapPlaces);
+                    map1.set('index', i);
                     placesList(mapPlaces, found); setServerFind({ places: [mapPlaces] });
                 }
             } else {
