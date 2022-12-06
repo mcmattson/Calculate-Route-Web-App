@@ -252,7 +252,7 @@ function AddNameFooter(props) {
 						const unique = mapCorrection(props.finalPlaceArr);
 						while (unique.length != 0) {
 							const result = await resolveAfterSeconds();
-							unique.splice(-1, unique.length).forEach(function (unique) { props.appendPlace(unique); console.log(unique); return result; })
+							unique.splice(0, unique.length).forEach(function (unique) { props.appendPlace(unique); console.log(unique); return result; })
 						}
 					} asyncCall();
 					props.setNameString(''); props.setFinalPlaceArr(''); /* props.setFoundNamePlace(''); */
