@@ -18,7 +18,7 @@ function useFind(match, limit, serverURL) {
                 processServerFindSuccess(findResponse, serverUrl);
                 for (i = 0; i < found; i++) {
                     places = findResponse.places[i]; mapPlaces = setMapInfo(name = places.name, latitude = places.latitude, longitude = places.longitude, map1); //Clears and Sets Map
-                    map1.set('index', i); map1.set('municipality', municipality); map1.set('iso_region', iso_region);
+                    map1.set('index', i); map1.set('municipality', municipality);map1.set('iso_region', iso_region);
                     placesList(mapPlaces, found); setServerFind({ places: [mapPlaces] });
                 }
             } else {
@@ -33,11 +33,13 @@ function useFind(match, limit, serverURL) {
     map1.set('name', 'unknown');
     return map1;
 }
+
 function setMapInfo(name, latitude, longitude, map1) {
     map1.clear();
     map1.set('name', name);
     map1.set('latitude', latitude);
     map1.set('longitude', longitude);
+  
     return map1;
 }
 function setNewFound(found, limit) {
