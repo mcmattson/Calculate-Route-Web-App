@@ -15,4 +15,11 @@ public class TestTourRequest {
         tour = new TourRequest();
     }
 
+    @Test
+    @DisplayName("marilake: Request type is \"tour\"")
+    public void testType(){
+        String type = tour.getRequestType();
+        assertEquals("tour", type);
+    }
+
 }
