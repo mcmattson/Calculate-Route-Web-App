@@ -15,7 +15,7 @@ public class Select {
 	} 
 
     static String match(String match, int limit) {
-        return statement(match, "DISTINCT " + getCOLUMNS(), "LIMIT " + limit);
+        return statement(match, "*", "LIMIT " + limit);
     }
 
     static String found(String match) {
@@ -26,7 +26,13 @@ public class Select {
         return "SELECT "
             + data
             + " FROM " + getTABLE()
-            + " WHERE name LIKE \"%" + match + "%\" OR id LIKE \"%" + match + "%\" OR municipality LIKE \"%" + match + "%\" OR iso_country LIKE \"%" + match + "%\" OR continent LIKE \"%" + match + "%\" "
+            + " INNER JOIN region ON world.iso_region = region.id"
+            + " INNER JOIN country ON world.iso_country = country.id"
+            + " INNER JOIN continent ON world.continent = continent.id"
+            + " WHERE (country.name LIKE \"%" + match + "%\" "
+            + " OR region.name LIKE \"%" + match + "%\" "
+            + " OR world.name LIKE \"%" + match + "%\" "
+            + " OR world.municipality LIKE \"%" + match + "%\") "
             + limit
             + " ;";
     }
