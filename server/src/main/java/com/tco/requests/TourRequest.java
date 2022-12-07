@@ -19,4 +19,8 @@ public class TourRequest extends Request{
         places = optimizer.findBestTour();
     }
 
+    public TourRequest(){
+        this.requestType = "tour";
+    }
+
 }
