@@ -44,7 +44,7 @@ public class Database {
             // connect to the database and query
             Connection conn    = DriverManager.getConnection(url, user, password);
             Statement  query   = conn.createStatement();
-            ResultSet  results = query.executeQuery(sql)
+            ResultSet  results = query.executeQuery(sql);
         ) {
             return convertQueryResultsToLocations(results, Select.getCOLUMNS());
         } catch (Exception e) {
