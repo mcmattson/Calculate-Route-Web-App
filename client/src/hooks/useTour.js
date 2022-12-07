@@ -1,34 +1,26 @@
-import { useState, useEffect } from 'react';
-import { LOG } from '../utils/constants';
-import {getOriginalServerUrl, sendAPIRequest } from '../utils/restfulAPI';
+import { useState, useEffect} from "react";
+import { LOG } from "../utils/constants";
+import { getOriginalServerUrl, sendAPIRequest } from "../utils/restfulAPI";
 
-
-export function useTour(optimize, earthRadius, places, response, serverURL) {
-    const [serverTour, setServerTour] = useState({places: []});
+export function useTour(places, earthRadius, serverURL, optimize){
     const [serverUrl, setServerUrl] = useState(getOriginalServerUrl());
-
+    const [serverTour, setServerTour] = useState([]);
+    const [responseTime, setResponseTime] = useState(0);
+    const tourVariables = { serverTour, setServerTour, responseTime, setResponseTime, serverUrl, setServerUrl };
     useEffect( () => {
-        makeTourRequest(earthRadius, places, response, serverURL);
+        makeTourRequest(places, earthRadius, tourVariables);
     }, optimize);  
 
-    return [{serverUrl: serverUrl, serverTour: serverTour}, processServerTourSuccess];
+    return { serverTour, responseTime, tourVariables};
 }
-
-function processServerTourSuccess(places, url){
-    LOG.info('Switching to Server: ', url);
-    setServerTour(places);
-    setServerUrl(url);
-}
-
-async function makeTourRequest(earthRadius, places, response, serverURL) {
-    const tourResponse = await sendAPIRequest({
-        requestType: 'tour',
-        earthRadius: earthRadius,
-        places: places, 
-        response: response}, serverUrl);
-    if (tourResponse) {
-        processServerTourSuccess(tourResponse,serverUrl);
-    } else {
-        setServerTour({places: []});
-    }
+async function makeTourRequest(places, earthRadius, tourVariables){
+    const {serverUrl, serverTour, setServerTour, setResponseTime} = tourVariables;
+    const tourResponse = await sendAPIRequest({ 
+        requestType: "tour", 
+        earthRadius, 
+        response: 1, 
+        places}, serverUrl)
+        setResponseTime(tourResponse.response);
+        setServerTour(tourResponse.places);
+        LOG.info('Tour Request Success ', serverUrl, tourResponse.places, tourResponse.response);
 }
