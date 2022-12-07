@@ -10,6 +10,7 @@ public class TourRequest extends Request{
 
     @Override
     public void buildResponse(){
+        optimizePlaces();
     }
 
 
