@@ -11,18 +11,18 @@ import {
 } from 'reactstrap';
 import Coordinates from 'coordinate-parser';
 import { reverseGeocode } from '../../utils/reverseGeocode';
-import { getOriginalServerUrl, sendAPIRequest } from '../../utils/restfulAPI';
+import { getOriginalServerUrl } from '../../utils/restfulAPI';
 import { useFind } from '../../hooks/useFind';
 import { Place } from '../../models/place.model';
 
 export default function AddPlace(props) {
 	var [foundPlace, setFoundPlace] = useState();
-	var [foundNamePlace, setFoundNamePlace] = useState();
+	var [foundNamePlace, setFoundNamePlace] = useState(); // --- 1 -----//
 	const [coordString, setCoordString] = useState('');
-	const [nameString, setNameString] = useState('');
-	const [finalPlaceArr, setFinalPlaceArr] = useState([])
-	var limit = 5;
-	const findSettings = useFind(nameString, limit, getOriginalServerUrl());
+	const [nameString, setNameString] = useState('');// --- 1 -----//
+	const [finalPlaceArr, setFinalPlaceArr] = useState([]) // --- 1 -----//
+	var limit = 5; // --- 5 -----//
+	const findSettings = useFind(nameString, limit, getOriginalServerUrl()); // --- 5 -----//
 
 	return (
 		<Modal isOpen={props.isOpen} toggle={props.toggleAddPlace}>
@@ -46,12 +46,12 @@ export default function AddPlace(props) {
 				setFoundNamePlace={setFoundNamePlace}
 				setNameString={setNameString}
 				findSettings={findSettings}
-			/>
+			/> {/* 5*/}
 
-			<AddOrDeletePlaceListItems
+			{<AddOrDeletePlaceListItems
 				setFoundNamePlace={setFoundNamePlace}
 				setFinalPlaceArr={setFinalPlaceArr}
-			/>
+			/>} {/* 1 */}
 
 			<AddNameFooter
 				appendPlace={props.appendPlace}
@@ -61,7 +61,7 @@ export default function AddPlace(props) {
 				foundNamePlace={foundNamePlace}
 				finalPlaceArr={finalPlaceArr}
 				setFinalPlaceArr={setFinalPlaceArr}
-			/>
+			/>{/* 6 */}
 		</Modal>
 	);
 }
@@ -94,10 +94,8 @@ function PlaceCoordSearch(props) {
 	);
 }
 
+// ---  5 ----//
 function PlaceNameSearch(props) {
-	useEffect(() => {
-
-	}, [props.nameString]);
 	return (
 		<ModalBody >
 			<Col>
@@ -136,6 +134,7 @@ function PlaceCoordInfo(props) {
 	);
 }
 
+// ---  5 ----//
 function PlaceNameInfo(props) {
 	return (
 		<ModalBody>
@@ -144,10 +143,9 @@ function PlaceNameInfo(props) {
 	);
 }
 
+// ---  1 ----//
 function AddOrDeletePlaceListItems(props) {
 	const buttons = document.querySelectorAll('.arrList');
-	const placeArr = [];
-	let newPlace = '';
 	buttons.forEach(el => el.addEventListener('click', () => {
 		const text = el.getAttribute("latlng").toString(),
 			name = el.getAttribute("name"),
@@ -158,31 +156,30 @@ function AddOrDeletePlaceListItems(props) {
 			lat = latLngPlace.getLatitude().toString(),
 			lng = latLngPlace.getLongitude().toString(),
 			newPlace = new Place({ latitude: lat, longitude: lng, name: name, index: index, municipality: municipality, iso_region: iso_region });
-
-		placeArr.push(index, newPlace);
 		props.setFinalPlaceArr(finalPlaceArr => [...finalPlaceArr, index, newPlace]);
 		verifyPlacesName(newPlace, props.setFoundNamePlace);
 		document.addEventListener('click', function handleClick(event) {
 			event.target.classList.add('active');
 			event.target.classList.add('disabled');
 		});
-		
-
 	}))
 	return (null);
 }
 
+// ---  2 ----//
 function removeAllChildNodes(parent) {
 	while (parent.firstChild) {
 		parent.removeChild(parent.firstChild);
 	}
 }
 
+// --- 2 ----//
 function splitIso_Region(str) {
 	const result = str.split('-');
 	return result;
 }
 
+// ---  3 ----//
 export function placesList(places, limit) {
 	places["name"] = [{ "index": places.get('index'), "name": places.get('name'), "latitude": places.get('latitude'), "longitude": places.get('longitude'), "municipality": places.get('municipality'), "iso_region": places.get('iso_region') }];
 	let splitIso_RegionResults = splitIso_Region(places.get('iso_region'));
@@ -199,7 +196,7 @@ export function placesList(places, limit) {
 		buttonElement.setAttribute("type", "button"); buttonElement.setAttribute("class", "arrList list-group-item list-group-item-action");
 		parent.appendChild(buttonElement);
 		buttonElement.appendChild(buttonElementtext);
-	} else if (limit ==0){
+	} else if (limit == 0) {
 		removeAllChildNodes(parent);
 		const divElementtext = document.createTextNode("No Results Found"), divElement = document.createElement('div'); divElement.setAttribute("id", "places-notfound");
 		divElement.setAttribute("data-testid", "places-notfound"); divElement.setAttribute("style", "text-align: center");
@@ -234,6 +231,7 @@ function mapCorrection(array) {
 	return unique
 }
 
+// --- 3 ----//
 function resolveAfterSeconds() {
 	return new Promise(resolve => {
 		setTimeout(() => {
@@ -242,6 +240,7 @@ function resolveAfterSeconds() {
 	});
 }
 
+// ---  6 ----//
 function AddNameFooter(props) {
 	return (
 		<ModalFooter>
@@ -255,7 +254,7 @@ function AddNameFooter(props) {
 							unique.splice(0, unique.length).forEach(function (unique) { props.appendPlace(unique); console.log(unique); return result; })
 						}
 					} asyncCall();
-					props.setNameString(''); props.setFinalPlaceArr(''); /* props.setFoundNamePlace(''); */
+					props.setNameString(''); props.setFinalPlaceArr(''); // props.setFoundNamePlace('');
 				}} data-testid='add-name-button' disabled={!props.foundNamePlace}
 			>Add Place(s)
 			</Button>
@@ -277,6 +276,7 @@ async function verifyCoordinates(coordString, setFoundPlace) {
 	}
 }
 
+// ---  2 ----//
 export function verifyPlacesName(places, setFoundNamePlace) {
 	try {
 		setFoundNamePlace(places);
