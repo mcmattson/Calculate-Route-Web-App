@@ -1,4 +1,6 @@
 package com.tco.requests;
+import com.tco.misc.Optimize;
+import com.tco.requests.Places;
 
 public class TourRequest extends Request{
     
@@ -9,13 +11,12 @@ public class TourRequest extends Request{
 
     @Override
     public void buildResponse(){
-   
     }
 
-    public Places buildPlaces(){
-        return null;
-    }
 
-    public void optimizePlaces(){}
+    public void optimizePlaces(){
+        Optimize optimizer = new Optimize(places, earthRadius);
+        places = optimizer.findBestTour();
+    }
 
 }
