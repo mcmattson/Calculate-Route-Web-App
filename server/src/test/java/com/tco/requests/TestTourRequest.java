@@ -8,5 +8,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestTourRequest {
-    
+    private TourRequest tour;
+
+    @BeforeEach
+    public void createConfigurationForTestCases() {
+        tour = new TourRequest();
+    }
+
 }
