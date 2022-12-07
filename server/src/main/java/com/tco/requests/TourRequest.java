@@ -4,7 +4,6 @@ import com.tco.requests.Places;
 
 public class TourRequest extends Request{
     
-    private String requestType;
     private Double earthRadius;
     private Double response;
     private Places places;
