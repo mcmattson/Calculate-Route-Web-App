@@ -44,7 +44,7 @@ public class Database {
             // connect to the database and query
             Connection conn    = DriverManager.getConnection(url, user, password);
             Statement  query   = conn.createStatement();
-            ResultSet  results = query.executeQuery(sql)
+            ResultSet  results = query.executeQuery(sql);
         ) {
             return convertQueryResultsToLocations(results, Select.getCOLUMNS());
         } catch (Exception e) {
@@ -53,24 +53,17 @@ public class Database {
     }
 
     public static Places convertQueryResultsToLocations(ResultSet results, String columns) throws Exception {
-        String[] cols = columns.split(",");
-        Places Places = new Places();  
-        while (results.next()) {
-            Place Place = new Place(results.getString("latitude"), 
-                                    results.getString("longitude"),
-                                    results.getString("name"), 
-                                    results.getString("id"), 
-                                    results.getString("continent"),
-                                    results.getString("altitude"), 
-                                    results.getString("iso_country"), 
-                                    results.getString("municipality"), 
-                                    results.getString("iso_region"));
-            Places.add(Place);  
-        }
-
-        return Places;
-    }
-
-
-
-}
+			int count = 0;
+			String[] cols = columns.split(",");
+			Places places = new Places();
+			while (results.next()) {
+				Place place = new Place();
+				for (String col: cols) {
+					place.put(col, results.getString(col));
+				}
+				place.put("index", String.format("%d",++count));
+				places.add(place);
+			}
+			return places;
+		}
+}         
