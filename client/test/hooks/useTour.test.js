@@ -7,10 +7,6 @@ import { useTour } from '../../src/hooks/useTour';
 
 
 describe('useTour', () => {
-    test('base: appends a place', async () => {
-        expect(1).toEqual(1);
-    });
-
     const mockLatLng = { lat: 40.570, lng: -105.085 };
     
     let hook;
