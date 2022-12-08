@@ -8,7 +8,7 @@ import static java.lang.Math.toRadians;
 import com.tco.misc.GeographicCoordinate;
 import java.util.HashMap;
 
-public class Place implements GeographicCoordinate {
+public class Place extends HashMap<String, String> implements GeographicCoordinate {
 
     public String latitude;
     public String longitude;
@@ -22,9 +22,13 @@ public class Place implements GeographicCoordinate {
     //Test
     //Constructor
     Place(String lat, String lon) {
-        this.latitude = lat;
-        this.longitude = lon;
+        this.put("latitude", lat);
+        this.put("longitude", lon);
+        this.latitude = this.get("latitude");
+        this.longitude = this.get("longitude");
     }
+
+    Place() {}
 
     Place(String lat, String lon, String name, String id, String continent, String altitude, String iso_country, String municipality, String iso_region) {
         this.latitude = lat;
@@ -40,11 +44,11 @@ public class Place implements GeographicCoordinate {
 
     //Interface
     public Double latRadians() {
-        return toRadians(parseDouble(latitude));
+        return toRadians(parseDouble(this.get("latitude")));
     }
 
     public Double lonRadians() {
-        return toRadians(parseDouble(longitude));
+        return toRadians(parseDouble(this.get("longitude")));
     }
     
 }
