@@ -29,8 +29,6 @@ function useFind(match, limit, serverURL) {
                         index: `${ places.index }`
 
                     }))
-                    //let buildList = map1[i];
-                    //console.log(buildList);
                     placesList(map1[i], found); setServerFind({ places: [map1] });
                 }
             } else {
@@ -40,7 +38,6 @@ function useFind(match, limit, serverURL) {
         } catch (error) { }
     }
 }
-export {placesList}
 function setMapInfoUnknown(map1) {
     map1.clear();
     map1.set('name', 'unknown');
