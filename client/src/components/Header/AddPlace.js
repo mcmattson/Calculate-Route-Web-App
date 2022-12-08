@@ -18,9 +18,9 @@ import { Place } from '../../models/place.model';
 export default function AddPlace(props) {
 	var [foundPlace, setFoundPlace] = useState();
 	const [coordString, setCoordString] = useState('');
-	const [nameString, setNameString] = useState('');// --- 1 -----//
-	var limit = 5; // --- 5 -----//
-	useFind(nameString, limit, getOriginalServerUrl()); // --- 5 -----//
+	const [nameString, setNameString] = useState('');	// ---  1 ----//
+	var limit = 5;  									// ---  - ----//
+	useFind(nameString, limit, getOriginalServerUrl()); // ---  - ----//
 
 	return (
 		<Modal isOpen={props.isOpen} toggle={props.toggleAddPlace}>
@@ -32,9 +32,8 @@ export default function AddPlace(props) {
 			<AddCoordFooter append={props.append} foundPlace={foundPlace}
 				setCoordString={setCoordString} setFoundPlace={setFoundPlace}
 			/>
-			<PlaceNameSearch nameString={nameString} setNameString={setNameString}
-			/> {/* 5*/}
-			<Add appendPlace={props.appendPlace} />
+			<PlaceNameSearch nameString={nameString} setNameString={setNameString}/>{/* 1 */}
+			<Add appendPlace={props.appendPlace} />{/* 3 */}
 		</Modal>
 	);
 }
@@ -66,8 +65,7 @@ function PlaceCoordSearch(props) {
 		</ModalBody>
 	);
 }
-
-// ---  5 ----//
+// ---  1 ----//
 function PlaceNameSearch(props) {
 	return (
 		<ModalBody >
@@ -107,7 +105,7 @@ function PlaceCoordInfo(props) {
 	);
 }
 
-// ---  5 ----//
+// ---  1 ----//
 function PlaceNameInfo() {
 	return (
 		<div>
@@ -117,12 +115,8 @@ function PlaceNameInfo() {
 	);
 }
 
-// --- 2 ----//
-function splitIso_Region(str) {
-	const result = str.split('-');
-	return result;
-}
 
+// ---  3 ----//
 function Add(props) {
 	try {
 		var newPlace = ['']
@@ -146,7 +140,13 @@ function removeAllChildNodes(parent) {
 	}
 }
 
-// ---  3 ----//
+// --- 2 ----//
+function splitIso_Region(str) {
+	const result = str.split('-');
+	return result;
+}
+
+// ---  2 ----//
 export function placesList(places, limit) {
 	const splitIso_RegionResults = splitIso_Region(places.region), parent = document.querySelector('#outerDivElement'),
 	buttonsAmount = document.querySelectorAll('#outerDivElement button'), buttonElement = document.createElement('button'),
@@ -161,7 +161,7 @@ export function placesList(places, limit) {
 		buttonElement.setAttribute("data-municipality", places.municipality);
 		buttonElement.setAttribute("data-region", splitIso_RegionResults[1]);
 		buttonElement.setAttribute("data-country", splitIso_RegionResults[0]);
-		buttonElement.addEventListener("click", function () { Add() });
+		buttonElement.addEventListener("click", function () { Add() }); // ---  3 ----//
 		divElement.setAttribute("class", "div_adjust");
 		parent.appendChild(divElement);
 		var divElementtext = document.createTextNode(places.name + ", " + places.municipality + ", " + splitIso_RegionResults[1] + ", " + splitIso_RegionResults[0])
