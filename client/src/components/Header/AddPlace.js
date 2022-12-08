@@ -24,7 +24,7 @@ export default function AddPlace(props) {
 
 	return (
 		<Modal isOpen={props.isOpen} toggle={props.toggleAddPlace}>
-			<AddPlaceHeader	toggleAddPlace={props.toggleAddPlace}/>
+			<AddPlaceHeader toggleAddPlace={props.toggleAddPlace} />
 			<PlaceCoordSearch
 				foundPlace={foundPlace} setFoundPlace={setFoundPlace}
 				coordString={coordString} setCoordString={setCoordString}
@@ -32,7 +32,7 @@ export default function AddPlace(props) {
 			<AddCoordFooter append={props.append} foundPlace={foundPlace}
 				setCoordString={setCoordString} setFoundPlace={setFoundPlace}
 			/>
-			<PlaceNameSearch nameString={nameString} setNameString={setNameString}/>{/* 1 */}
+			<PlaceNameSearch nameString={nameString} setNameString={setNameString} />{/* 1 */}
 			<Add appendPlace={props.appendPlace} />{/* 3 */}
 		</Modal>
 	);
@@ -77,7 +77,7 @@ function PlaceNameSearch(props) {
 					data-testid='name-input'
 					value={props.nameString}
 				/>
-				<PlaceNameInfo/>
+				<PlaceNameInfo />
 			</Col>
 		</ModalBody >
 	);
@@ -148,9 +148,8 @@ function splitIso_Region(str) {
 
 // ---  2 ----//
 export function placesList(places, limit) {
-	const splitIso_RegionResults = splitIso_Region(places.region), parent = document.querySelector('#outerDivElement'),
-	buttonsAmount = document.querySelectorAll('#outerDivElement button'), buttonElement = document.createElement('button'),
-	buttonElementtext = document.createTextNode("+"), divElement = document.createElement('div');
+	const splitIso_RegionResults = splitIso_Region(places.region), parent = document.querySelector('#outerDivElement'), buttonsAmount = document.querySelectorAll('#outerDivElement button'), buttonElement = document.createElement('button'),
+		buttonElementtext = document.createTextNode("+"), divElement = document.createElement('div');
 	if (limit != 0 && buttonsAmount.length < limit) {
 		buttonElement.setAttribute("type", "button");
 		buttonElement.setAttribute("data-testid", "add-place-btn");
@@ -166,7 +165,7 @@ export function placesList(places, limit) {
 		parent.appendChild(divElement);
 		var divElementtext = document.createTextNode(places.name + ", " + places.municipality + ", " + splitIso_RegionResults[1] + ", " + splitIso_RegionResults[0])
 		divElement.appendChild(divElementtext);
-		var linebreak = document.createElement('br');divElement.appendChild(linebreak);
+		var linebreak = document.createElement('br'); divElement.appendChild(linebreak);
 		divElementtext = document.createTextNode("(" + places.latitude + ", " + places.longitude + ")");
 		divElement.appendChild(divElementtext);
 		divElement.appendChild(buttonElement);

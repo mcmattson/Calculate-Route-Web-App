@@ -10,7 +10,6 @@ function useFind(match, limit, serverURL) {
     let find = { serverFind }, findActions = { setServerFind: setServerFind };
     useEffect(() => { sendFindRequest(match, limit, serverURL, findActions); }, [match, limit]); return { find };
     function processServerFindSuccess(places, url) { LOG.info('Switching to Server:', url); setServerFind(places); setServerUrl(url); }
-    
     async function sendFindRequest(match, limit, serverURL, findActions) {
         const { setServerFind } = findActions, map1 = []; let findResponse, mapPlaces, i, mapSetUnknown;
         try {
@@ -21,18 +20,12 @@ function useFind(match, limit, serverURL) {
                     processServerFindSuccess(findResponse[i], serverUrl);
                     places = findResponse.places[i];
                     map1.push(mapPlaces = new Place({
-                        name: `${places.name}`,
-                        latitude: `${places.latitude}`,
-                        longitude: `${places.longitude}`,
-                        municipality: `${places.municipality}`,
-                        region: `${places.iso_region}`,
-                        index: `${ places.index }`
-
+                        name: `${places.name}`, latitude: `${places.latitude}`, longitude: `${places.longitude}`, municipality: `${places.municipality}`, region: `${places.iso_region}`, index: `${places.index}`
                     }))
                     placesList(map1[i], found); setServerFind({ places: [map1] });
                 }
             } else {
-                mapSetUnknown = setMapInfoUnknown(map1); //Clears and Sets Map to Unknown
+                mapSetUnknown = setMapInfoUnknown(map1);
                 placesList(mapSetUnknown, found); setServerFind({ places: [] });
             }
         } catch (error) { }
