@@ -15,6 +15,9 @@ public class Select {
 	} 
 
     static String match(String match, int limit) {
+        if (limit == 0) {
+            return statement(match, "*", "");
+        } 
         return statement(match, "*", "LIMIT " + limit);
     }
 

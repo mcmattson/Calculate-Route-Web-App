@@ -28,4 +28,26 @@ public class TestSelect {
             System.err.println("Exception: " + e.getMessage());
         }
     }
+
+    @Test
+    @DisplayName("mikylab: the match should only return 5 entries")
+    public void testMatchLimit() {
+        try {
+            Places places = Database.Places("dave", 5);
+            assertEquals(5, places.size());
+        } catch (Exception e) {
+            System.err.println("Exception: " + e.getMessage());
+        }
+    }
+
+    @Test
+    @DisplayName("mikylab: all entries should be found")
+    public void testNoMatchLimit() {
+        try {
+            Places places = Database.Places("dave", 0 );
+            assertEquals(28, places.size());
+        } catch (Exception e) {
+            System.err.println("Exception: " + e.getMessage());
+        }
+    }
 }
