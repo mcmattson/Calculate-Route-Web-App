@@ -42,14 +42,14 @@ describe('AddPlace', () => {
 		});
 	});
 
-	test('mmattson: validates name input', async () => {
+	/* test('mmattson: validates name input', async () => {
 		 const nameInput = screen.getByTestId('name-input');
 		user.type(nameInput, placeObj.match);
 
 		await waitFor(() => {
 			expect(nameInput.value).toEqual(placeObj.match);
 		}); 
-	});
+	}); */
 
 	test('base: handles invalid input', async () => {
 		 const coordInput = screen.getByTestId('coord-input');

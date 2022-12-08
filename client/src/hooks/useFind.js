@@ -5,7 +5,7 @@ import { placesList } from '../components/Header/AddPlace';
 import { Place } from '../models/place.model';
 
 function useFind(match, limit, serverURL) {
-    limit = limitUndefinedNull(match, limit); match = matchUndefinedNull(match);
+    /* limit = limitUndefinedNull(match, limit); match = matchUndefinedNull(match);
     let found, places = []; const type = ['airport'], where = ['US'], [serverUrl, setServerUrl] = useState(getOriginalServerUrl()), [serverFind, setServerFind] = useState({ places: [] });
     let find = { serverFind }, findActions = { setServerFind: setServerFind };
     useEffect(() => { sendFindRequest(match, limit, serverURL, findActions); }, [match, limit]); return { find };
@@ -29,37 +29,37 @@ function useFind(match, limit, serverURL) {
                 placesList(mapSetUnknown, found); setServerFind({ places: [] });
             }
         } catch (error) { }
-    }
+    } */
 }
-function setMapInfoUnknown(map1) {
+/* function setMapInfoUnknown(map1) {
     map1.clear();
     map1.set('name', 'unknown');
     return map1;
-}
+} */
 
-function setNewFound(found, limit) {
+/* function setNewFound(found, limit) {
     if (found > limit) {
         found = limit;
         return found;
     } else {
         return found;
     }
-}
+} */
 
-function limitUndefinedNull(match, limit) {
+/* function limitUndefinedNull(match, limit) {
     if (match == undefined || match.length < 3) {
         limit = 0;
         return limit;
     } else {
         return limit;
     }
-}
-function matchUndefinedNull(match) {
+} */
+/* function matchUndefinedNull(match) {
     if (match == undefined || match.length < 3) {
         match = ' ';
         return match;
     } else {
         return match;
     }
-}
+} */
 export { useFind };

@@ -18,9 +18,9 @@ import { Place } from '../../models/place.model';
 export default function AddPlace(props) {
 	var [foundPlace, setFoundPlace] = useState();
 	const [coordString, setCoordString] = useState('');
-	const [nameString, setNameString] = useState('');	// ---  1 ----//
-	var limit = 5;  									// ---  - ----//
-	useFind(nameString, limit, getOriginalServerUrl()); // ---  - ----//
+	//const [nameString, setNameString] = useState('');	// ---  1 ----//
+	//var limit = 5;  									// ---  - ----//
+	//useFind(nameString, limit, getOriginalServerUrl()); // ---  - ----//
 
 	return (
 		<Modal isOpen={props.isOpen} toggle={props.toggleAddPlace}>
@@ -32,8 +32,8 @@ export default function AddPlace(props) {
 			<AddCoordFooter append={props.append} foundPlace={foundPlace}
 				setCoordString={setCoordString} setFoundPlace={setFoundPlace}
 			/>
-			<PlaceNameSearch nameString={nameString} setNameString={setNameString} />{/* 1 */}
-			<Add appendPlace={props.appendPlace} />{/* 3 */}
+			{/* <PlaceNameSearch nameString={nameString} setNameString={setNameString} /> */}{/* 1 */}
+			{/* <Add appendPlace={props.appendPlace} /> */}{/* 3 */}
 		</Modal>
 	);
 }
@@ -66,7 +66,7 @@ function PlaceCoordSearch(props) {
 	);
 }
 // ---  1 ----//
-function PlaceNameSearch(props) {
+/* function PlaceNameSearch(props) {
 	return (
 		<ModalBody >
 			<Col>
@@ -81,7 +81,7 @@ function PlaceNameSearch(props) {
 			</Col>
 		</ModalBody >
 	);
-}
+} */
 /* async function checkSearchType(coordString) {
 	let newCoordString = coordString.replace(/,/g, '')
 	let stringLength = newCoordString.length
@@ -106,18 +106,18 @@ function PlaceCoordInfo(props) {
 }
 
 // ---  1 ----//
-function PlaceNameInfo() {
+/* function PlaceNameInfo() {
 	return (
 		<div>
 			<br />
 			<div id="outerDivElement" className="list-group"></div>
 		</div>
 	);
-}
+} */
 
 
 // ---  3 ----//
-function Add(props) {
+/* function Add(props) {
 	try {
 		var newPlace = ['']
 		const buttons = document.querySelectorAll('.addPlace-btn');
@@ -131,23 +131,23 @@ function Add(props) {
 		}));
 	} catch (e) { }
 	return (null);
-}
+} */
 
 // ---  2 ----//
-function removeAllChildNodes(parent) {
+/* function removeAllChildNodes(parent) {
 	while (parent.firstChild) {
 		parent.removeChild(parent.firstChild);
 	}
-}
+} */
 
 // --- 2 ----//
-function splitIso_Region(str) {
+/* function splitIso_Region(str) {
 	const result = str.split('-');
 	return result;
-}
+} */
 
 // ---  2 ----//
-export function placesList(places, limit) {
+/* export function placesList(places, limit) {
 	const splitIso_RegionResults = splitIso_Region(places.region), parent = document.querySelector('#outerDivElement'), buttonsAmount = document.querySelectorAll('#outerDivElement button'), buttonElement = document.createElement('button'),
 		buttonElementtext = document.createTextNode("+"), divElement = document.createElement('div');
 	if (limit != 0 && buttonsAmount.length < limit) {
@@ -173,7 +173,7 @@ export function placesList(places, limit) {
 	} else {
 		removeAllChildNodes(parent);
 	}
-}
+} */
 
 function AddCoordFooter(props) {
 	return (
