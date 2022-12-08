@@ -63,7 +63,7 @@ describe('AddPlace', () => {
 		expect(addButton.classList.contains('disabled')).toBe(true); 
 	});
 
-	test('mmattson: handles invalid name input', async () => {
+	/* test('mmattson: handles invalid name input', async () => {
 	 	const nameInput = screen.getByTestId('name-input');
 		user.paste(nameInput, 'da');
 		
@@ -73,7 +73,7 @@ describe('AddPlace', () => {
 
 		const addButton = screen.getByTestId('add-name-button');
 		expect(addButton.classList.contains('disabled')).toBe(true); 
-	});
+	}); */
 
 	test('mmattson: handles valid name input not found', async () => {
 		/*  const nameInput = screen.getByTestId('name-input');
