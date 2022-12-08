@@ -31,35 +31,36 @@ function useFind(match, limit, serverURL) {
         } catch (error) { }
     }
 }*/
-/*function setMapInfoUnknown(map1) {
-    map1.clear();
-    map1.set('name', 'unknown');
-    return map1;
-}
-
-function setNewFound(found, limit) {
-    if (found > limit) {
-        found = limit;
-        return found;
-    } else {
-        return found;
+    /*function setMapInfoUnknown(map1) {
+        map1.clear();
+        map1.set('name', 'unknown');
+        return map1;
     }
-}
-
-function limitUndefinedNull(match, limit) {
-    if (match == undefined || match.length < 3) {
-        limit = 0;
-        return limit;
-    } else {
-        return limit;
+    
+    function setNewFound(found, limit) {
+        if (found > limit) {
+            found = limit;
+            return found;
+        } else {
+            return found;
+        }
     }
-}
-function matchUndefinedNull(match) {
-    if (match == undefined || match.length < 3) {
-        match = ' ';
-        return match;
-    } else {
-        return match;
+    
+    function limitUndefinedNull(match, limit) {
+        if (match == undefined || match.length < 3) {
+            limit = 0;
+            return limit;
+        } else {
+            return limit;
+        }
     }
-}*/
-export { useFind };
+    function matchUndefinedNull(match) {
+        if (match == undefined || match.length < 3) {
+            match = ' ';
+            return match;
+        } else {
+            return match;
+        }
+    }*/
+}
+export { useFind }
