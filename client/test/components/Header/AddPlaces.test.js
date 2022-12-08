@@ -12,14 +12,12 @@ describe('AddPlace', () => {
 	const placeObj = {
 		latLng: '40.57, -105.085',
 		name: 'Colorado State University, South College Avenue, Fort Collins, Larimer County, Colorado, 80525-1725, United States',
-		match: 'Dave'
 	};
 
 	const props = {
 		toggleAddPlace: jest.fn(),
 		append: jest.fn(),
 		isOpen: true,
-		show: jest.fn(),
 	};
 
 	beforeEach(() => {
@@ -28,12 +26,11 @@ describe('AddPlace', () => {
 				append={props.append}
 				isOpen={props.isOpen}
 				toggleAddPlace={props.toggleAddPlace}
-				show={props.show}
 			/>
 		);
 	});
 
-	test('base: validates coord input', async () => {
+	test('base: validates input', async () => {
 		const coordInput = screen.getByTestId('coord-input');
 		user.type(coordInput, placeObj.latLng);
 
@@ -42,29 +39,48 @@ describe('AddPlace', () => {
 		});
 	});
 
-	/* test('mmattson: validates name input', async () => {
-		 const nameInput = screen.getByTestId('name-input');
-		user.type(nameInput, placeObj.match);
-
-		await waitFor(() => {
-			expect(nameInput.value).toEqual(placeObj.match);
-		}); 
-	}); */
-
 	test('base: handles invalid input', async () => {
-		 const coordInput = screen.getByTestId('coord-input');
+		const coordInput = screen.getByTestId('coord-input');
 		user.paste(coordInput, '1');
 
 		await waitFor(() => {
 			expect(coordInput.value).toEqual('1');
 		});
 
-		const addButton = screen.getByTestId('add-coord-button');
-		expect(addButton.classList.contains('disabled')).toBe(true); 
+		const addButton = screen.getByTestId('add-place-button');
+		expect(addButton.classList.contains('disabled')).toBe(true);
 	});
 
-	test('base: Adds coord place', async () => {
-		  fetch.mockResponse(REVERSE_GEOCODE_RESPONSE);
+	test('mmattson: handles less than 3 chars input', async () => {
+		const coordInput = screen.getByTestId('coord-input');
+		const logSpy = jest.spyOn(console, 'log');
+		user.type(coordInput, 'd');
+
+		await waitFor(() => {
+			expect(coordInput.value).toEqual('d');
+
+		});
+		expect(logSpy).toBeNull;
+		const addButton = screen.getByTestId('add-place-button');
+		expect(addButton.classList.contains('disabled')).toBe(true);
+	});
+
+	test('mmattson: handles equal or more than 3 chars input', async () => {
+		const coordInput = screen.getByTestId('coord-input');
+		const logSpy = jest.spyOn(console, 'log');
+		user.type(coordInput, "dav")
+
+		await waitFor(() => {
+			expect(coordInput.value).toEqual("dav");
+
+		});
+		(!expect(logSpy).toBeNull);
+		const addButton = screen.getByTestId('add-place-button');
+		expect(addButton.classList.contains('disabled')).toBe(true);
+	});
+
+	test('base: Adds place', async () => {
+		fetch.mockResponse(REVERSE_GEOCODE_RESPONSE);
 		const coordInput = screen.getByTestId('coord-input');
 		user.type(coordInput, placeObj.latLng);
 
@@ -72,12 +88,12 @@ describe('AddPlace', () => {
 			expect(coordInput.value).toEqual(placeObj.latLng);
 		});
 
-		const addButton = screen.getByTestId('add-coord-button');
+		const addButton = screen.getByTestId('add-place-button');
 		expect(addButton.classList.contains('disabled')).toBe(false);
 		await waitFor(() => {
 			user.click(addButton);
 		});
 		expect(props.append).toHaveBeenCalledWith(MOCK_PLACE_RESPONSE);
-		expect(coordInput.value).toEqual('');  
+		expect(coordInput.value).toEqual('');
 	});
 });
