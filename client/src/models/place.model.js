@@ -13,7 +13,7 @@ export class Place {
 		this.country = placeObj.country;
         this.postcode = placeObj.postcode;
         this.defaultDisplayName = this.buildDefaultDisplayName();
-        this.index = placeObj.index;
+		this.index = placeObj.index;
 	}
 
     formatPlace(){
