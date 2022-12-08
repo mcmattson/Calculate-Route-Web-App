@@ -6,17 +6,21 @@ import { BsChevronDown, BsInfoCircleFill } from 'react-icons/bs';
 import { LOG } from '../../../utils/constants';
 import PlaceActions from './PlaceActions';
 import { getOriginalServerUrl, sendAPIRequest } from '../../../utils/restfulAPI';
+import Help from './Help';
 
 
 export default function Itinerary(props) {
 	const distanceSettings = useDistances(props.places, 3959.0, getOriginalServerUrl());
+	const [openHelp, toggleHelp] = useToggle(false);
 	return (
+		<div>
 		<Table responsive>
 			<TripHeader
 				tripName={props.tripName}
 				distanceSettings= {distanceSettings}
 				places={props.places}
 				removeAll={props.placeActions.removeAll}
+				helpOpen={openHelp} toggleHelp={toggleHelp}		
 			/>
 			<PlaceList
 				places={props.places}
@@ -26,6 +30,8 @@ export default function Itinerary(props) {
 
 			/>
 		</Table>
+		<Help isOpen={openHelp} toggleHelp={toggleHelp}/>
+		</div>
 	);
 }
 
@@ -46,7 +52,8 @@ function TripHeader(props) {
 					{/* {' '}
 					{Optimize(props)} */}
 					{' '}
-					{Help(props)}
+					{HelpButton(props)}
+					
 				</th>
 				<th> Leg Distance </th>
 				<th> Cumulative Distance </th>
@@ -61,7 +68,7 @@ function RemoveAll(props) {
 		id='remove-all-button' disabled={props.places.length === 0} onClick={() => props.removeAll()}>
 			Remove All Places
 		</Button>
-	)
+	);
 }
 
 // function Optimize(props) {
@@ -72,6 +79,14 @@ function RemoveAll(props) {
 // 		</Button>
 // 	)
 // }
+
+
+function HelpButton(props){
+	return(
+		<Button data-test-id='help-button' color='primary' onClick={() => props.toggleHelp(true)}
+		id='help-button'> {<BsInfoCircleFill/>} </Button>
+	);
+}
 
 function TotalTripDistance(props){
 	let distances = [0]; 
@@ -171,12 +186,6 @@ function RowArrow(props) {
 			<BsChevronDown data-testid={`place-row-toggle-${props.index}`} onClick={props.toggleShowFullName}/>
 		</td>
 	);
-}
-
-function Help(props) {
-	return( 
-		<BsInfoCircleFill data-testid={`help-icon`} size={18}/>	
-	)
 }
 
 export function useDistances(places, earthRadius, serverURL) {
