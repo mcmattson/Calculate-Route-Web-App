@@ -11,7 +11,7 @@ export function usePlaces() {
 
     const placeActions = {
         append: async (place) => append(place, context),
-        appendPlace: async (place) => appendPlace(place, context),
+       /* appendPlace: async (place) => appendPlace(place, context),*/
         removeAtIndex: (index) => removeAtIndex(index, context),
         removeAll: () => removeAll(context),
         selectIndex: (index) => selectIndex(index, context),
@@ -32,14 +32,14 @@ async function append(latLng, context) {
     setSelectedIndex(newPlaces.length - 1);
 }
 
-async function appendPlace(latLng, context) {
+/*  async function appendPlace(latLng, context) {
     const { places, setPlaces, setSelectedIndex } = context;
     const newPlaces = [...places];
     const fullPlace = latLng
     newPlaces.push(fullPlace);
     setPlaces(newPlaces);
     setSelectedIndex(newPlaces.length - 1);
-}
+}*/
 
 function removeAtIndex(index, context) {
     const { places, setPlaces, selectedIndex, setSelectedIndex } = context;
