@@ -26,7 +26,12 @@ export default function AddPlace(props) {
 
 	return (
 		<Modal isOpen={props.isOpen} toggle={props.toggleAddPlace}>
-			<AddPlaceHeader toggleAddPlace={props.toggleAddPlace} />
+			<AddPlaceHeader
+				toggleAddPlace={props.toggleAddPlace}
+				setNameString={setNameString}
+				setFinalPlaceArr={setFinalPlaceArr}
+				setFoundNamePlace={setFoundNamePlace}
+			/>
 			<PlaceCoordSearch
 				foundPlace={foundPlace}
 				setFoundPlace={setFoundPlace}
@@ -45,13 +50,11 @@ export default function AddPlace(props) {
 				foundNamePlace={foundNamePlace}
 				setFoundNamePlace={setFoundNamePlace}
 				setNameString={setNameString}
-				findSettings={findSettings}
 			/> {/* 5*/}
 
-			{<AddOrDeletePlaceListItems
-				setFoundNamePlace={setFoundNamePlace}
-				setFinalPlaceArr={setFinalPlaceArr}
-			/>} {/* 1 */}
+			{/* <Add
+				appendPlace={props.appendPlace}
+			/> */}
 
 			<AddNameFooter
 				appendPlace={props.appendPlace}
@@ -59,7 +62,7 @@ export default function AddPlace(props) {
 				setFoundPlace={setFoundPlace}
 				setFoundNamePlace={setFoundNamePlace}
 				foundNamePlace={foundNamePlace}
-				finalPlaceArr={finalPlaceArr}
+				nameString={nameString}
 				setFinalPlaceArr={setFinalPlaceArr}
 			/>{/* 6 */}
 		</Modal>
@@ -138,32 +141,11 @@ function PlaceCoordInfo(props) {
 function PlaceNameInfo(props) {
 	return (
 		<ModalBody>
+			<br />
 			<div id="outerDivElement" className="list-group adjustList container"></div>
+
 		</ModalBody>
 	);
-}
-
-// ---  1 ----//
-function AddOrDeletePlaceListItems(props) {
-	const buttons = document.querySelectorAll('.arrList');
-	buttons.forEach(el => el.addEventListener('click', () => {
-		const text = el.getAttribute("latlng").toString(),
-			name = el.getAttribute("name"),
-			index = el.getAttribute("index"),
-			municipality = el.getAttribute("municipality"),
-			iso_region = el.getAttribute("iso_region"),
-			latLngPlace = new Coordinates(text),
-			lat = latLngPlace.getLatitude().toString(),
-			lng = latLngPlace.getLongitude().toString(),
-			newPlace = new Place({ latitude: lat, longitude: lng, name: name, index: index, municipality: municipality, iso_region: iso_region });
-		props.setFinalPlaceArr(finalPlaceArr => [...finalPlaceArr, index, newPlace]);
-		verifyPlacesName(newPlace, props.setFoundNamePlace);
-		document.addEventListener('click', function handleClick(event) {
-			event.target.classList.add('active');
-			event.target.classList.add('disabled');
-		});
-	}))
-	return (null);
 }
 
 // ---  2 ----//
@@ -179,83 +161,43 @@ function splitIso_Region(str) {
 	return result;
 }
 
+function Add(place/* , props */) {
+	console.log(place);
+	//props.appendPlace(place);
+}
+
 // ---  3 ----//
 export function placesList(places, limit) {
-	places["name"] = [{ "index": places.get('index'), "name": places.get('name'), "latitude": places.get('latitude'), "longitude": places.get('longitude'), "municipality": places.get('municipality'), "iso_region": places.get('iso_region') }];
-	let splitIso_RegionResults = splitIso_Region(places.get('iso_region'));
+	let splitIso_RegionResults = splitIso_Region(places.region)
 	var parent = document.querySelector('#outerDivElement');
 	var buttonsAmount = document.querySelectorAll('#outerDivElement button');
 	var buttonElement = document.createElement('button');
-	var buttonElementtext = document.createTextNode("Add");
+	var buttonElementtext = document.createTextNode("+");
 	var divElement = document.createElement('div');
-	var divElementtext = document.createTextNode(`${places.get('name')}` + ", " + `${places.get('municipality')}` + ", " + splitIso_RegionResults[1] + ", " + splitIso_RegionResults[0]);
-
+	var divElementtext = document.createTextNode(places.name + ", " + places.municipality + ", \n" + splitIso_RegionResults[1] + ", " + splitIso_RegionResults[0]);
 
 	if (limit != 0 && buttonsAmount.length < limit) {
-		divElement.setAttribute("class", "display: flex");
 		buttonElement.setAttribute("type", "button");
 		buttonElement.setAttribute("data-testid", "add-place-btn");
-		buttonElement.setAttribute("class", "arrList addPlace-btn list-group-item:hover");
-		buttonElement.setAttribute("style", "margin-left: auto");
-
-		buttonElement.setAttribute("name", `${places.get('name')}`);
-		buttonElement.setAttribute("index", `${places.get('index')}`);
-		buttonElement.setAttribute("latlng", `${places.get('latitude')}` + "," + `${places.get('longitude')}`);
+		buttonElement.setAttribute("class", "addPlace-btn btn btn-primary");
+		buttonElement.setAttribute("style", "margin-left: auto; float: right; margin-bottom: 1em");
+		buttonElement.addEventListener("click", function () { Add(places) });
 
 		parent.appendChild(divElement);
 		divElement.appendChild(divElementtext);
 		divElement.appendChild(buttonElement);
 		buttonElement.appendChild(buttonElementtext);
 
-	} else if (limit <= 0) {
+	} else {
 		removeAllChildNodes(parent);
+		removeAllChildNodes(divElement);
+		removeAllChildNodes(buttonElement);
 		divElementtext = document.createTextNode("No Results Found"),
-			divElement.setAttribute("data-testid", "places-notfound");
+		divElement.setAttribute("data-testid", "places-notfound");
 		divElement.setAttribute("style", "text-align: center");
 		parent.appendChild(divElement);
 		divElement.appendChild(divElementtext);
-		divElement.appendChild(buttonElement);
-		buttonElement.appendChild(buttonElementtext);
-	} else {
-		removeAllChildNodes(parent);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	/* buttonsAmount = document.querySelectorAll('#outerDivElement button');
-var buttonElement = document.createElement('button');
-var buttonElementtext = document.createTextNode("");
-if (limit != 0 && buttonsAmount.length < limit) {
-	
-	buttonElementtext = document.createTextNode(`${places.get('name')}` + ", " + `${places.get('municipality')}` + ", " + splitIso_RegionResults[1] + ", " + splitIso_RegionResults[0]);
-	buttonElement.setAttribute("name", `${places.get('name')}`);
-	buttonElement.setAttribute("index", `${places.get('index')}`);
-	buttonElement.setAttribute("latlng", `${places.get('latitude')}` + "," + `${places.get('longitude')}`);
-	buttonElement.setAttribute("id", "places" + `${places.get('index')}` + "-btn"); buttonElement.setAttribute("data-testid", "places" + `${places.get('index')}` + "-btn");
-	buttonElement.setAttribute("type", "button"); buttonElement.setAttribute("class", "arrList list-group-item list-group-item-action");
-	parent.appendChild(buttonElement);
-	buttonElement.appendChild(buttonElementtext);
-} else if (limit == 0) {
-	removeAllChildNodes(parent);
-	const divElementtext = document.createTextNode("No Results Found"), divElement = document.createElement('div'); divElement.setAttribute("id", "places-notfound");
-	divElement.setAttribute("data-testid", "places-notfound"); divElement.setAttribute("style", "text-align: center");
-	divElement.appendChild(divElementtext);
-	parent.appendChild(divElement);
-} else {
-	removeAllChildNodes(parent);
-} */
 }
 
 function AddCoordFooter(props) {
@@ -275,56 +217,27 @@ function AddCoordFooter(props) {
 		</ModalFooter>
 	);
 }
-function mapCorrection(array) {
-	let i = array.length;
-	while (i--) (i) % 2 === 0 && (array.splice(i, 1));//Remove Indexing Numbers
-	const unique = [...new Map(array.map((m) => [m.name, m])).values()];//Remove Duplicates
-	return unique
-}
 
-// --- 3 ----//
-function resolveAfterSeconds() {
-	return new Promise(resolve => {
-		setTimeout(() => {
-			resolve('resolved');
-		}, 100);
-	});
-}
 
 // ---  6 ----//
 function AddNameFooter(props) {
 	return (
 		<ModalFooter>
-			<Button
-				color='primary'
-				onClick={() => {
-					async function asyncCall() {
-						const unique = mapCorrection(props.finalPlaceArr);
-						const result = await resolveAfterSeconds();
-						unique.splice(0, unique.length).forEach(function (unique) {
-							props.appendPlace(unique);
-							console.log(unique);
-							return result;
-						})
-					} asyncCall();
-					props.setNameString(''); props.setFinalPlaceArr([]); props.setFoundNamePlace('');
-				}} data-testid='add-name-button' disabled={!props.foundNamePlace}
-			>Add Place(s)
-			</Button>{Clear(props)}
+			{Clear(props)}
 		</ModalFooter>
 	);
 }
+
 function Clear(props) {
 	return (
 		<Button
 			color='danger'
 			onClick={() => {
 				props.setNameString('');
-				props.setFinalPlaceArr('');
 				props.setFoundNamePlace('');
 			}}
 			data-testid='add-clear-button'
-			disabled={!props.foundNamePlace}
+		//disabled={!props.foundNamePlace}
 		>
 			Clear Search
 		</Button>
