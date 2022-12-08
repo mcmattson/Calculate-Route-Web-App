@@ -5,7 +5,7 @@ import { placesList } from '../components/Header/AddPlace';
 import { Place } from '../models/place.model';
 
 function useFind(match, limit, serverURL) {
-    limit = limitUndefinedNull(match, limit); match = matchUndefinedNull(match);
+    /*  limit = limitUndefinedNull(match, limit); match = matchUndefinedNull(match);
     let found, places = []; const type = ['airport'], where = ['US'], [serverUrl, setServerUrl] = useState(getOriginalServerUrl()), [serverFind, setServerFind] = useState({ places: [] });
     let find = { serverFind }, findActions = { setServerFind: setServerFind };
     useEffect(() => { sendFindRequest(match, limit, serverURL, findActions); }, [match, limit]); return { find };
@@ -30,8 +30,8 @@ function useFind(match, limit, serverURL) {
             }
         } catch (error) { }
     }
-}
-function setMapInfoUnknown(map1) {
+}*/
+/*function setMapInfoUnknown(map1) {
     map1.clear();
     map1.set('name', 'unknown');
     return map1;
@@ -61,5 +61,5 @@ function matchUndefinedNull(match) {
     } else {
         return match;
     }
-}
+}*/
 export { useFind };
