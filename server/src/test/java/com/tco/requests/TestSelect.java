@@ -50,4 +50,16 @@ public class TestSelect {
             System.err.println("Exception: " + e.getMessage());
         }
     }
+
+    @Test
+    @DisplayName("cath2731: no entries should be found")
+    public void testNoMatch() {
+        try {
+            Places places = Database.Places("CSU", 0);
+            assertEquals(0, places.size());
+        } catch (Exception e) {
+            System.err.println("Exception: " + e.getMessage());
+        }
+    }
+
 }
