@@ -82,6 +82,7 @@ function AppModals(props) {
 				isOpen={props.showAddPlace}
 				toggleAddPlace={props.toggleAddPlace}
 				append={props.placeActions.append}
+				/*appendPlace={props.placeActions.appendPlace}*/
 			/>
 			<ServerSettings
 				isOpen={props.showServerSettings}
